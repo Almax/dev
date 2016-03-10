@@ -1,0 +1,45 @@
+{
+  "name": "MarryGuard_v2",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "test": "node node_modules/eslint/bin/eslint .",
+    "clean:babelrc": "find ./node_modules -name react-packager -prune -o -name '.babelrc' -print | xargs rm -f",
+    "postinstall": "npm run clean:babelrc",
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "moment": "^2.11.1",
+    "moment-range": "^2.1.0",
+    "react-native": "^0.21.0",
+    "react-native-action-button": "^1.1.1",
+    "react-native-android-badge": "^0.3.1",
+    "react-native-animatable": "^0.4.1",
+    "react-native-chart": "^0.1.12",
+    "react-native-code-push": "^1.8.0-beta",
+    "react-native-http-cache": "^0.1.1",
+    "react-native-image-picker": "^0.18.2",
+    "react-native-keyboard-aware-scroll-view": "0.0.4",
+    "react-native-lazyload": "^0.1.7",
+    "react-native-lightbox": "^0.5.0",
+    "react-native-parallax-scroll-view": "^0.18.0",
+    "react-native-storage": "0.0.12",
+    "react-native-store": "^0.4.1",
+    "react-native-swiper2": "^2.0.3",
+    "react-native-system-notification": "^0.1.6",
+    "react-native-timeago": "^0.2.0",
+    "react-native-vibration": "^0.2.0",
+    "react-redux": "^4.0.2",
+    "redux": "^3.0.5",
+    "redux-actions": "^0.9.1",
+    "redux-logger": "^2.3.1",
+    "redux-thunk": "^1.0.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^4.1.6",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.1.1",
+    "eslint-plugin-import": "^0.12.1",
+    "eslint-plugin-react": "^3.11.3"
+  }
+}
