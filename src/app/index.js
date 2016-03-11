@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux';
 import store from '../redux/store';
-
+import codePush from "react-native-code-push";
 import React, {
   AppRegistry,
   Platform,
@@ -24,7 +24,7 @@ class App extends React.Component {
     }
   }
   componentDidMount() {
-    
+    codePush.sync();
   }
   onBackAndroid = () => {
     const nav = this.navigator;

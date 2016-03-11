@@ -10,10 +10,10 @@ import React, {
 import { connect } from 'react-redux';
 import styles from '../styles'
 import { FormBlock, FormRow, Selectable, SubmitButton, Input, SoftInput, PureButton } from '../components/Form'
-import { CatalogSection, Caption, Subtitle, HorizontalView, BackStep, SegmentedControl } from '../components/View';
+import { CatalogSection, AccountCatalog, Caption, Subtitle, HorizontalView, BackStep, SegmentedControl } from '../components/View';
 import { test } from '../redux/modules/money';
 import NumberPad from '../components/Form/NumberPad';
-import TodoCatalog from './TodoCatalog';
+import AccountCatalogView from './AccountCatalog';
 import { createMoney, updateMoney } from '../utils/syncdata';
 class Income extends React.Component {
 	constructor(props) {
@@ -46,7 +46,7 @@ class Income extends React.Component {
 	}
 	_selectCatalog() {
 		this.props.navigator.push({
-			component: TodoCatalog,
+			component: AccountCatalogView,
 			params: {
 				update: (catalog) => {
 					this.setState({
@@ -106,7 +106,7 @@ class Income extends React.Component {
 						contentContainerStyle={innerStyles.container}>
 						<Subtitle>收入类别</Subtitle>
 						<View>
-							<CatalogSection id={this.state.catalog_id} onPress={this._selectCatalog.bind(this)} />
+							<AccountCatalog id={this.state.catalog_id} onPress={this._selectCatalog.bind(this)} />
 						</View>
 						<Subtitle>具体金额</Subtitle>
 						<FormRow>

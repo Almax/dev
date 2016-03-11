@@ -16,8 +16,14 @@ import { logout } from '../redux/modules/session';
 import BasicProfile from './BasicProfile';
 import BasicMarry from './BasicMarry';
 import WebView from './WebView';
+import BasicSecurity from './BasicSecurity';
 
 class More extends React.Component {
+	componentDidMount() {
+		// this.props.navigator.push({
+		// 	component: BasicSecurity
+		// })
+	}
 	render() {
 		const { navigator } = this.props
 		const user = this.props.state
@@ -32,9 +38,13 @@ class More extends React.Component {
 								<Text style={innerStyles.username}> {user.name}</Text>
 							</View>
 
-							<View style={{ padding: 10, backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 5, borderWidth: 1, borderColor: '#FFFFFF' }}>
-								<Text style={{ color: '#FFFFFF', fontWeight: '200', fontSize: 14 }}>{user.signature}</Text>
-							</View>
+							{ user.signature ? 
+								<View style={{ padding: 10, backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 5, borderWidth: 1, borderColor: '#FFFFFF' }}>
+									<Text style={{ color: '#FFFFFF', fontWeight: '200', fontSize: 14 }}>{user.signature}</Text>
+								</View>
+								: 
+								null 
+							}
 
 						</View>
 				</Image>
@@ -43,24 +53,35 @@ class More extends React.Component {
 				</View>
 
 				<View style={{ backgroundColor: '#FFFFFF' }}>
-				<TouchableOpacity
-						onPress={ () => navigator.push({ component: BasicProfile }) }
-						style={styles.textIcon}>
-					<View style={styles.textWrapper}>
-						<Image source={asset.icon_book} style={styles.icon} />
-						<Text style={styles.text}>个人资料</Text>
-					</View>
-					<Text style={styles.helperText}>修改我的资料</Text>
-				</TouchableOpacity>
 
 				<TouchableOpacity
 						onPress={ () => navigator.push({ component: BasicMarry }) }
 						style={styles.textIcon}>
 					<View style={styles.textWrapper}>
 						<Image source={asset.icon_book} style={styles.icon} />
-						<Text style={styles.text}>婚礼信息</Text>
+						<Text style={styles.text}>我的婚礼信息</Text>
 					</View>
 					<Text style={styles.helperText}>我们的婚礼信息</Text>
+				</TouchableOpacity>
+
+				<TouchableOpacity
+						onPress={ () => navigator.push({ component: BasicProfile }) }
+						style={styles.textIcon}>
+					<View style={styles.textWrapper}>
+						<Image source={asset.icon_book} style={styles.icon} />
+						<Text style={styles.text}>账户信息</Text>
+					</View>
+					<Text style={styles.helperText}>修改我的资料</Text>
+				</TouchableOpacity>
+
+				<TouchableOpacity
+						onPress={ () => navigator.push({ component: BasicSecurity }) }
+						style={styles.textIcon}>
+					<View style={styles.textWrapper}>
+						<Image source={asset.icon_book} style={styles.icon} />
+						<Text style={styles.text}>安全信息</Text>
+					</View>
+					<Text style={styles.helperText}>账户密码安全保护</Text>
 				</TouchableOpacity>
 
 				<TouchableOpacity
@@ -68,7 +89,7 @@ class More extends React.Component {
 						style={styles.textIcon}>
 					<View style={styles.textWrapper}>
 						<Image source={asset.icon_book} style={styles.icon} />
-						<Text style={styles.text}>联系我们</Text>
+						<Text style={styles.text}>关于我们</Text>
 					</View>
 					<Text style={styles.helperText}>教你怎么找到我们</Text>
 				</TouchableOpacity>

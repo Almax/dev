@@ -93,8 +93,6 @@ class Register extends React.Component {
 			code: this.state.code,
 		});
 
-		console.warn(JSON.stringify(resp));
-
 		if(resp.error) {
 			Alert.alert("注册出错",resp.error);
 		}else {

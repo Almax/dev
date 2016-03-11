@@ -10,14 +10,16 @@ import React, {
 } from 'react-native';
 import styles from '../styles';
 import { connect } from 'react-redux';
-import { BackStep, CatalogSection } from '../components/View';
+import { BackStep, AccountCatalog, CatalogSection } from '../components/View';
 import { load } from '../redux/modules/money';
 import AccountBudget from './AccountBudget';
+import AccountOut from './AccountOut';
 import AccountItem from './AccountItem';
+
 class AccountBook extends React.Component {
 	constructor(props) {
 		super(props);
-		var dataSource = new ListView.DataSource({ 
+		var dataSource = new ListView.DataSource({
 			getSectionHeaderData: this._getSectionHeaderData,
 			rowHasChanged: (r1, r2) => r1!==r2,
 			sectionHeaderHasChanged: (s1, s2) => s1!==s2
@@ -33,6 +35,9 @@ class AccountBook extends React.Component {
 	async componentDidMount() {
 		InteractionManager.runAfterInteractions(() => {
 			this.props.load(this.props.marry);
+			// this.props.navigator.push({
+			// 	component: AccountBudget
+			// });
 		});
 	}
 	componentWillReceiveProps(nextProps) {
@@ -49,25 +54,48 @@ class AccountBook extends React.Component {
 				budget,
 				cost
 			});
-			if(ds[nextProps.money[key].catalog_id]) {	
-				ds[nextProps.money[key].catalog_id].push(nextProps.money[key])
+
+			if(nextProps.money[key].compute_sign === 1) {
+
+				if(ds[nextProps.money[key].catalog_id+1000]) {
+					ds[nextProps.money[key].catalog_id+1000].push(nextProps.money[key]);
+				}else {
+					ds[nextProps.money[key].catalog_id+1000] = [nextProps.money[key]];
+				}
+
 			}else {
-				ds[nextProps.money[key].catalog_id] = [nextProps.money[key]];
+
+				if(ds[nextProps.money[key].catalog_id]) {
+					ds[nextProps.money[key].catalog_id].push(nextProps.money[key]);
+				}else {
+					ds[nextProps.money[key].catalog_id] = [nextProps.money[key]];
+				}
+
 			}
+
 		});
 		this.setState({
 			dataSource: this.state.dataSource.cloneWithRowsAndSections(ds)
 		});
 	}
-	sectionHeaderHasChanged(dataBlob, sectionID) {
+	_getSectionHeaderData(dataBlob, sectionID) {
 		return sectionID;
 	}
 	_renderSectionHeader(sectionData, sectionID) {
+		if(sectionID < 1000) {
+			return (
+				<View style={{ backgroundColor: '#EFEFEF' }}>
+					<CatalogSection id={sectionID} />
+				</View>
+			)			
+		}else {
 		return (
-		<View style={{ backgroundColor: '#EFEFEF' }}>
-			<CatalogSection id={sectionID} />
-		</View>
-		)
+			<View style={{ backgroundColor: '#EFEFEF' }}>
+				<AccountCatalog id={sectionID-1000} />
+			</View>
+			)
+		}
+
 	}
 	_renderRow(row, sectionId, rowId) {
 		if(row.compute_sign === -1) {
@@ -125,17 +153,17 @@ class AccountBook extends React.Component {
 
 					<View style={{ width: 1/PixelRatio.get(), height: 150 }} />
 
-					<TouchableOpacity style={innerStyles.button}>
+					<TouchableOpacity onPress={() => this.props.navigator.push({ component: AccountOut })} style={innerStyles.button}>
 						<Text style={innerStyles.key}>已花费</Text>
 						<Text style={innerStyles.value}>{ this.state.cost } 元</Text>
 					</TouchableOpacity>
-				</View>	
+				</View>
 
 				<View style={{ height: 1/PixelRatio.get() }} />
-				
+
 				<View style={innerStyles.oneline}>
 					<Text style={innerStyles.helper}>剩余金额</Text>
-					<Text style={innerStyles.reversedValue}>{ this.state.budget - this.state.cost }</Text>
+					<Text style={innerStyles.reversedValue}>{ parseFloat(this.state.budget - this.state.cost).toFixed(2) }</Text>
 					<Text>元</Text>
 				</View>
 
@@ -145,7 +173,7 @@ class AccountBook extends React.Component {
 					pageSize={8}
 					dataSource={this.state.dataSource}
 					renderSectionHeader={this._renderSectionHeader.bind(this)}
-					renderRow={this._renderRow.bind(this)}					
+					renderRow={this._renderRow.bind(this)}
 					refreshControl={
           	<RefreshControl
               refreshing={this.state.isRefreshing}
@@ -156,6 +184,7 @@ class AccountBook extends React.Component {
               progressBackgroundColor="#FFFFFF"
             />
           } />
+
 
 			</View>
 		)

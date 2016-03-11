@@ -1,10 +1,11 @@
 import icons from '../assets';
 
 const ACCOUNT = [
-	{ id:0,name:'通知',			icon: icons.i_3 }, 
-	{ id:1,name:'当面沟通',			icon: icons.i_4 }, 
-	{ id:2,name:'电话沟通',		icon: icons.i_18 }, 
-	{ id:3,name:'约会见面',			icon: icons.i_50 }, 
+	{ id:0,name:'男方收入',			icon: icons.a_male }, 
+	{ id:1,name:'女方收入',			icon: icons.a_female },
+	{ id:2,name:'男方父母',		icon: icons.a_male_family }, 
+	{ id:3,name:'女方父母',			icon: icons.a_female_family }, 	
+	{ id:4,name:'其他资金',    icon: icons.a_accountbook }
 ];
 
 export default ACCOUNT;

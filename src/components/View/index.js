@@ -14,7 +14,7 @@ import ButtonGroup from './ButtonGroup';
 import Line from './Line';
 import Catalog from './Catalog';
 import CatalogSection from './CatalogSection';
-
+import AccountCatalog from './AccountCatalog';
 import ActivityIndicator from './ActivityIndicator';
 
 module.exports = {
@@ -35,4 +35,5 @@ module.exports = {
 	ActivityIndicator,
 	Catalog,
 	CatalogSection,
+	AccountCatalog,
 }

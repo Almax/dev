@@ -54,20 +54,20 @@ class OurWedding extends React.Component {
 		if(this.state.isLoaded) {
 			return (
 				<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-					<BackStep navigator={this.props.navigator} title={"婚礼信息"} />
+					<BackStep navigator={this.props.navigator} title={"婚礼"} />
 
 					<View style={{ flex: 1, margin: 10, padding: 10, borderRadius: 5, backgroundColor: '#FFFFFF', alignItems: 'center' }}>
 
 						<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
 							<Text style={{ color: '#999999', fontSize: 16 }}>婚礼名:</Text>
-							<Text style={{ color: '#E1759C', fontSize: 32, fontWeight: '600' }}>{marry_name}</Text>
+							<Text style={{ color: '#E1759C', fontSize: 24, fontWeight: '600' }}>{marry_name}</Text>
 						</View>
 
 						<View style={{ height: 20 }} />
 
 						<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
 							<Text style={{ color: '#999999', fontSize: 16 }}>婚期:</Text>
-							<Text style={{ color: '#E1759C', fontSize: 32, fontWeight: '600' }}>{moment(marry_date).format("YYYY年MM月DD")}</Text>
+							<Text style={{ color: '#E1759C', fontSize: 24, fontWeight: '600' }}>{moment(marry_date).format("YYYY年MM月DD")}</Text>
 						</View>
 
 						<View style={{ margin: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
@@ -84,7 +84,7 @@ class OurWedding extends React.Component {
 								<TouchableOpacity activeOpacity={0} onPress={this.addMiss.bind(this)}>
 									<Image source={asset.heart} style={{ width: 120 }} resizeMode={"contain"} />
 								</TouchableOpacity>
-								<Text style={{ fontSize: 30, color: '#E1759C' }}>心跳次数: {heart_beat}</Text>
+								<Text style={{ fontSize: 24, color: '#E1759C' }}>心跳次数: {heart_beat}</Text>
 							</View>
 
 							<View style={{ alignItems: 'center', justifyContent: 'center' }}>

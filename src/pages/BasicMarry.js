@@ -30,6 +30,7 @@ class BasicMarry extends React.Component {
 		this.state = {
 			marry_name: "",
 			marry_date: new Date(),
+			marry_city: "",
 		}
 	}
 	componentDidMount() {
@@ -37,6 +38,7 @@ class BasicMarry extends React.Component {
 		this.setState({
 			marry_name: marry.marry_name,
 			marry_date: marry.marry_date,
+			marry_city: marry.marry_city,
 		});
 	}
 	componentWillReceiveProps(nextProps) {
@@ -44,6 +46,7 @@ class BasicMarry extends React.Component {
 		this.setState({
 			marry_name: marry.marry_name,
 			marry_date: marry.marry_date,
+			marry_city: marry.marry_city,
 		});
 	}
 	_onDateChange(date) {
@@ -60,6 +63,7 @@ class BasicMarry extends React.Component {
 		const marry = {
 			id: this.props.marry.id,
 			marry_name: this.state.marry_name,
+			marry_city: this.state.marry_city,
 			marry_date: this.state.marry_date,
 		}
 		await this.props.update(marry);
@@ -69,14 +73,14 @@ class BasicMarry extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<BackStep navigator={this.props.navigator} />
+				<BackStep title={"我的婚礼信息"} navigator={this.props.navigator} />
 				<ScrollView
 					ref={scrollView => this.scrollView = scrollView}
 					contentContainerStyle={{ padding: 10, }}
 					bounces={false}
 					automaticallyAdjustContentInsets={false}>
 					
-					<Subtitle>婚礼信息</Subtitle>
+					<Subtitle>我的婚礼信息</Subtitle>
 					<View style={styles.form}>
 
 						<FormRow>
@@ -86,6 +90,15 @@ class BasicMarry extends React.Component {
 								value={this.state.marry_name}
 								onChangeText={(marry_name) => this.setState({ marry_name })}
 								placeholder={"我们的婚礼名称"} />
+						</FormRow>
+
+						<FormRow>
+							<Label>婚礼城市</Label>
+							<SoftInput
+								scroll={this.viewScroll.bind(this)}
+								value={this.state.marry_city}
+								onChangeText={(marry_city) => this.setState({ marry_city })}
+								placeholder={"婚礼举办的城市"} />
 						</FormRow>
 
 						<FormRow>

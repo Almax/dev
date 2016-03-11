@@ -97,7 +97,7 @@ var AssetList = {
 
 	a_task: require('./account/task.png'),
 	a_female_family: require('./account/female_family.png'),
-	a_female: require('./account/female_family.png'),
+	a_female: require('./account/female.png'),
 	a_male_family: require('./account/male_family.png'),
 	a_male: require('./account/male.png'),
 	a_accountbook: require('./account/accountbook.png'),

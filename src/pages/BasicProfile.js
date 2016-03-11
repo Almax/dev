@@ -113,7 +113,7 @@ class BasicProfile extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<BackStep navigator={this.props.navigator} />
+				<BackStep title={"基本资料"} navigator={this.props.navigator} />
 				<ScrollView
 					ref={scrollView => this.scrollView = scrollView}
 					contentContainerStyle={{ padding: 10, }}
@@ -152,7 +152,7 @@ class BasicProfile extends React.Component {
 							<Label>我的身份</Label>
 							<Picker
 								style={{ backgroundColor: '#FFFFFF', flex: 1 }}
-								itemStyle={{ fontSize: 14, height: 80, justifyContent: 'flex-start' }}
+								itemStyle={{ fontSize: 16, height: 120, justifyContent: 'flex-start' }}
 							  selectedValue={this.state.role}
 							  onValueChange={(role) => this.setState({ role })}>
 							  <Picker.Item label="保密" value="保密" />

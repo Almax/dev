@@ -20,9 +20,9 @@ import { BackStep } from '../components/View';
 class TodoList extends React.Component {
 	render() {
 		return (
-			<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-					<BackStep navigator={this.props.navigator} />
-					<Todo navigator={this.props.navigator} />
+			<View style={{flex: 1, backgroundColor: '#EFEFEF'}}>
+					<BackStep navigator={this.props.navigator} title={"待办"} />
+					<Todo navigator={this.props.navigator}/>
 			</View>
 		);
 	}
@@ -33,6 +33,9 @@ class Home extends Component {
 		this.state = {
 			mock: null
 		}
+	}
+	componentDidMount() {
+		this.props.navigator.push({ component: AccountBook });
 	}
  	render() {
 		const { state, navigator } = this.props;
