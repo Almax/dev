@@ -50,6 +50,7 @@ class BasicProfile extends React.Component {
 			photo: null,
 			role: "保密",
 			name: "",
+			nickname: "",
 			call: "",
 			signature: "",
 		}
@@ -57,6 +58,7 @@ class BasicProfile extends React.Component {
 	componentDidMount() {
 		this.setState({
 			name: this.props.state.name,
+			nickname: this.props.state.nickname,
 			call: this.props.state.call,
 			role: this.props.state.role,
 			photo: this.props.state.photo,
@@ -72,6 +74,7 @@ class BasicProfile extends React.Component {
 		if(/http\:\/\//.test(this.state.photo)) {
 			this.props.save({
 				name: this.state.name,
+				nickname: this.state.nickname,
 				call: this.state.call,
 				role: this.state.role,
 				signature: this.state.signature,
@@ -79,6 +82,7 @@ class BasicProfile extends React.Component {
 		}else {
 			this.props.save({
 				name: this.state.name,
+				nickname: this.state.nickname,
 				call: this.state.call,
 				role: this.state.role,
 				photo: this.state.photo,
@@ -139,6 +143,14 @@ class BasicProfile extends React.Component {
 								value={this.state.name}
 								onChangeText={(name) => this.setState({ name })}
 								placeholder={"请填写你的真实姓名"} />
+						</FormRow>
+						<FormRow>
+							<Label>昵称</Label>
+							<SoftInput
+								scroll={this.viewScroll.bind(this)}
+								value={this.state.nickname}
+								onChangeText={(nickname) => this.setState({ nickname })}
+								placeholder={"请填写你的昵称"} />
 						</FormRow>
 						<FormRow>
 							<Label>联系方式</Label>

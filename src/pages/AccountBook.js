@@ -35,9 +35,6 @@ class AccountBook extends React.Component {
 	async componentDidMount() {
 		InteractionManager.runAfterInteractions(() => {
 			this.props.load(this.props.marry);
-			// this.props.navigator.push({
-			// 	component: AccountBudget
-			// });
 		});
 	}
 	componentWillReceiveProps(nextProps) {

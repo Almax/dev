@@ -9,7 +9,7 @@ class Caption extends React.Component {
 
 		const { children } = this.props;
 
-		color = this.props.color ? this.props.color : '#666666';
+		color = this.props.color ? this.props.color : '#999999';
 
 		return (
 			<View style={styles.container}>
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 		marginVertical: 10
 	},
 	text: {
-		fontSize: 16
+		fontSize: 16,
 	}
 })
 

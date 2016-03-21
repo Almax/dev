@@ -4,6 +4,7 @@ import React, {
 	Text,
 	Switch,
 	TouchableOpacity,
+	Alert,
 	StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -97,6 +98,7 @@ class Cost extends React.Component {
 		if(this.props.reload) {
 			await this.props.reload();
 		}
+		Alert.alert('编辑完成', '已经成功编辑账本');
 		this.props.navigator.pop();
 	}
 	_resetData() {

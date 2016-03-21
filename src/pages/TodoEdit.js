@@ -5,8 +5,12 @@ import React, {
 	Alert,
 	StyleSheet,
 } from 'react-native';
+import moment from 'moment';
+import DatePickerIOS from '../components/CustomPicker';
 import { connect } from 'react-redux';
 import {
+	Label,
+	Selectable,
 	FormRow,
 	FormBlock,
 	PureButton,
@@ -22,7 +26,9 @@ class TodoEdit extends React.Component {
 		super(props);
 		const { todo } = this.props;
 		this.state = {
-			...todo
+			...todo,
+			showPicker: false,
+			timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
 		};
 	}
 	componentDidMount() {
@@ -32,6 +38,7 @@ class TodoEdit extends React.Component {
 			id: this.state.id,
 			task_name: this.state.task_name,
 			task_detail: this.state.task_detail,
+			end_date: this.state.end_date,
 		});
 
 		Alert.alert("修改成功", "任务的内容已经修改完成", [
@@ -41,6 +48,11 @@ class TodoEdit extends React.Component {
 	_scroll(offset) {
 		this.scrollView.scrollTo({
 			y: offset
+		})
+	}
+	_onSelect(date) {
+		this.setState({
+			end_date: date
 		})
 	}
 	render() {
@@ -68,6 +80,25 @@ class TodoEdit extends React.Component {
 							onChangeText={(text) => this.setState({ task_detail: text })}
 							placeholder={"关于这个任务里详细的要求"} />
 					</FormRow>
+
+					
+					<FormRow style={{ marginVertical: 10 }}>
+						<Label>截止日期</Label>
+						<Selectable onPress={() => this.setState({ showPicker: !this.state.showPicker })}>
+							{ todo.end_date ? moment(todo.end_date).format('YYYY-MM-DD hh:mm:ss') : "选择日期"  }
+						</Selectable>
+					</FormRow>
+
+					{ 
+						this.state.showPicker ? 
+		        <DatePickerIOS
+		          date={this.state.end_date ? new Date(this.state.end_date) : new Date()}
+		          mode="datetime"
+		          timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
+		          onDateChange={this._onSelect.bind(this)} />
+						:
+						null
+					}
 
 					<FormBlock>
 						<PureButton onPress={this._save.bind(this)}>保存</PureButton>

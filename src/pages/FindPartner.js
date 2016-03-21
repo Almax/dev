@@ -13,12 +13,12 @@ import { findUser } from '../utils/session';
 import FillMyProfile from './FillMyProfile';
 import { createInvitation } from '../utils/syncdata';
 class FindPartner extends React.Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
 			account: null,
 			target: null,
+			showTutorial: true,
 		}
 	}
 	shouldComponentUpdate(nextProps, nextState) {
@@ -36,6 +36,11 @@ class FindPartner extends React.Component {
 		var target = await findUser(this.state.account);
 		if(target.error) {
 			Alert.alert('没有找到用户', '原因: '+JSON.stringify(target.error));
+			
+			this.setState({ 
+				showTutorial: true 
+			});
+
 		}else {
 			this.setState({
 				target
@@ -46,10 +51,7 @@ class FindPartner extends React.Component {
 		var resp = await createInvitation({ 
 			from_user_id: this.props.user.id, 
 			to_user_id: this.state.target.id 
-		});
-
-		console.warn(JSON.stringify(resp));
-		
+		});		
 		Alert.alert('发送成功','进入一下一步继续完善资料', 
 		[
 			{text: '下一步', onPress: () => this.props.navigator.push({ component: FillMyProfile }) }
@@ -91,6 +93,19 @@ class FindPartner extends React.Component {
 					 	</View>
 					 : null }
 					</View>
+
+					{ 
+						this.state.showTutorial ? 
+						<View style={{ backgroundColor: '#FFF7DD', margin: 10, padding: 10, borderWidth: 1, borderColor: '#E0DBC0' }}>
+							<Text>告诉另一半如何加入:</Text>
+							<Text>1.打开App Store</Text>
+							<Text>2.进入App Store, 选择搜索 "婚格"</Text>
+							<Text>3.点击安装</Text>
+							<Text>4.打开婚格，使用手机号注册</Text>
+							<Text>5.搜索框里填入他/她的手机号，发送邀请</Text> 
+						</View>
+					 : null 
+					}
 
 				</ScrollView>
 			</View>

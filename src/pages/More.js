@@ -1,4 +1,5 @@
 import React, {
+	ScrollView,
 	View,
 	Text,
 	Image,
@@ -15,7 +16,7 @@ import { connect } from 'react-redux';
 import { logout } from '../redux/modules/session';
 import BasicProfile from './BasicProfile';
 import BasicMarry from './BasicMarry';
-import WebView from './WebView';
+import About from './About';
 import BasicSecurity from './BasicSecurity';
 
 class More extends React.Component {
@@ -48,67 +49,69 @@ class More extends React.Component {
 
 						</View>
 				</Image>
-				<View style={{ height: 40, justifyContent: 'center', paddingHorizontal: 10 }}>
-					<Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>资料</Text>
-				</View>
-
-				<View style={{ backgroundColor: '#FFFFFF' }}>
-
-				<TouchableOpacity
-						onPress={ () => navigator.push({ component: BasicMarry }) }
-						style={styles.textIcon}>
-					<View style={styles.textWrapper}>
-						<Image source={asset.icon_book} style={styles.icon} />
-						<Text style={styles.text}>我的婚礼信息</Text>
+				<ScrollView>
+					<View style={{ height: 40, justifyContent: 'center', paddingHorizontal: 10 }}>
+						<Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>资料</Text>
 					</View>
-					<Text style={styles.helperText}>我们的婚礼信息</Text>
-				</TouchableOpacity>
 
-				<TouchableOpacity
-						onPress={ () => navigator.push({ component: BasicProfile }) }
-						style={styles.textIcon}>
-					<View style={styles.textWrapper}>
-						<Image source={asset.icon_book} style={styles.icon} />
-						<Text style={styles.text}>账户信息</Text>
+					<View style={{ backgroundColor: '#FFFFFF' }}>
+
+					<TouchableOpacity
+							onPress={ () => navigator.push({ component: BasicMarry }) }
+							style={styles.textIcon}>
+						<View style={styles.textWrapper}>
+							<Image source={asset.wedding} style={styles.icon} />
+							<Text style={styles.text}>我的婚礼信息</Text>
+						</View>
+						<Text style={styles.helperText}>我们的婚礼信息</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity
+							onPress={ () => navigator.push({ component: BasicProfile }) }
+							style={styles.textIcon}>
+						<View style={styles.textWrapper}>
+							<Image source={asset.account} style={styles.icon} />
+							<Text style={styles.text}>账户信息</Text>
+						</View>
+						<Text style={styles.helperText}>修改我的资料</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity
+							onPress={ () => navigator.push({ component: BasicSecurity }) }
+							style={styles.textIcon}>
+						<View style={styles.textWrapper}>
+							<Image source={asset.safe} style={styles.icon} />
+							<Text style={styles.text}>安全信息</Text>
+						</View>
+						<Text style={styles.helperText}>账户密码安全保护</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity
+							onPress={ () => navigator.push({ component: About }) }
+							style={styles.textIcon}>
+						<View style={styles.textWrapper}>
+							<Image source={asset.about} style={styles.icon} />
+							<Text style={styles.text}>关于我们</Text>
+						</View>
+						<Text style={styles.helperText}>教你怎么找到我们</Text>
+					</TouchableOpacity>
 					</View>
-					<Text style={styles.helperText}>修改我的资料</Text>
-				</TouchableOpacity>
 
-				<TouchableOpacity
-						onPress={ () => navigator.push({ component: BasicSecurity }) }
-						style={styles.textIcon}>
-					<View style={styles.textWrapper}>
-						<Image source={asset.icon_book} style={styles.icon} />
-						<Text style={styles.text}>安全信息</Text>
+					<View style={{ height: 40, justifyContent: 'center', paddingHorizontal: 10 }}></View>
+
+					<View style={{ marginBottom: 20, backgroundColor: '#FFFFFF' }}>
+					<TouchableOpacity
+							onPress={ () => this.props.cleanSession() }
+							style={styles.textIcon}>
+						<View style={styles.textWrapper}>
+							<Image source={asset.exit} style={styles.icon} />
+							<Text style={styles.text}>退出</Text>
+						</View>
+						<Text style={styles.helperText}>退出婚格</Text>
+					</TouchableOpacity>
 					</View>
-					<Text style={styles.helperText}>账户密码安全保护</Text>
-				</TouchableOpacity>
-
-				<TouchableOpacity
-						onPress={ () => navigator.push({ component: WebView }) }
-						style={styles.textIcon}>
-					<View style={styles.textWrapper}>
-						<Image source={asset.icon_book} style={styles.icon} />
-						<Text style={styles.text}>关于我们</Text>
-					</View>
-					<Text style={styles.helperText}>教你怎么找到我们</Text>
-				</TouchableOpacity>
-				</View>
-
-				<View style={{ height: 40, justifyContent: 'center', paddingHorizontal: 10 }}></View>
-
-				<View style={{ marginBottom: 20, backgroundColor: '#FFFFFF' }}>
-				<TouchableOpacity
-						onPress={ () => this.props.cleanSession() }
-						style={styles.textIcon}>
-					<View style={styles.textWrapper}>
-						<Image source={asset.icon_book} style={styles.icon} />
-						<Text style={styles.text}>退出</Text>
-					</View>
-					<Text style={styles.helperText}>退出婚格</Text>
-				</TouchableOpacity>
-				</View>
-
+				</ScrollView>
+				
     </View>
 		)
 	}
@@ -137,6 +140,7 @@ const innerStyles = StyleSheet.create({
 	},
 	layer: {
 		flex: 1,
+		backgroundColor: 'rgba(0,0,0,0.2)',
 		alignItems: 'center',
 		justifyContent: 'center',
 	},

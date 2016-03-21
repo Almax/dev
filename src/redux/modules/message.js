@@ -21,7 +21,8 @@ export const passMessage = createAction(PASS_MESSAGE);
 
 export function load() {
 	return async(dispatch) => {
-		dispatch(initialMessage(await loadInvitation()));
+		var messages = await loadInvitation();
+		dispatch(initialMessage(messages));
 	}
 }
 

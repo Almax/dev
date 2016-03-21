@@ -7,7 +7,7 @@ import React, {
 import { connect } from 'react-redux';
 import {
 	FormRow,
-	Input,
+	SoftInput,
 	Label,
 	WaitButton,
 	SubmitButton,
@@ -15,6 +15,7 @@ import {
 	Link
 } from '../components/Form';
 import { Logo, BackStep } from '../components/View';
+import styles from '../styles';
 import asset from '../assets';
 import { sendActivation, doActivation } from '../utils/session';
 import { store } from '../redux/modules/session';
@@ -61,9 +62,16 @@ class Register extends React.Component {
 
 	async sendCode() {
 		if(/\d{11}/.test(this.state.username)) {
-			this.setState({send: true});
-			await sendActivation(this.state.username);
-			this._startCount();
+      this.setState({send: true});
+			var resp = await sendActivation(this.state.username);
+      if(resp.error) {
+        Alert.alert('账号不正确', resp.error);
+        this.setState({
+          send: false
+        });
+      }else {
+        this._startCount();
+      }
 		}else {
 			Alert.alert('账号不正确', '请填写正确的11位手机号');
 			return ;
@@ -99,33 +107,40 @@ class Register extends React.Component {
 			this.props.loginUser(resp);
 		}
 	}
+	_scroll(offset) {
+		this.scrollView.scrollTo({ y: offset });
+	}
 	render() {
 		return (
 			<View style={styles.container}>
 
 				<BackStep navigator={this.props.navigator} title={"注册婚格"} />
 				<ScrollView
+					ref={scrollView => this.scrollView = scrollView}
 					bounces={false}
 					keyboardDismissMode={"interactive"}
 					contentContainerStyle={[styles.wall, {padding: 10 , justifyContent: 'center'}]}>
 	        
-		        <View style={{ marginTop: 20 }}>
+		        <View style={{ marginTop: 10 }}>
 		          <Logo source={asset.logo} />
 		        </View>
 						<FormRow>
 							<Label>手机号</Label>
-							<Input
+							<SoftInput
+								scroll={this._scroll.bind(this)}
+								style={styles.input}
 								keyboardType={"numeric"}
 								onChangeText={(username)=>this.setState({ username })}
 								placeholder={"请输入你的手机号"}/>
 						</FormRow>
 						<FormRow>
 							<Label>验证码</Label>
-							<Input
+							<SoftInput
+								scroll={this._scroll.bind(this)}
+								style={styles.input}
 								keyboardType={"numeric"}
 								onChangeText={(code)=>this.setState({ code })}
 								placeholder={"请输入验证码"}/>
-
 								{ this.state.send ?
 									<WaitButton size={"small"}>{this.state.timer}秒后</WaitButton>
 									:
@@ -134,30 +149,24 @@ class Register extends React.Component {
 						</FormRow>
 						<FormRow>
 							<Label>密码</Label>
-							<Input
+							<SoftInput
+								scroll={this._scroll.bind(this)}
+								style={styles.input}
 								secureTextEntry={true}
 								onChangeText={(password)=>this.setState({ password })}
 								placeholder={"输入密码"}/>
 						</FormRow>
-						<FormBlock>
-							<SubmitButton onPress={this._signup.bind(this)}>注册</SubmitButton>
-						</FormBlock>
+
+            <View style={{ height: 20 }} />
+						<SubmitButton onPress={this._signup.bind(this)}>注册</SubmitButton>
+
 						<FormBlock>
 							<Link onPress={() => { this.props.navigator.pop() }}>使用已有账号登录</Link>
 						</FormBlock>
-						<View style={{ padding: 20 }}>
-							<Text style={{ color: '#999999' }}>注意: 如果是即将结婚的用户，推荐请使用上一页的“创建我的婚礼”使用主动邀请协作功能,当前为普通注册</Text>
-						</View>
+
 				</ScrollView>
 			</View>
 		);
-	}
-}
-
-const styles = {
-	container: {
-		flex: 1,
-		backgroundColor: '#FFFFFF'
 	}
 }
 

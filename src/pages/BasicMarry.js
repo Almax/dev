@@ -19,6 +19,7 @@ import {
 	Label,
 	PureButton,
 	FormBlock,
+	SubmitButton,
 } from '../components/Form';
 import asset from '../assets'
 import { connect } from 'react-redux'
@@ -113,8 +114,19 @@ class BasicMarry extends React.Component {
 						  timeZoneOffsetInMinutes={((-1) * (new Date()).getTimezoneOffset() / 60) * 60}
 						  onDateChange={this._onDateChange.bind(this)} />
 						
+
+						<View style={{ backgroundColor: '#FFF7DD', marginVertical: 20, padding: 10, borderWidth: 1, borderColor: '#E0DBC0' }}>
+							
+							<Text style={{ lineHeight: 20, marginBottom: 10, fontSize: 14, color: '#666666' }}>
+								注意: 邀请完另一半，并且选择完婚期之后，请点击下方同步任务来安排我的结婚筹备日程
+							</Text>
+
+							<PureButton size={"small"} style={{ backgroundColor: 'transparent' }}>生成婚礼任务</PureButton>
+						</View>
+
+
 						<FormBlock>
-							<PureButton onPress={this.changeMarry.bind(this)}>修改</PureButton>
+							<SubmitButton onPress={this.changeMarry.bind(this)}>保存修改</SubmitButton>
 						</FormBlock>
 					</View>
 				</ScrollView>

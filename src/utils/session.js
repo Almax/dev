@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import Storage from 'react-native-storage';
 session = new Storage({
     size: 1000,    
@@ -8,7 +9,7 @@ session = new Storage({
     }
 });
 const base_request = 'http://test.marrynovo.com/api/v1/users';
-//const base_request = 'http://192.168.1.152:3000/api/v1/users';
+//const base_request = 'http://192.168.199.152:3000/api/v1/users';
 
 export async function currentUser() {
 	try {
@@ -44,7 +45,10 @@ export async function userLogin(username, password) {
 	});
 
 	user = await response.json();
-	if(!user.error) {
+	if(user.error) {
+		Alert.alert('登陆失败', user.error);
+		return null;
+	}else {
 		await session.save({
 		    key: 'loginState', 
 		    rawData: user,
@@ -104,6 +108,35 @@ export async function sendActivation(username) {
 
 export async function doActivation(data) {
 	var response = await fetch(base_request+'/bind', {
+		headers: {
+	    'Accept': 'application/json',
+	    'Content-Type': 'application/json'
+		},
+		method: 'put',
+		body: JSON.stringify({user: data})
+	});
+
+	var resp = await response.json();
+	return resp;
+}
+
+export async function findPassword(data) {
+	var response = await fetch(base_request+'/find_password', {
+		headers: {
+	    'Accept': 'application/json',
+	    'Content-Type': 'application/json'
+		},
+		method: 'post',
+		body: JSON.stringify({user: data})
+	});
+
+	var resp = await response.json();
+	console.log('resp:', resp);
+	return resp;
+}
+
+export async function findPasswordConfirm(data) {
+	var response = await fetch(base_request+'/find_password', {
 		headers: {
 	    'Accept': 'application/json',
 	    'Content-Type': 'application/json'

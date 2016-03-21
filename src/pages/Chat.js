@@ -78,10 +78,16 @@ class Chat extends React.Component {
 					</TouchableOpacity>
 
 					<View style={{ backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center', height: 70, width: 80 }}>
-								
-						<TouchableOpacity onPress={this._passRequest.bind(this, row)} style={{ backgroundColor: '#5DC01D', padding: 10, borderRadius: 5 }}>
-							<Text style={{ color: '#FFFFFF' }}>通过</Text>
-						</TouchableOpacity>
+						
+						{ row.pass ? 
+							<TouchableOpacity activeOpacity={1} style={{ backgroundColor: '#FFFFFF', padding: 10, borderRadius: 5 }}>
+								<Text style={{ fontSize: 14, color: '#999999' }}>已加入</Text>
+							</TouchableOpacity>
+							: 
+							<TouchableOpacity onPress={this._passRequest.bind(this, row)} style={{ backgroundColor: '#5DC01D', padding: 10, borderRadius: 5 }}>
+								<Text style={{ color: '#FFFFFF' }}>通过</Text>
+							</TouchableOpacity>
+						}
 
 					</View>
 				</View>

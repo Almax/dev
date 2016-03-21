@@ -14,6 +14,8 @@ import { Subtitle, BackStep, CatalogSection, PureText } from '../components/View
 import { FormBlock, FormRow, SoftInput, PureButton } from '../components/Form';
 import AccountEdit from './AccountEdit';
 import { findMoney, deleteMoney } from '../utils/syncdata';
+import { load } from '../redux/modules/money';
+
 import TimeAgo from 'react-native-timeago';
 class AccountItem extends React.Component {
 	constructor(props) {
@@ -39,6 +41,7 @@ class AccountItem extends React.Component {
 	}
 	_deleteItem() {
 		deleteMoney(this.props.marry, this.props.data);
+		this.props.load(this.props.marry);
 		this.props.navigator.pop();
 	}
 	async _reloadItem() {
@@ -46,7 +49,9 @@ class AccountItem extends React.Component {
 		this.setState({
 			...this.state,
 			...money,
-		})
+		});
+
+		this.props.load(this.props.marry);
 	}
 	render() {
 		const { navigator } = this.props;
@@ -127,6 +132,7 @@ class AccountItem extends React.Component {
 								{ expired_at ?
 									<View style={{ flexDirection: 'row' }}>
 										<Text style={{ fontSize: 16, color: '#666666' }}>{moment(expired_at).format('YYYY-MM-DD')}</Text>
+										<View style={{ width: 10 }} />
 										<TimeAgo time={expired_at} style={{ fontSize: 16, color: '#769AE4' }} />
 									</View>
 								 : 
@@ -228,8 +234,8 @@ const innerStyles = StyleSheet.create({
 });
 
 export default connect(
-	state=>({ marry: state.marry }),
+	state=>({ money: state.money, marry: state.marry }),
 	dispatch=>({
-
+		load: (marry) => dispatch(load(marry))
 	})
 )(AccountItem);

@@ -48,7 +48,7 @@ export default class SoftInput extends Component {
 	onFocus() {
 		const { scroll } = this.props;
 		this.textInput.measure((ox, oy, width, height, px, py) => {
-			scroll(py - this.state.keyboardSpace + 160)
+			scroll(py-50)
 		});
 	}
 	onBlur() {
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		height: 60,
 		fontSize: 14,
-		fontWeight: '200',
+		fontWeight: '500',
 		color: '#666666',
 		backgroundColor: '#FFFFFF',
 	}

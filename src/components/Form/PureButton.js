@@ -7,17 +7,17 @@ import React, {
 
 export default class PureButton extends Component {
 	render() {
-		const { onPress, children, size } = this.props;
+		const { onPress, children, size, style } = this.props;
 
 		if(size == 'small') {
 			return (
-				<TouchableOpacity onPress={onPress} activeOpacity={0.6} style={styles.buttonSmall}>
+				<TouchableOpacity onPress={onPress} activeOpacity={0.6} style={[styles.buttonSmall, style]}>
 					<Text style={styles.textSmall}>{children}</Text>
 				</TouchableOpacity>
 			)
 		}else {
 			return (
-				<TouchableOpacity onPress={onPress} activeOpacity={0.6} style={styles.button}>
+				<TouchableOpacity onPress={onPress} activeOpacity={0.6} style={[styles.button, style]}>
 					<Text style={styles.text}>{children}</Text>
 				</TouchableOpacity>
 			)

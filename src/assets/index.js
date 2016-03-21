@@ -1,4 +1,11 @@
 var AssetList = {
+	team: require('./team.png'),
+	account: require('./ICONS/account.png'),
+	about: require('./ICONS/about.png'),
+	wedding: require('./ICONS/wedding.png'),
+	safe: require('./ICONS/safe.png'),
+	exit: require('./ICONS/exit.png'),
+	
 	splash: require('./splash.png'),
 	home: require('./ICONS/home.png'),
 	task: require('./ICONS/task.png'),

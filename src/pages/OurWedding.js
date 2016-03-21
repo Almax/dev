@@ -59,14 +59,12 @@ class OurWedding extends React.Component {
 					<View style={{ flex: 1, margin: 10, padding: 10, borderRadius: 5, backgroundColor: '#FFFFFF', alignItems: 'center' }}>
 
 						<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
-							<Text style={{ color: '#999999', fontSize: 16 }}>婚礼名:</Text>
 							<Text style={{ color: '#E1759C', fontSize: 24, fontWeight: '600' }}>{marry_name}</Text>
 						</View>
 
 						<View style={{ height: 20 }} />
 
 						<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
-							<Text style={{ color: '#999999', fontSize: 16 }}>婚期:</Text>
 							<Text style={{ color: '#E1759C', fontSize: 24, fontWeight: '600' }}>{moment(marry_date).format("YYYY年MM月DD")}</Text>
 						</View>
 
@@ -77,15 +75,10 @@ class OurWedding extends React.Component {
 										:
 										<View style={{ borderWidth: 1, borderColor: '#EFEFEF', height: 66, width: 66, borderRadius: 33 }} resizeMode={"contain"} /> 
 								}
-								<Text>{ users[0] ? users[0].name : null }</Text>
+								<PureButton size={"small"}>{ users[0] ? users[0].name : null }</PureButton>
 							</View>
 
-							<View style={{ flexWrap: 'wrap', alignItems: 'center' }}>
-								<TouchableOpacity activeOpacity={0} onPress={this.addMiss.bind(this)}>
-									<Image source={asset.heart} style={{ width: 120 }} resizeMode={"contain"} />
-								</TouchableOpacity>
-								<Text style={{ fontSize: 24, color: '#E1759C' }}>心跳次数: {heart_beat}</Text>
-							</View>
+
 
 							<View style={{ alignItems: 'center', justifyContent: 'center' }}>
 								{ users[1] ? 
@@ -95,7 +88,7 @@ class OurWedding extends React.Component {
 								}
 								{ 
 									users[1] ? 
-									<Text>{ users[1].name }</Text> 
+									<PureButton size={"small"}>{ users[1].name }</PureButton>
 									:
 									<PureButton onPress={this._findPartner.bind(this)} size={"small"}>邀请</PureButton>
 								}

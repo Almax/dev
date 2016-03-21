@@ -200,7 +200,11 @@ class TodoAction extends React.Component {
 
 				</View>
 			</View>
-
+			
+      <View style={{ padding: 10 }}>
+				<Text style={{ fontSize: 16, color: '#666666' }}>{row.description}</Text>
+			</View>
+      
 			{ 
 				row.photo ?
           <View style={innerStyles.square}>
@@ -209,9 +213,7 @@ class TodoAction extends React.Component {
 				 : null 
 			}
 
-			<View style={{ padding: 10 }}>
-				<Text style={{ fontSize: 16, color: '#666666' }}>{row.description}</Text>
-			</View>
+
 
 		</View>
 		)
@@ -233,6 +235,7 @@ class TodoAction extends React.Component {
 			)
 		}
 	}
+  
 	render() {
 		const { todo } = this.state;
 		return (

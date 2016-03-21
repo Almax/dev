@@ -16,13 +16,14 @@ import AccountBook from './AccountBook';
 import Todo from './Todo';
 import OurWedding from './OurWedding';
 import { BackStep } from '../components/View';
-
+import { PureButton } from '../components/Form';
+import FindPartner from './FindPartner';
 class TodoList extends React.Component {
 	render() {
 		return (
 			<View style={{flex: 1, backgroundColor: '#EFEFEF'}}>
-					<BackStep navigator={this.props.navigator} title={"待办"} />
-					<Todo navigator={this.props.navigator}/>
+					<BackStep navigator={this.props.navigator} title={"待办"}></BackStep>
+					<Todo navigator={this.props.navigator} />
 			</View>
 		);
 	}
@@ -34,8 +35,10 @@ class Home extends Component {
 			mock: null
 		}
 	}
-	componentDidMount() {
-		this.props.navigator.push({ component: AccountBook });
+	_invite() {
+		this.props.navigator.push({
+			component: FindPartner
+		});
 	}
  	render() {
 		const { state, navigator } = this.props;
@@ -44,7 +47,8 @@ class Home extends Component {
 			const { marry } = this.props;
 			return (
 				<View style={{ flex: 1 }}>
-						<Swiper height={200} showsPagination={true} showsButtons={false}>
+
+						<Swiper height={180} showsPagination={true} showsButtons={false}>
 							<View style={styles.bannerWrapper}>
 								<Image source={asset.homeBanner} style={styles.bannerImage} resizeMode={"contain"} />
 							</View>
@@ -59,42 +63,45 @@ class Home extends Component {
 								</View>
 							</View>
 						</Swiper>
-						<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
-							<TouchableOpacity
-									onPress={ () => navigator.push({ component: AccountBook }) }
-									style={styles.textIcon}>
-								<Image source={asset.accountBook} style={styles.icon} />
-								<Text style={styles.text}>账本</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-									onPress={ () => navigator.push({ component: TodoList }) }
-									style={styles.textIcon}>
-								<Image source={asset.taskBook} style={styles.icon} />
-								<Text style={styles.text}>待办</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-									onPress={ () => navigator.push({ component: Story }) }
-									style={styles.textIcon}>
-								<Image source={asset.storyBook} style={styles.icon} />
-								<Text style={styles.text}>故事</Text>
-							</TouchableOpacity>
+
+						<View style={{ flex: 1 }}>
+              <View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
+                <TouchableOpacity
+                    onPress={ () => navigator.push({ component: AccountBook }) }
+                    style={styles.textIcon}>
+                  <Image source={asset.accountBook} style={styles.icon} />
+                  <Text style={styles.text}>账本</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={ () => navigator.push({ component: TodoList }) }
+                    style={styles.textIcon}>
+                  <Image source={asset.taskBook} style={styles.icon} />
+                  <Text style={styles.text}>待办</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={ () => navigator.push({ component: Story }) }
+                    style={styles.textIcon}>
+                  <Image source={asset.storyBook} style={styles.icon} />
+                  <Text style={styles.text}>故事</Text>
+                </TouchableOpacity>
+              </View>
 						</View>
-						<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
-							<TouchableOpacity
-									onPress={ () => navigator.push({ component: OurWedding }) }
-									style={styles.textIcon}>
-								<Image source={asset.marryBook} style={styles.icon} />
-								<Text style={styles.text}>婚礼</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-									activeOpacity={1}
-									style={styles.emptyIcon}>
-							</TouchableOpacity>
-							<TouchableOpacity
-									activeOpacity={1}
-									style={styles.emptyIcon}>
-							</TouchableOpacity>
-						</View>
+
+						{
+							marry.users.length == 1 ? 
+							<View style={{ backgroundColor: '#FFF7DD', margin: 10, padding: 10, borderWidth: 1, borderColor: '#E0DBC0' }}>
+								<PureButton
+									size={"small"} 
+									onPress={this._invite.bind(this)}
+									style={{ backgroundColor: 'transparent' }}>
+									你现在是单人模式，立即邀请另一半加入婚礼?
+								</PureButton>
+							</View>
+							: 
+							null
+						}
+
+						<View style={{ height: 50 }} />
 				</View>
 			);
 		}else {
@@ -117,18 +124,20 @@ const styles = StyleSheet.create({
 	},
 
 	textIcon: {
-		height: 80,
-		width: 80,
-		borderRadius: 40,
+		height: 70,
+		width: 70,
+		borderRadius: 35,
 		marginTop: 20,
 		backgroundColor: '#FFFCE6',
 		alignItems: 'center',
 		justifyContent: 'center',
+		borderWidth: 1,
+		borderColor: '#E0DBC0',
 	},
 	emptyIcon: {
-		height: 80,
-		width: 80,
-		borderRadius: 40,
+		height: 70,
+		width: 70,
+		borderRadius: 35,
 		marginTop: 20,
 		backgroundColor: '#FFFFFF',
 		alignItems: 'center',

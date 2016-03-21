@@ -122,7 +122,7 @@ class Memory extends React.Component {
 				<View style={{ height: 60, alignItems: 'center', justifyContent: 'center' }}>
 					<Text style={{ fontSize: 16, color: '#666666', fontWeight: '500' }}>我们的婚礼故事</Text>
 				</View>
-				<View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+				<View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', paddingLeft: 1, }}>
 					
 					{Object.keys(this.state.stories).map((key) => {
 						return (
@@ -134,7 +134,7 @@ class Memory extends React.Component {
 							<LazyloadImage 
 								host="lazyload-list" 
 								source={{ uri: this.state.stories[key].photo }} 
-								style={{ height: (width/4) - 2, width: (width/4) - 2, marginBottom: 2 }} />
+								style={{ marginRight: 1, height: (width/4) - 2, width: (width/4) - 2, marginBottom: 2 }} />
 						</TouchableOpacity>
 						)
 					})}

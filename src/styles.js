@@ -50,13 +50,16 @@ export default StyleSheet.create({
 		margin: 5,
 	},
 	text: {
-		fontSize: 18,
+		fontSize: 16,
 		color: '#999999',
 	},
 	helperText: {
 		fontSize: 14,
 		color: '#CCCCCC',
 		marginRight: 10,
+	},
+	input: {
+		height: 40
 	}
 	
 })

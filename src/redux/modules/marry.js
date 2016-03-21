@@ -29,7 +29,8 @@ export const hitMarry = createAction(HEART_BEAT);
 //GET 
 export function getMyMarry() {
 	return async (dispatch) => {
-		dispatch(loadMarry(await getMarry()));
+		var marry = await getMarry();
+		dispatch(loadMarry(marry));
 	}
 }
 

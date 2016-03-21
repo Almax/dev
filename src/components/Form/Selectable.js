@@ -6,11 +6,11 @@ import React, {
 
 export default class Selectable extends React.Component {
 	render() {
-		const { onPress, children, indicator } = this.props;
+		const { onPress, children, indicator, style } = this.props;
 		if(typeof children === 'string') {
 			return (
 				<TouchableOpacity onPress={onPress} style={styles.selectable}>
-						<Text style={styles.text}>{children}</Text>
+						<Text style={[styles.text, style]}>{children}</Text>
 						{indicator}
 				</TouchableOpacity>
 			);
@@ -28,7 +28,6 @@ export default class Selectable extends React.Component {
 
 const styles = StyleSheet.create({
 	selectable: {
-		flex: 1,
 		flexDirection: 'row',
 		height: 40,
 		backgroundColor: '#FFFFFF',

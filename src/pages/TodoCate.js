@@ -6,13 +6,14 @@ import React, {
 	TouchableOpacity,
 	StyleSheet,
 } from 'react-native'
+import asset from '../assets';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { init } from '../redux/modules/task';
 import CatalogSection from '../components/View/CatalogSection';
 import PureText from '../components/View/PureText';
 import TodoAction from './TodoAction';
-
+import { update } from '../redux/modules/task';
 class TodoCard extends React.Component {
 	_open(row, index) {
 		this.props.navigator.push({ 
@@ -23,41 +24,55 @@ class TodoCard extends React.Component {
 	    }
 		});
 	}
+  _finishWork(row, index) {
+    this.props.updateTask({ id: row.id, status: true, index });
+    this.props.init();
+  }
+  _cancelWork(row, index) {
+    this.props.updateTask({ id: row.id, status: false, index });
+    this.props.init();
+  }
   render() {
-    const { master, task_name, created_at } = this.props.data;
+    const { master, task_name, status, created_at } = this.props.data;
     return (
-  		<TouchableOpacity
-  			onPress={this._open.bind(this, this.props.data, this.props.rowId)}
-  			style={{ flex: 1 }}>
-
-  			<View style={styles.card}>
-      		{/*
-						<View style={{ flexDirection: 'row', marginBottom: 10 }}>
-							<Text style={{ fontSize: 12, color: '#999999' }}>提醒: </Text> 
-							<PureText color={"#769AE4"}>
-						  	{ moment(created_at).format('YYYY年MM月DD日 a') }
-							</PureText>
-						</View>
-      		*/}
- 
-
+      <View style={styles.card}>
+          
+        { status ?
+          <TouchableOpacity onPress={this._cancelWork.bind(this, this.props.data, this.props.rowId)}>
+            <Image source={asset.work_done} style={{ height: 28, width: 28, marginRight: 10 }} /> 
+          </TouchableOpacity>
+          :
+          <TouchableOpacity onPress={this._finishWork.bind(this, this.props.data, this.props.rowId)}>
+            <Image source={asset.work_in_progress} style={{ height: 28, width: 28, marginRight: 10 }} />
+          </TouchableOpacity>
+        }
+          
+        <TouchableOpacity
+          onPress={this._open.bind(this, this.props.data, this.props.rowId)}
+          style={{ flex: 1 }}>
           <Text style={styles.task}>{task_name}</Text>
-        </View>
-
-    	</TouchableOpacity>
-    )
+        </TouchableOpacity>
+      </View>
+    );
   }
 }
 
+const TodoCardRedux = connect(
+	state=>({}),
+	dispatch=>({
+    init: () => dispatch(init()),
+		updateTask: (data) => dispatch(update(data))
+	})
+)(TodoCard);
+
 const styles = StyleSheet.create({
 	card: {
+		flexDirection: 'row',
+		flexWrap: 'wrap',
+    alignItems: 'center',
 		backgroundColor: '#FFFFFF',
 		marginBottom: 1,
 		padding: 10,
-	},
-	layout: {
-		flexDirection: 'row',
-		flexWrap: 'wrap'
 	},
 	task: {
 		fontSize: 16,
@@ -100,7 +115,7 @@ class TodoCate extends React.Component {
 			});
 			this.setState({
 				dataSource: this.state.dataSource.cloneWithRowsAndSections(group)
-			})
+			});
 		}
 	}
 	_getSectionHeaderData(dataBlob, sectionID) {
@@ -108,7 +123,7 @@ class TodoCate extends React.Component {
 	}
 	_renderRow(row, sectionId, rowId) {
 		return (
-			<TodoCard navigator={this.props.navigator} data={row} rowId={rowId} />
+			<TodoCardRedux navigator={this.props.navigator} data={row} rowId={rowId} />
 		)
 	}
 	_renderSectionHeader(sectionData, sectionID) {
