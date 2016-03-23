@@ -34,6 +34,7 @@ import {
 
 import { PureButton, HideButton } from '../components/Form';
 import TodoAction from './TodoAction';
+import TodoImport from './TodoImport';
 import Loading from './Loading';
 
 class Todo extends React.Component {
@@ -44,18 +45,32 @@ class Todo extends React.Component {
     this.refCache = [];
     this.state = {
       isRefreshing: false,
-      loaded: 0,
+      loaded: false,
       dataSource: dataSource
     }
   }
   componentDidMount() {
-    this.props.init()
+    // this.props.navigator.push({
+    //   component: TodoImport
+    // });
+
+    InteractionManager.runAfterInteractions(() => {
+      if(this.props.state === 'initial state') {
+        this.props.init();
+      }else {
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(this.props.state),
+          loaded: true,
+        });
+      }
+    });
   }
   componentWillReceiveProps(nextProps) {
     if(nextProps.state !== this.props.state) {
       InteractionManager.runAfterInteractions(() => {
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(nextProps.state)
+          dataSource: this.state.dataSource.cloneWithRows(nextProps.state),
+          loaded: true,
         });
       });
     }
@@ -106,12 +121,19 @@ class Todo extends React.Component {
         </Title>
         
         { row.task_detail ?  
-            <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+            <TouchableOpacity onPress={() => 
+              this.props.navigator.push({ 
+                component: TodoAction, 
+                params: {
+                  todo: row,
+                  index: rowId 
+                } 
+              })} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
               <Image source={asset.taskDesc} />
               <View style={{ flex: 1, marginHorizontal: 5, flexWrap: 'wrap' }}>
-                <Text style={{ fontSize: 14, color: '#666666' }}>{row.task_detail}</Text> 
+                <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>{row.task_detail}</Text> 
               </View>
-            </View>
+            </TouchableOpacity>
             : 
             null 
         }
@@ -126,7 +148,9 @@ class Todo extends React.Component {
             </View>
 
             <View style={{ backgroundColor: '#F4F4F4', padding: 10, borderRadius: 5, justifyContent: 'center' }}>
-              <Text style={{fontSize: 12, color: '#666666', fontWeight: '300'}}>截止 {moment(row.end_date).format("YYYY.MM.DD")}</Text>
+              <Text style={{fontSize: 12, color: '#666666', fontWeight: '300'}}>
+                截止 {row.end_date ? moment(row.end_date).format("YYYY.MM.DD") : "未设置"}
+              </Text>
             </View>
           </View>
           )
@@ -142,33 +166,83 @@ class Todo extends React.Component {
     )
   }
 
+  _renderStarter() {
+    const { state } = this.props;
+    if(state.length===0) {
+      return (
+        <View style={{ margin: 10, padding: 10, borderRadius: 10, backgroundColor: '#FBFFDF' }}>
+
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Image source={asset.girl} style={{ height: 40, width: 40, borderRadius: 20 }} />
+              <View>
+                <Text style={{ fontSize: 16 }}>格小格</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+                  <Text style={{ fontSize: 12, color: '#769AE4' }}>1分钟前</Text>
+                </View>
+              </View>
+            </View>
+
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Image source={asset.i_41} style={{ width: 30, height: 30 }} />
+              <Text style={{ fontSize: 12, fontWeight: '400', color: '#666666' }}>新手任务</Text>
+            </TouchableOpacity>
+          </View>
+
+          <Title onPress={() => 
+              this.props.navigator.push({ 
+                component: TodoImport, 
+              })}>
+            格小格的简单婚礼筹备流程攻略
+          </Title>
+
+            <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+              <Image source={asset.taskDesc} />
+              <View style={{ flex: 1, marginHorizontal: 5, flexWrap: 'wrap' }}>
+                <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>
+                快速生成你的婚礼待办事项列表,我们将会一步步教你筹备婚礼
+                </Text> 
+              </View>
+            </View>
+
+        </View>
+      );
+    } 
+  }
+
   render() {
     const { state } = this.props;
-    if(state === 'initial state') {
+    if(state === 'initial state' || this.state.loaded === false ) {
       return (
         <Loading />
       )
     }else {
       return (
-        <ListView
-          automaticallyAdjustContentInsets={false}
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow.bind(this)}
-          renderFooter={this.renderFooter}
-          initialListSize={1}
-          pageSize={5}
-          scrollRenderAheadDistance={2}
-          removeClippedSubviews={true}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.isRefreshing}
-              onRefresh={this._onRefresh.bind(this)}
-              tintColor="#EEEEEE"
-              title="更新我的婚礼进度"
-              colors={['#F06199']}
-              progressBackgroundColor="#FFFFFF"
-            />
-          } />
+        <View style={{ flex: 1 }}>
+
+          { this._renderStarter() }
+
+          <ListView
+            automaticallyAdjustContentInsets={false}
+            dataSource={this.state.dataSource}
+            renderRow={this.renderRow.bind(this)}
+            renderFooter={this.renderFooter}
+            initialListSize={1}
+            pageSize={5}
+            scrollRenderAheadDistance={2}
+            removeClippedSubviews={true}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.isRefreshing}
+                onRefresh={this._onRefresh.bind(this)}
+                tintColor="#EEEEEE"
+                title="更新我的婚礼进度"
+                colors={['#F06199']}
+                progressBackgroundColor="#FFFFFF"
+              />
+            } />
+        </View>
       );
     }
   }

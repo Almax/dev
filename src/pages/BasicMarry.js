@@ -14,6 +14,7 @@ import React, {
 import moment from 'moment';
 import { Caption, Subtitle, HorizontalView, BackStep } from '../components/View'
 import {
+	Selectable,
 	FormRow,
 	SoftInput,
 	Label,
@@ -24,6 +25,8 @@ import {
 import asset from '../assets'
 import { connect } from 'react-redux'
 import { setMyMarry } from '../redux/modules/marry';
+import TodoImport from './TodoImport';
+import DateTimePicker from '../components/Widget/DateTimePicker';
 
 class BasicMarry extends React.Component {
 	constructor(props) {
@@ -32,6 +35,7 @@ class BasicMarry extends React.Component {
 			marry_name: "",
 			marry_date: new Date(),
 			marry_city: "",
+			showPicker: false,
 		}
 	}
 	componentDidMount() {
@@ -104,15 +108,19 @@ class BasicMarry extends React.Component {
 
 						<FormRow>
 							<Label>婚礼日期</Label>
-							<View style={{ flex: 1, height: 60, alignItems: 'flex-start', justifyContent: 'center' }}>
-								<Text style={{ fontSize: 16, color: '#666666', fontWeight: '300' }}>{moment(this.state.marry_date).format('YYYY-MM-DD')}</Text>
-							</View>
+							<Selectable
+								onPress={ () => this.setState({ showPicker: true }) }
+								indicator={<Image source={asset.arrowRight}  />}>
+								{ this.state.marry_date ? 
+										<Text>
+											{moment(this.state.marry_date).format('YYYY-MM-DD')}
+										</Text> 
+										: 
+										"选择" 
+								}
+							</Selectable>
 						</FormRow>
-						<DatePickerIOS
-						  date={new Date(this.state.marry_date)}
-						  mode="date"
-						  timeZoneOffsetInMinutes={((-1) * (new Date()).getTimezoneOffset() / 60) * 60}
-						  onDateChange={this._onDateChange.bind(this)} />
+
 						
 
 						<View style={{ backgroundColor: '#FFF7DD', marginVertical: 20, padding: 10, borderWidth: 1, borderColor: '#E0DBC0' }}>
@@ -121,7 +129,7 @@ class BasicMarry extends React.Component {
 								注意: 邀请完另一半，并且选择完婚期之后，请点击下方同步任务来安排我的结婚筹备日程
 							</Text>
 
-							<PureButton size={"small"} style={{ backgroundColor: 'transparent' }}>生成婚礼任务</PureButton>
+							<PureButton onPress={() => this.props.navigator.push({ component: TodoImport })} size={"small"} style={{ backgroundColor: 'transparent' }}>生成婚礼任务</PureButton>
 						</View>
 
 
@@ -130,6 +138,13 @@ class BasicMarry extends React.Component {
 						</FormBlock>
 					</View>
 				</ScrollView>
+
+				<DateTimePicker
+						isDate={true}
+						close={() => this.setState({ showPicker: false })}
+						isVisible={this.state.showPicker} 
+						onSelect={this._onDateChange.bind(this)} />
+
 			</View>
 		)
 	}

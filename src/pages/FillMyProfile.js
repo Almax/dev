@@ -34,7 +34,7 @@ import asset from '../assets';
 const ImagePickerManager = NativeModules.ImagePickerManager;
 import { connect } from 'react-redux';
 import { BackStep } from '../components/View';
-import { FormBlock, PureButton, SoftInput, Label, FormRow } from '../components/Form';
+import { FormBlock, SubmitButton, SoftInput, Label, FormRow } from '../components/Form';
 import Welcome from './Welcome';
 import moment from 'moment';
 import { setMyMarry } from '../redux/modules/marry';
@@ -142,10 +142,6 @@ class FillMyProfile extends React.Component {
 					bounces={true}
 					style={{ flex: 1, margin: 10, padding: 10, borderRadius: 5, backgroundColor: '#FFFFFF' }}>
 
-					<View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 30 }}>
-						<Text style={{ fontSize: 20, fontWeight: '400', color: '#666666' }}>完善我的资料</Text>
-					</View>
-
 					<FormRow>
 						<Label>我的照片</Label>
 						<TouchableOpacity 
@@ -211,10 +207,8 @@ class FillMyProfile extends React.Component {
 						: 
 							null
 					}
-
-					<FormBlock>
-						<PureButton onPress={this._welcome.bind(this)}>完成</PureButton>
-					</FormBlock>
+					<View style={{ height: 10 }}/>
+					<SubmitButton onPress={this._welcome.bind(this)}>完成</SubmitButton>
 
 				</ScrollView>	
 			</View>

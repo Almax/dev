@@ -9,7 +9,6 @@ const reducer = handleActions({
 		return action.payload
 	},
 	[PASS_MESSAGE]: (state, action) => {
-		console.warn(JSON.stringify(action.payload));
 		return state;
 	}
 }, initialState);

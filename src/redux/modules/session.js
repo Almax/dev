@@ -9,6 +9,7 @@ import {
 
 import { createAction, handleActions } from 'redux-actions'
 /* action type */
+export const RELOAD_USER = 'app/session/reload_user';
 export const LOAD_USER = 'app/session/load_user'
 export const LOGOUT_USER = 'app/session/logout_user'
 
@@ -17,6 +18,9 @@ const initialState = 'initial state'
 
 /* state reduce */
 const reducer = handleActions({
+	[RELOAD_USER]: (state, action) => {
+		return null;
+	},
 	[LOAD_USER]: (state, action) => {
 		return action.payload;
 	},
@@ -27,13 +31,19 @@ const reducer = handleActions({
 
 export default reducer
 
+export const reloadSession = createAction(RELOAD_USER);
 export const loadSession = createAction(LOAD_USER)
 export const cleanSession = createAction(LOGOUT_USER)
 
 /* 使用账号密码登陆 */
 export function login(username, password) {
 	return async (dispatch) => {
-		dispatch(loadSession(await userLogin(username, password)))
+		const user = await userLogin(username, password);
+		if(user) {
+			dispatch(loadSession(user));
+		}else {
+			dispatch(reloadSession());
+		}
 	}
 }
 

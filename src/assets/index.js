@@ -5,6 +5,11 @@ var AssetList = {
 	wedding: require('./ICONS/wedding.png'),
 	safe: require('./ICONS/safe.png'),
 	exit: require('./ICONS/exit.png'),
+	couple: require('./ICONS/couple.png'),
+	avatar: require('./img/avatar.png'),
+	placeholder: require('./img/placeholder.png'),
+	girl: require('./img/girl.png'),
+	takePhoto: require('./img/takePhoto.png'),
 	
 	splash: require('./splash.png'),
 	home: require('./ICONS/home.png'),

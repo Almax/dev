@@ -8,44 +8,58 @@ async function request(url, options) {
   if (!me) {
     return;
   }
-  const { uid, authentication_token } = me;
-  const { method, body } = options;
-  let response = {};
-  if (method === 'get') {
-    response = await fetch(url, {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-User-Id': uid,
-        'X-User-Token': authentication_token,
-      },
-      method: 'get',
-    });
-  } else {
-    response = await fetch(url, {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-User-Id': uid,
-        'X-User-Token': authentication_token,
-      },
-      method,
-      body,
-    });
-  }
-  const resp = await response.json();
-  if(resp.error) {
-    Alert.alert('请求错误','网络请求异常，请关闭重试');
-    await cleanUser();
-  }else {
-    return resp;
+
+  try {
+    const { uid, authentication_token } = me;
+    const { method, body } = options;
+    let response = {};
+    if (method === 'get') {
+      response = await fetch(url, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-User-Id': uid,
+          'X-User-Token': authentication_token,
+        },
+        method: 'get',
+      });
+    } else {
+      response = await fetch(url, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-User-Id': uid,
+          'X-User-Token': authentication_token,
+        },
+        method,
+        body,
+      });
+    }
+
+    const resp = await response.json();
+    if(resp === null) {
+      //空数据返回
+      return null;
+    }else if(resp.error) {
+      //服务器异常 清空数据
+      Alert.alert('请求错误','网络请求异常，请关闭重试');
+      await cleanUser();
+    }else {
+      //返回正常
+      return resp;
+    }
+
+  } catch(e) {
+    console.log('throw: ', e);
   }
 }
 
 export async function getMarry() {
+  console.log('now, getMarry');
   const options = { method: 'get' };
   const url = baseUrl.concat('syncdata/');
   return await request(url, options);
+
 }
 
 export async function setMarry(data) {

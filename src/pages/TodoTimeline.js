@@ -6,6 +6,7 @@ import React, {
 	ListView,
 	Dimensions,
 	PanResponder,
+	InteractionManager,
 	StyleSheet,
 } from 'react-native'
 import { connect } from 'react-redux';
@@ -149,15 +150,17 @@ class TodoTimeline extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		const { state } = nextProps;
 		if(typeof state === 'object') {
-			var data = [];
-			Object.keys(state).map((key) => {
-				if(moment(state[key].end_date).format('YYYY-MM') === moment().format('YYYY-MM')) {
-					data = data.concat([state[key]])
-				}
-			})
-			this.setState({
-				dataSource: this.state.dataSource.cloneWithRows(data)
-			})
+			InteractionManager.runAfterInteractions(() => {
+				var data = [];
+				Object.keys(state).map((key) => {
+					if(moment(state[key].end_date).format('YYYY-MM') === moment().format('YYYY-MM')) {
+						data = data.concat([state[key]])
+					}
+				})
+				this.setState({
+					dataSource: this.state.dataSource.cloneWithRows(data)
+				});
+			});
 		}
 	}
 	_onSelect(dateObject) {

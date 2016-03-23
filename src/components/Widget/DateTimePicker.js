@@ -52,6 +52,11 @@ class DateTimePicker extends React.Component {
 				<View />
 			)
 		}
+		let format = "datetime";
+		const { isDate } = this.props;
+		if(isDate) {
+			format = "date";
+		}
 
 		if(Platform.OS === 'ios') {
 			return (
@@ -67,12 +72,14 @@ class DateTimePicker extends React.Component {
 						borderColor: '#EFEFEF'
 					}}>
 					
-	        <DatePickerIOS
-	          date={this.state.date}
-	          mode="datetime"
-	          timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
-	          onDateChange={this.onDateChange.bind(this)} />
-
+					<View style={{ alignItems: 'center', justifyContent: 'center' }}>
+		        <DatePickerIOS
+		          date={this.state.date}
+		          mode={format}
+		          timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
+		          onDateChange={this.onDateChange.bind(this)} />
+	        </View>
+	        
 	        <View style={{ borderTopWidth: 1, borderTopColor: '#EEEEEE', flexDirection: 'row', height: 40, alignItems: 'center' }}>
 	        	<TouchableOpacity onPress={this._confirm.bind(this)} style={{ flex: 1, paddingVertical: 15, alignItems: 'center', justifyContent: 'center' }}>
 	        		<Text>设定日期</Text>

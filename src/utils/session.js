@@ -35,26 +35,31 @@ export async function storeUserSession(user) {
 }
 
 export async function userLogin(username, password) {
-	var response = await fetch(base_request+'/', {
-		headers: {
-	    'Accept': 'application/json',
-	    'Content-Type': 'application/json'
-		},
-		method: 'post',
-		body: JSON.stringify({username, password})
-	});
-
-	user = await response.json();
-	if(user.error) {
-		Alert.alert('登陆失败', user.error);
-		return null;
-	}else {
-		await session.save({
-		    key: 'loginState', 
-		    rawData: user,
+	try {
+		var response = await fetch(base_request+'/', {
+			headers: {
+		    'Accept': 'application/json',
+		    'Content-Type': 'application/json'
+			},
+			method: 'post',
+			body: JSON.stringify({username, password})
 		});
+
+		const user = await response.json();
+
+		if(user.error) {
+			Alert.alert('登陆失败', user.error);
+			return null;
+		}else {
+			await session.save({
+			    key: 'loginState', 
+			    rawData: user,
+			});
+		}
+		return user;
+	}catch(e) {
+		console.log('error', e);
 	}
-	return user;
 }
 
 export async function updateBasicProfile(profile) {
@@ -150,15 +155,19 @@ export async function findPasswordConfirm(data) {
 }
 
 export async function findUser(username) {
-	var response = await fetch(base_request+'/search', {
-		headers: {
-	    'Accept': 'application/json',
-	    'Content-Type': 'application/json'
-		},
-		method: 'post',
-		body: JSON.stringify({username})
-	});
+	try {
+		var response = await fetch(base_request+'/search', {
+			headers: {
+		    'Accept': 'application/json',
+		    'Content-Type': 'application/json'
+			},
+			method: 'post',
+			body: JSON.stringify({username})
+		});
 
-	var resp = await response.json();
-	return resp;
+		var resp = await response.json();
+		return resp;
+	}catch(e) {
+		console.warn('throw', e);
+	}
 }

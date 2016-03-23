@@ -121,7 +121,7 @@ class BasicProfile extends React.Component {
 				<ScrollView
 					ref={scrollView => this.scrollView = scrollView}
 					contentContainerStyle={{ padding: 10, }}
-					bounces={false}
+					bounces={true}
 					automaticallyAdjustContentInsets={false}>
 					
 					<Subtitle>基本资料</Subtitle>
@@ -178,7 +178,6 @@ class BasicProfile extends React.Component {
 							<Label>个人签名</Label>
 							<SoftInput
 								scroll={this.viewScroll.bind(this)}
-								multiline={true}
 								value={this.state.signature}
 								onChangeText={(signature) => this.setState({ signature })}
 								placeholder={"这里是我的签名"} />

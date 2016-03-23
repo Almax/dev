@@ -41,15 +41,6 @@ class FindPassword extends React.Component {
 			this.props.navigator.popToTop();
 		}
 	}
-	shouldComponentUpdate(nextProps, nextState) {
-		if(this.state.username !== nextState.username ||
-			 this.state.password !== nextState.password ||
-			 this.state.code !== nextState.code
-		) {
-			return false;
-		}
-		return true;
-	}
   setInterval() {
     this.intervals.map(clearInterval);
     this.intervals.push(setInterval.apply(null, arguments));
@@ -117,10 +108,16 @@ class FindPassword extends React.Component {
 		this.scrollView.scrollTo({ y: offset });
 	}
 	render() {
+		let title = "";
+		if(typeof this.props.state === 'object') {
+			title = "修改密码";
+		}else {
+			title = "找回密码";
+		}
 		return (
 			<View style={styles.container}>
 
-				<BackStep navigator={this.props.navigator} title={"找回密码"} />
+				<BackStep navigator={this.props.navigator} title={title} />
 				<ScrollView
 					ref={scrollView => this.scrollView = scrollView}
 					bounces={false}
@@ -175,9 +172,14 @@ class FindPassword extends React.Component {
             <View style={{ height: 20 }} />
 					  <SubmitButton onPress={this._signup.bind(this)}>修改密码</SubmitButton>
 
-						<FormBlock>
-							<Link onPress={() => { this.props.navigator.pop() }}>使用已有账号登录</Link>
-						</FormBlock>
+					  { title === "找回密码" ? 
+							<FormBlock>
+								<Link onPress={() => { this.props.navigator.pop() }}>使用已有账号登录</Link>
+							</FormBlock>
+					  	: 
+							null
+					  }
+
 				</ScrollView>
 			</View>
 		);

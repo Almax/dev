@@ -3,20 +3,20 @@ import React, {
 	View,
 	Text,
 	Image,
+	Dimensions,
 } from 'react-native';
+const { width, height } = Dimensions.get('window');
 import { PureButton } from '../components/Form';
 import { BackStep } from '../components/View';
 class StoryView extends React.Component {
 	render() {
-		const { story } = this.props;
+		const { uri } = this.props;
 		return (
 		<View style={{ flex: 1, backgroundColor: '#000000' }}>
 			<BackStep navigator={this.props.navigator}/>
-			<ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center', backgroundColor: '#000000' }}>
 
-				<Image source={{ uri: story.photo }} resizeMode={"contain"} style={{ height: 500 }} />
+				<Image source={{ uri: uri }} resizeMode={"contain"} style={{ flex: 1, width: width, height: height }} />
 
-			</ScrollView>
 		</View>
 		);
 	}

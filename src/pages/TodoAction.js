@@ -60,7 +60,7 @@ import Loading from './Loading';
 import { connect } from 'react-redux';
 import { update } from '../redux/modules/task';
 import Catalog from '../components/View/Catalog';
-
+import ImageView from './ImageView';
 class TodoAction extends React.Component {
 	constructor(props) {
 		super(props)
@@ -78,7 +78,8 @@ class TodoAction extends React.Component {
 			text: null,
 			images: [],
 			isLoaded: false,
-			remarks: remarks
+			remarks: remarks,
+			addDone: true,
 		}
 	}
 	componentDidMount() {
@@ -159,9 +160,11 @@ class TodoAction extends React.Component {
 		this.scrollView.scrollTo({ x:0 ,y: offset, animated: true })
 	}
 	async _submit() {
+		this.setState({ addDone: false });
 		const { todo } = this.state;
 		var photos = [];
 		var i = 0;
+		
 		for(; i < this.state.images.length; i++) {
 			photos.push(this.state.images[i].uri)
 		}
@@ -169,11 +172,13 @@ class TodoAction extends React.Component {
 			text: this.state.text,
 			photos: photos
 		});
+
 		this.setState({
 			text: null,
 			images: []
 		})
 		this._reload();
+		this.setState({ addDone: true });
 	}
 	async _reload() {
 		const { todo } = this.state;
@@ -185,8 +190,8 @@ class TodoAction extends React.Component {
 	}
 	renderRow(row, sid, rid) {
 		return (
-		<View style={{ borderTopWidth: 1, borderTopColor: '#EEEEEE' }}>
-			<View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10 }}>
+		<View style={{ backgroundColor: '#EFEFEF', marginBottom: 10, padding: 10 }}>
+			<View style={{ flexDirection: 'row', alignItems: 'center'}}>
 				<Image source={{ uri: row.user.photo }} style={{ marginRight: 10, height: 50, width: 50, borderRadius: 25 }} />
 				<View>
 					<Text style={{ fontSize: 16, color: '#666666', fontWeight: '500' }}>{row.user.name}</Text>
@@ -200,20 +205,21 @@ class TodoAction extends React.Component {
 
 				</View>
 			</View>
-			
-      <View style={{ padding: 10 }}>
-				<Text style={{ fontSize: 16, color: '#666666' }}>{row.description}</Text>
-			</View>
+				
+			{ row.description ? 
+	      <View style={{ paddingVertical: 10 }}>
+					<Text style={{ fontSize: 16, color: '#666666' }}>{row.description}</Text>
+				</View>
+				: null 
+			}
       
 			{ 
 				row.photo ?
-          <View style={innerStyles.square}>
-            <Image source={{ uri: row.photo }} style={{ flex: 1, height: 200, borderRadius: 5 }} resizeMode={"contain"} />
-          </View>
+				<TouchableOpacity style={{ marginTop: 10 }} onPress={() => this.props.navigator.push({ component: ImageView, params: { uri: row.photo } })}>
+          <Image source={{ uri: row.photo }} style={{ width: width / 2, height:  width / 2, borderRadius: 5 }} resizeMode={"cover"} />
+				</TouchableOpacity>
 				 : null 
 			}
-
-
 
 		</View>
 		)
@@ -222,12 +228,14 @@ class TodoAction extends React.Component {
 	renderRemark() {
 		if(this.state.isLoaded) {
 			return (
+			<View style={{ backgroundColor: '#FFFFFF' }}>
 				<ListView
 					initialListSize={1}
 					pageSize={3}
 					removeClippedSubviews={true}
 					renderRow={this.renderRow.bind(this)}
 					dataSource={this.state.remarks} />
+			</View>
 			)
 		}else {
 			return (
@@ -330,9 +338,14 @@ class TodoAction extends React.Component {
 
 
 		  			<FormBlock>
+
+		  				{ this.state.addDone ? 
 		  				<PureButton onPress={this._submit.bind(this)}>
 		  					添加备忘
 		  				</PureButton>
+		  				 : 
+		  				 <Loading /> 
+		  				}
 		  			</FormBlock>
 
 		  			{this.renderRemark()}
@@ -370,7 +383,5 @@ const innerStyles = {
 
   col: {
     flex: 1,
-  },
-  square: {
   },
 }

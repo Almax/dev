@@ -39,6 +39,8 @@ class Splash extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.state !== 'initial state' && nextProps.state != null) {
 			this.props.loadMessage();
+		} else {
+			this.props.navigator.popToTop();
 		}
 	}
 

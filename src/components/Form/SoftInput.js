@@ -7,14 +7,17 @@ import React, {
 	View,
 	Text,
 	DeviceEventEmitter,
+	Dimensions,
 	StyleSheet,
 } from 'react-native';
+const { height, width } = Dimensions.get('window');
 
 export default class SoftInput extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 		    keyboardSpace: 0,
+		    offset: 0,
 		};
 		this.updateKeyboardSpace = this.updateKeyboardSpace.bind(this);
 		this.resetKeyboardSpace = this.resetKeyboardSpace.bind(this);
@@ -48,7 +51,11 @@ export default class SoftInput extends Component {
 	onFocus() {
 		const { scroll } = this.props;
 		this.textInput.measure((ox, oy, width, height, px, py) => {
-			scroll(py-50)
+			const offset = py + 120 - this.state.keyboardSpace;
+			if(offset > 0) {
+				this.setState({ offset });
+				scroll(offset);
+			}
 		});
 	}
 	onBlur() {
@@ -80,8 +87,8 @@ export default class SoftInput extends Component {
 					keyboardType={keyboardType}
 					onChangeText={onChangeText}
 					placeholder={placeholder}
-					placeholderTextColor={"#CCCCCC"}
-					underlineColorAndroid={"transparent"}/>
+					placeholderTextColor={'#CCCCCC'}
+					underlineColorAndroid={'transparent'} />
 			)
 		}else if(Platform.OS == 'ios') {
 			return (

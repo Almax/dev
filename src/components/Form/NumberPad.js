@@ -37,6 +37,7 @@ class Signal extends React.Component {
 class NumberPad extends React.Component {
 	constructor(props){
 		super(props);
+
 		this.state = {
 			stack: [],
 			isVisible: true,
@@ -47,13 +48,13 @@ class NumberPad extends React.Component {
 		//this.view.bounceInUp(600);
 	}
 	async componentWillReceiveProps(nextProps) {
-		if(this.state.isVisible === nextProps.isVisible) {
+		if(nextProps.isVisible === this.props.isVisible) {
 			return ;
-		}else if(nextProps.isVisible === true) {
-			this.setState({ isVisible: nextProps.isVisible });
+		}
+
+		if(nextProps.isVisible === true) {
 			await this.view.bounceInUp(600);
 		}else if(nextProps.isVisible === false) {
-			this.setState({ isVisible: nextProps.isVisible });
 			await this.view.fadeOutDown(200);
 		}
 	}

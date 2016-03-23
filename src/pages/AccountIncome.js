@@ -14,6 +14,7 @@ import { CatalogSection, AccountCatalog, Caption, Subtitle, HorizontalView, Back
 import { test } from '../redux/modules/money';
 import NumberPad from '../components/Form/NumberPad';
 import AccountCatalogView from './AccountCatalog';
+import { load } from '../redux/modules/money';
 import { createMoney, updateMoney } from '../utils/syncdata';
 class Income extends React.Component {
 	constructor(props) {
@@ -27,7 +28,7 @@ class Income extends React.Component {
 		}
 	}
 	componentDidMount() {
-		this.scrollView.scrollResponderHandleTouchStart = (e) => {
+		this.scrollView.scrollResponderIsAnimating = (e) => {
 			this.setState({
 				isVisible: false
 			});
@@ -68,6 +69,9 @@ class Income extends React.Component {
 		};
 		//console.warn(JSON.stringify(cost));
 		await createMoney(this.props.marry, cost);
+		
+		this.props.load(this.props.marry);
+
 		this.setState({
 			success: true
 		});
@@ -173,5 +177,7 @@ const innerStyles = StyleSheet.create({
 
 export default connect(
 	state=>({ marry: state.marry }),
-	dispatch=>({})
+	dispatch=>({
+		load: (marry) => dispatch(load(marry))
+	})
 )(Income);

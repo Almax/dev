@@ -7,6 +7,7 @@ import React, {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { BackStep, Subtitle } from '../components/View';
+import FindPassword from './FindPassword';
 import {
 	FormRow,
 	SoftInput,
@@ -32,8 +33,19 @@ class BasicSecurity extends React.Component {
 							</TouchableOpacity>
 						</FormRow>
 
+						<FormRow>
+							<Label>密码</Label>
+							<TouchableOpacity 
+									onPress={() => this.props.navigator.push({ component: FindPassword })} 
+									style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-end', height: 40 }}>
+								
+								<Text style={styles.text}> 修改密码 </Text>
+								
+							</TouchableOpacity>
+						</FormRow>
+
 						<View style={{ height: 100, alignItems: 'center', justifyContent: 'center' }}>
-							<Text>账号已经激活</Text>
+							<Text style={{ fontSize: 16 }}>账号已经激活</Text>
 						</View>
 
 					</View>

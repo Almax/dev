@@ -15,6 +15,7 @@ import { CatalogSection, Caption, Subtitle, HorizontalView, BackStep, SegmentedC
 import { test } from '../redux/modules/money';
 import NumberPad from '../components/Form/NumberPad';
 import TodoCatalog from './TodoCatalog';
+import { load } from '../redux/modules/money';
 import { createMoney, updateMoney } from '../utils/syncdata';
 import DateTimePicker from '../components/Widget/DateTimePicker'
 
@@ -28,12 +29,12 @@ class Cost extends React.Component {
 			value: 0,
 			catalog_id: 0,
 			description: null,
-			isVisible: false,
+			isVisible: true,
 			expired_at: new Date(),
 		}
 	}
 	componentDidMount() {
-		this.scrollView.scrollResponderHandleTouchStart = (e) => {
+		this.scrollView.scrollResponderIsAnimating = (e) => {
 			this.setState({
 				isVisible: false,
 				showPicker: false,
@@ -68,7 +69,9 @@ class Cost extends React.Component {
 		});
 	}
 	_toggleNumberPad() {
-		this.setState({ isVisible: !this.state.isVisible });
+		this.setState({ 
+			isVisible: !this.state.isVisible
+		});
 	}
 	async _submit() {
 		const cost = {
@@ -80,6 +83,9 @@ class Cost extends React.Component {
 			expired_at: this.state.expired_at,
 		};
 		await createMoney(this.props.marry, cost);
+		
+		this.props.load(this.props.marry);
+
 		this.setState({
 			success: true
 		});
@@ -237,5 +243,7 @@ const innerStyles = StyleSheet.create({
 
 export default connect(
 	state=>({ marry: state.marry }),
-	dispatch=>({})
+	dispatch=>({
+		load: (marry) => dispatch(load(marry))
+	})
 )(Cost);

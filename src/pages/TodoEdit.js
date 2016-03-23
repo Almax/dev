@@ -21,6 +21,8 @@ import {
   BackStep,
 } from '../components/View';
 import { update } from '../redux/modules/task';
+import DateTimePicker from '../components/Widget/DateTimePicker'
+
 class TodoEdit extends React.Component {
 	constructor(props) {
 		super(props);
@@ -84,27 +86,24 @@ class TodoEdit extends React.Component {
 					
 					<FormRow style={{ marginVertical: 10 }}>
 						<Label>截止日期</Label>
-						<Selectable onPress={() => this.setState({ showPicker: !this.state.showPicker })}>
-							{ todo.end_date ? moment(todo.end_date).format('YYYY-MM-DD hh:mm:ss') : "选择日期"  }
+						<Selectable onPress={() => this.setState({ showPicker: true})}>
+							{ todo.end_date ? moment(todo.end_date).format('YYYY年MM月DD日 a hh:mm:ss') : "选择日期"  }
 						</Selectable>
+
+
+
 					</FormRow>
-
-					{ 
-						this.state.showPicker ? 
-		        <DatePickerIOS
-		          date={this.state.end_date ? new Date(this.state.end_date) : new Date()}
-		          mode="datetime"
-		          timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
-		          onDateChange={this._onSelect.bind(this)} />
-						:
-						null
-					}
-
 					<FormBlock>
 						<PureButton onPress={this._save.bind(this)}>保存</PureButton>
 					</FormBlock>
 
 				</ScrollView>
+					
+
+				<DateTimePicker 
+						close={() => this.setState({ showPicker: false })}
+						isVisible={this.state.showPicker} 
+						onSelect={this._onSelect.bind(this)} />
 
 			</View>
 		);

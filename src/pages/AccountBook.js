@@ -15,6 +15,8 @@ import { load } from '../redux/modules/money';
 import AccountBudget from './AccountBudget';
 import AccountOut from './AccountOut';
 import AccountItem from './AccountItem';
+import ActionButton from 'react-native-action-button';
+import AccountStore from './AccountStore';
 
 class AccountBook extends React.Component {
 	constructor(props) {
@@ -34,7 +36,41 @@ class AccountBook extends React.Component {
 	}
 	async componentDidMount() {
 		InteractionManager.runAfterInteractions(() => {
-			this.props.load(this.props.marry);
+			const { money } = this.props;
+			if(money === 'initial state') {
+				this.props.load(this.props.marry);
+			}else {
+				var ds = {};
+				var { budget, cost } = this.state;
+				Object.keys(money).map((key) => {
+					var value = parseFloat(money[key].value);
+					if(money[key].compute_sign === 1) {
+						budget=budget+value;
+					}else if(money[key].compute_sign === -1) {
+						cost=cost+value;
+					}
+					this.setState({
+						budget,
+						cost
+					});
+					if(money[key].compute_sign === 1) {
+						if(ds[money[key].catalog_id+1000]) {
+							ds[money[key].catalog_id+1000].push(money[key]);
+						}else {
+							ds[money[key].catalog_id+1000] = [money[key]];
+						}
+					}else {
+						if(ds[money[key].catalog_id]) {
+							ds[money[key].catalog_id].push(money[key]);
+						}else {
+							ds[money[key].catalog_id] = [money[key]];
+						}
+					}
+				});
+				this.setState({
+					dataSource: this.state.dataSource.cloneWithRowsAndSections(ds)
+				});
+			}
 		});
 	}
 	componentWillReceiveProps(nextProps) {
@@ -51,25 +87,19 @@ class AccountBook extends React.Component {
 				budget,
 				cost
 			});
-
 			if(nextProps.money[key].compute_sign === 1) {
-
 				if(ds[nextProps.money[key].catalog_id+1000]) {
 					ds[nextProps.money[key].catalog_id+1000].push(nextProps.money[key]);
 				}else {
 					ds[nextProps.money[key].catalog_id+1000] = [nextProps.money[key]];
 				}
-
 			}else {
-
 				if(ds[nextProps.money[key].catalog_id]) {
 					ds[nextProps.money[key].catalog_id].push(nextProps.money[key]);
 				}else {
 					ds[nextProps.money[key].catalog_id] = [nextProps.money[key]];
 				}
-
 			}
-
 		});
 		this.setState({
 			dataSource: this.state.dataSource.cloneWithRowsAndSections(ds)
@@ -182,6 +212,10 @@ class AccountBook extends React.Component {
             />
           } />
 
+        <ActionButton 
+        	position={"center"}
+        	onPress={() => this.props.navigator.push({ component: AccountStore })}
+        	buttonColor="#F06199" />
 
 			</View>
 		)

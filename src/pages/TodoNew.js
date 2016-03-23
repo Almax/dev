@@ -24,7 +24,7 @@ import AddDate from './AddDate';
 import AddPhoto from './AddPhoto';
 import AddCategories from './AddCategories';
 import data from './mock.json';
-
+import DateTimePicker from '../components/Widget/DateTimePicker';
 import { create, load } from '../redux/modules/task';
 
 class TodoNew extends React.Component {
@@ -35,6 +35,7 @@ class TodoNew extends React.Component {
 			task_name: null,
 			catalog_id: null,
 			end_date: null,
+			showPicker: false,
 		};
 	}
 	viewScroll(offset) {
@@ -42,6 +43,9 @@ class TodoNew extends React.Component {
 	}
 	setValue(key, value) {
 		this.setState({key: value});
+	}
+	_onSelect(date) {
+		this.setState({end_date: date});
 	}
 	nextStep() {
     if(this.state.task_name && this.state.end_date && this.state.catalog_id) {
@@ -134,18 +138,11 @@ class TodoNew extends React.Component {
 
 					<Subtitle>提醒日期</Subtitle>
 					<Selectable
-						onPress={() => this.props.navigator.push({ 
-							component: AddDate,
-							params: {
-								getResult: (value) => {
-									this.setState({ end_date: value });
-								},
-							},
-						})}
+						onPress={ () => this.setState({ showPicker: true }) }
 						indicator={<Image source={asset.arrowRight}  />}>
 						{ this.state.end_date ? 
 								<Text style={innerStyles.date}>
-									{moment(this.state.end_date).format("YYYY年MM月DD日")}
+									{moment(this.state.end_date).format("YYYY年MM月DD日 a hh:mm:ss")}
 								</Text> 
 								: 
 								"选择" 
@@ -158,6 +155,12 @@ class TodoNew extends React.Component {
 						<SubmitButton onPress={this.nextStep.bind(this)}>添加任务</SubmitButton>
 					</FormBlock>
 				</ScrollView>
+
+				<DateTimePicker 
+						close={() => this.setState({ showPicker: false })}
+						isVisible={this.state.showPicker} 
+						onSelect={this._onSelect.bind(this)} />
+
 			</View>
 			);
 		}
@@ -174,7 +177,6 @@ const innerStyles = StyleSheet.create({
 		height: 100,
 	},
 	date: {
-		marginHorizontal: 15,
 		fontSize: 16, 
 		fontWeight: '500', 
 		color: '#666666',

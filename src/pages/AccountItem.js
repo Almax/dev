@@ -39,8 +39,8 @@ class AccountItem extends React.Component {
 			}
 		});
 	}
-	_deleteItem() {
-		deleteMoney(this.props.marry, this.props.data);
+	async _deleteItem() {
+		await deleteMoney(this.props.marry, this.props.data);
 		this.props.load(this.props.marry);
 		this.props.navigator.pop();
 	}

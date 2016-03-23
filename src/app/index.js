@@ -24,7 +24,7 @@ class App extends React.Component {
     }
   }
   componentDidMount() {
-    codePush.sync();
+    //codePush.sync();
   }
   onBackAndroid = () => {
     const nav = this.navigator;

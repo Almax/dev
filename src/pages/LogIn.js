@@ -41,7 +41,7 @@ class Login extends React.Component {
 		// })
 	}
 	componentWillReceiveProps(nextProps) {
-		const user = nextProps.state;
+		
 	}
 	async _loginUser() {
 		const { loginUser } = this.props;

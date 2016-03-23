@@ -8,6 +8,7 @@ import React, {
 } from 'react-native';
 import { connect } from 'react-redux';
 import asset from '../assets';
+import globalStyles from '../styles';
 import { setMyMarry } from '../redux/modules/marry';
 import moment from 'moment';
 import Swiper from 'react-native-swiper2';
@@ -18,12 +19,21 @@ import OurWedding from './OurWedding';
 import { BackStep } from '../components/View';
 import { PureButton } from '../components/Form';
 import FindPartner from './FindPartner';
+import TodoNew from './TodoNew';
+import ActionButton from 'react-native-action-button';
+
 class TodoList extends React.Component {
 	render() {
 		return (
 			<View style={{flex: 1, backgroundColor: '#EFEFEF'}}>
 					<BackStep navigator={this.props.navigator} title={"待办"}></BackStep>
 					<Todo navigator={this.props.navigator} />
+
+
+	        <ActionButton 
+	        	position={"center"}
+	        	onPress={() => this.props.navigator.push({ component: TodoNew })}
+	        	buttonColor="#F06199" />
 			</View>
 		);
 	}
@@ -35,6 +45,11 @@ class Home extends Component {
 			mock: null
 		}
 	}
+	componentDidMount() {
+		this.props.navigator.push({
+			component: TodoList
+		})
+	}
 	_invite() {
 		this.props.navigator.push({
 			component: FindPartner
@@ -42,7 +57,6 @@ class Home extends Component {
 	}
  	render() {
 		const { state, navigator } = this.props;
-
 		if(this.props.marry) {
 			const { marry } = this.props;
 			return (
@@ -89,13 +103,13 @@ class Home extends Component {
 
 						{
 							marry.users.length == 1 ? 
-							<View style={{ backgroundColor: '#FFF7DD', margin: 10, padding: 10, borderWidth: 1, borderColor: '#E0DBC0' }}>
-								<PureButton
-									size={"small"} 
-									onPress={this._invite.bind(this)}
-									style={{ backgroundColor: 'transparent' }}>
-									你现在是单人模式，立即邀请另一半加入婚礼?
-								</PureButton>
+							<View style={[{ flexDirection: 'row', height: 80, alignItems: 'center' }, globalStyles.yellow_box]}>
+								<Image source={asset.couple} style={{ height: 40 }} resizeMode={"contain"} />
+								<View style={{ flex: 1, paddingHorizontal: 10 }}>
+									<TouchableOpacity onPress={this._invite.bind(this)}><Text style={{ fontSize: 14, color: '#666666' }}>
+										你现在是单人模式, 邀请另一半加入婚礼, 双人模式 筹备婚礼更简单哦~ <Text style={{ fontWeight: '500' }}>点我邀请</Text></Text>
+									</TouchableOpacity>
+								</View>
 							</View>
 							: 
 							null
