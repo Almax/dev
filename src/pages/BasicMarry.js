@@ -109,20 +109,15 @@ class BasicMarry extends React.Component {
 						<FormRow>
 							<Label>婚礼日期</Label>
 							<Selectable
-								onPress={ () => this.setState({ showPicker: true }) }
-								indicator={<Image source={asset.arrowRight}  />}>
+								onPress={ () => this.setState({ showPicker: true }) } >
 								{ this.state.marry_date ? 
-										<Text>
-											{moment(this.state.marry_date).format('YYYY-MM-DD')}
-										</Text> 
+										moment(this.state.marry_date).format('YYYY-MM-DD')
 										: 
 										"选择" 
 								}
 							</Selectable>
 						</FormRow>
-
 						
-
 						<View style={{ backgroundColor: '#FFF7DD', marginVertical: 20, padding: 10, borderWidth: 1, borderColor: '#E0DBC0' }}>
 							
 							<Text style={{ lineHeight: 20, marginBottom: 10, fontSize: 14, color: '#666666' }}>
@@ -133,9 +128,9 @@ class BasicMarry extends React.Component {
 						</View>
 
 
-						<FormBlock>
-							<SubmitButton onPress={this.changeMarry.bind(this)}>保存修改</SubmitButton>
-						</FormBlock>
+						
+						<SubmitButton onPress={this.changeMarry.bind(this)}>保存修改</SubmitButton>
+						
 					</View>
 				</ScrollView>
 

@@ -5,19 +5,16 @@ export default StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#FFFFFF'
 	},
-
 	centerLayout: {
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
 		backgroundColor: '#FFFFFF'
 	},
-
 	wall: {
 		backgroundColor: '#FFFFFF',
 		marginTop: 20
 	},
-
 	bannerWrapper: {
 		alignItems: 'center',
 		justifyContent: 'center',
@@ -27,14 +24,13 @@ export default StyleSheet.create({
 	bannerImage: {
 		height: 100
 	},
-
 	textIcon: {
+		backgroundColor: '#FFFFFF',
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		borderRadius: 5,
-		borderBottomColor: '#EEEEEE',
-		borderBottomWidth: 1
+		marginBottom: 1,
 	},
 	textWrapper: {
 		height: 50,

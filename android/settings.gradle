@@ -3,3 +3,15 @@ rootProject.name = 'MarryGuard_v2'
 include ':app'
 include ':react-native-image-picker'
 project(':react-native-image-picker').projectDir = new File(settingsDir, '../node_modules/react-native-image-picker/android')
+
+include ':app', ':react-native-code-push'
+project(':react-native-code-push').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-code-push/android/app')
+
+include ':react-native-android-badge'
+project(':react-native-android-badge').projectDir = new File(settingsDir, '../node_modules/react-native-android-badge/android')
+
+include ':react-native-system-notification'
+project(':react-native-system-notification').projectDir = new File(settingsDir, '../node_modules/react-native-system-notification/android')
+
+include ':react-native-splashscreen'
+project(':react-native-splashscreen').projectDir = new File(rootProject.projectDir, '../node_modules/@remobile/react-native-splashscreen/android')

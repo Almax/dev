@@ -18,17 +18,10 @@ import OurWedding from './OurWedding';
 import Add from './Add';
 import { BackStep } from '../components/View';
 import ActionButton from 'react-native-action-button';
+import Schedule from './Schedule';
+import Chat from './Chat';
+import More from './More';
 
-class TodoList extends React.Component {
-	render() {
-		return (
-			<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-					<BackStep navigator={this.props.navigator} />
-					<Todo navigator={this.props.navigator} />
-			</View>
-		);
-	}
-}
 class Home extends Component {
 	constructor(props) {
 		super(props);
@@ -36,17 +29,15 @@ class Home extends Component {
 			mock: null
 		}
 	}
-	// componentDidMount() {
-	// }
-	// componentWillReceiveProps(nextProps) {
-	// }
+	componentDidMount() {
+	}
  	render() {
 		const { state, navigator } = this.props;
 
 		if(this.props.marry) {
 			const { marry } = this.props;
 			return (
-				<View style={{ flex: 1 }}>
+				<View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
 						<Swiper height={200} showsPagination={true} showsButtons={false}>
 							<View style={styles.bannerWrapper}>
 								<Image source={asset.homeBanner} style={styles.bannerImage} resizeMode={"contain"} />
@@ -70,7 +61,7 @@ class Home extends Component {
 								<Text style={styles.text}>账本</Text>
 							</TouchableOpacity>
 							<TouchableOpacity
-									onPress={ () => navigator.push({ component: TodoList }) }
+									onPress={ () => navigator.push({ component: Schedule }) }
 									style={styles.textIcon}>
 								<Image source={asset.taskBook} style={styles.icon} />
 								<Text style={styles.text}>待办</Text>
@@ -90,16 +81,20 @@ class Home extends Component {
 								<Text style={styles.text}>婚礼</Text>
 							</TouchableOpacity>
 							<TouchableOpacity
-									activeOpacity={1}
-									style={styles.emptyIcon}>
+									onPress={ () => navigator.push({ component: Chat }) }
+									style={styles.textIcon}>
+								<Image source={asset.msg} style={styles.icon} />
+								<Text style={styles.text}>聊天</Text>
 							</TouchableOpacity>
 							<TouchableOpacity
-									activeOpacity={1}
-									style={styles.emptyIcon}>
+									onPress={ () => navigator.push({ component: More }) }
+									style={styles.textIcon}>
+								<Image source={asset.configure} style={styles.icon} />
+								<Text style={styles.text}>设置</Text>
 							</TouchableOpacity>
 						</View>
 
-        <ActionButton onPress={() => this.props.navigator.push({ component: Add })} buttonColor="rgba(231,76,60,1)">
+        <ActionButton onPress={() => this.props.navigator.push({ component: Add })} buttonColor="#F06199">
         </ActionButton>
 
 				</View>
@@ -124,18 +119,20 @@ const styles = StyleSheet.create({
 	},
 
 	textIcon: {
-		height: 80,
-		width: 80,
-		borderRadius: 40,
+		height: 70,
+		width: 70,
+		borderRadius: 35,
 		marginTop: 20,
 		backgroundColor: '#FFFCE6',
 		alignItems: 'center',
 		justifyContent: 'center',
+		borderWidth: 1,
+		borderColor: '#E0DBC0',
 	},
 	emptyIcon: {
-		height: 80,
-		width: 80,
-		borderRadius: 40,
+		height: 70,
+		width: 70,
+		borderRadius: 35,
 		marginTop: 20,
 		backgroundColor: '#FFFFFF',
 		alignItems: 'center',

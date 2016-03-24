@@ -5,6 +5,9 @@ import React, {
 	Switch,
 	TouchableOpacity,
 	Alert,
+	DatePickerAndroid,
+	TimePickerAndroid,
+	Platform,
 	StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -116,12 +119,42 @@ class Cost extends React.Component {
 			description: null,
 			showPicker: false,
 			isVisible: false,
+			expired_at: new Date(),
 		});
 	}
-	_showPicker() {
-		this.setState({
-			showPicker: true
-		})
+	async _showPicker() {
+		if (Platform.OS === 'android') {
+			try {
+			  const {action, year, month, day} = await DatePickerAndroid.open({
+			    date: this.state.expired_at ? new Date(this.state.expired_at) : new Date()
+			  });
+			  if (action !== DatePickerAndroid.dismissedAction) {
+				  const {action, hour, minute} = await TimePickerAndroid.open({
+				    hour: parseInt(moment().format("hh")),
+				    minute: parseInt(moment().format("mm")),
+				    is24Hour: false,
+				  });
+			  	if (month < 10) { month = `0${month + 1}`; } else { month = `${month + 1}`; }
+			  	if (day < 10) { day = `0${day}`; }
+
+				  if (action !== DatePickerAndroid.dismissedAction) {
+				  	if (hour < 10) { hour = `0${hour}`; }
+				  	if (minute < 10) { hour = `0${hour}`; }
+				  	const date = `${year}/${month}/${day} ${hour}:${minute}:00`;
+				  	this.setState({ expired_at: new Date(date) });
+				  }else {
+				  	const date = `${year}/${month}/${day}`;
+				  	this.setState({ expired_at: new Date(date) });
+				  }
+			  }
+			} catch ({code, message}) {
+			  console.warn('Cannot open date picker', message);
+			}
+		} else if (Platform.OS === 'ios') {
+			this.setState({
+				showPicker: true
+			});
+		}
 	}
 	_back() {
 		this.props.navigator.pop();

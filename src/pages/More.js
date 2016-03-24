@@ -49,12 +49,13 @@ class More extends React.Component {
 
 						</View>
 				</Image>
-				<ScrollView>
+				<ScrollView contentContainerStyle={{ backgroundColor: '#EFEFEF' }}>
+					
 					<View style={{ height: 40, justifyContent: 'center', paddingHorizontal: 10 }}>
 						<Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>资料</Text>
 					</View>
 
-					<View style={{ backgroundColor: '#FFFFFF' }}>
+
 
 					<TouchableOpacity
 							onPress={ () => navigator.push({ component: BasicMarry }) }
@@ -95,7 +96,7 @@ class More extends React.Component {
 						</View>
 						<Text style={styles.helperText}>教你怎么找到我们</Text>
 					</TouchableOpacity>
-					</View>
+	
 
 					<View style={{ height: 40, justifyContent: 'center', paddingHorizontal: 10 }}></View>
 

@@ -9,6 +9,7 @@
 
 #import "AppDelegate.h"
 #import "CodePush.h"
+#import "RCTSplashScreen.h"
 #import "RCTRootView.h"
 
 @implementation AppDelegate
@@ -50,7 +51,7 @@
                                                       moduleName:@"MarryGuard_v2"
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
-
+  [RCTSplashScreen show:rootView];
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;

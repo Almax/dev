@@ -3,6 +3,7 @@ import React, {
 	Text,
 	DatePickerIOS,
 	TouchableOpacity,
+	DatePickerAndroid,
 	Platform
 } from 'react-native';
 import Animatable from 'react-native-animatable';
@@ -17,7 +18,9 @@ class DateTimePicker extends React.Component {
       timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60
 		}
 	}
+	componentDidMount() {
 
+	}
 	onDateChange(date) {
 		this.setState({
 			date

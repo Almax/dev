@@ -1,5 +1,6 @@
 import React, {
 	TouchableOpacity,
+	View,
 	Text,
 	StyleSheet,
 } from 'react-native';
@@ -9,17 +10,21 @@ export default class Selectable extends React.Component {
 		const { onPress, children, indicator, style } = this.props;
 		if(typeof children === 'string') {
 			return (
+			<View style={{ height: 40 }}>
 				<TouchableOpacity onPress={onPress} style={styles.selectable}>
 						<Text style={[styles.text, style]}>{children}</Text>
 						{indicator}
 				</TouchableOpacity>
+			</View>
 			);
 		}else {
 			return (
+			<View style={{ height: 40 }}>
 				<TouchableOpacity onPress={onPress} style={styles.selectable}>
 						{children}
 						{indicator}
 				</TouchableOpacity>
+			</View>
 			);
 		}
 	}
@@ -28,8 +33,8 @@ export default class Selectable extends React.Component {
 
 const styles = StyleSheet.create({
 	selectable: {
+		flex: 1,
 		flexDirection: 'row',
-		height: 40,
 		backgroundColor: '#FFFFFF',
 		alignItems: 'center',
 		justifyContent: 'space-between',
@@ -37,7 +42,7 @@ const styles = StyleSheet.create({
 
 	text: {
 		fontSize: 16,
-		color: '#9A9A9A'
+		color: '#666666'
 	}
 
 })

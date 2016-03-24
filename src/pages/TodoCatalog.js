@@ -13,6 +13,7 @@ const { height, width } = Dimensions.get('window');
 import asset from '../assets';
 import { BackStep } from '../components/View'
 import Catalogs from '../utils/constant';
+import Loading from './Loading';
 class TodoCatalog extends React.Component {
 	constructor(props) {
 		super(props);
@@ -67,7 +68,7 @@ class TodoCatalog extends React.Component {
 				<View style={styles.container}>
 					<BackStep navigator={this.props.navigator} title={"类别"} />
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-						<Text>正在加载数据...</Text>
+						<Loading />
 					</View>
 				</View>
 			);

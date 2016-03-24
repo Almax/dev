@@ -5,7 +5,7 @@ import React, {
 	ListView,
 	TouchableOpacity,
 	StyleSheet,
-} from 'react-native'
+} from 'react-native';
 import asset from '../assets';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -124,25 +124,27 @@ class TodoCate extends React.Component {
 	_renderRow(row, sectionId, rowId) {
 		return (
 			<TodoCardRedux navigator={this.props.navigator} data={row} rowId={rowId} />
-		)
+		);
 	}
 	_renderSectionHeader(sectionData, sectionID) {
 		return (
-		<View style={{ backgroundColor: '#EFEFEF' }}>
-			<CatalogSection id={sectionData} />
-		</View>
+			<View style={{ backgroundColor: '#EFEFEF' }}>
+				<CatalogSection id={sectionData} />
+			</View>
 		);
 	}
 	render() {
 		return (
-		<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
 			<ListView
+        initialListSize={20}
+        pageSize={15}
+        scrollRenderAheadDistance={2}
+        removeClippedSubviews={true}
 				automaticallyAdjustContentInsets={false}
 				dataSource={this.state.dataSource}
 				renderSectionHeader={this._renderSectionHeader.bind(this)}
+				renderFooter={() => <View style={{ height: 50 }} />}
 				renderRow={this._renderRow.bind(this)} />
-			<View style={{ height: 50 }} />
-		</View>
 		);
 	}
 }

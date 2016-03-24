@@ -201,7 +201,7 @@ class TodoTimeline extends React.Component {
 						ref={(timeline) => this.timeline = timeline}
 						onSelect={this._onSelect.bind(this)}
 						backgroundColor={"#FFFFFF"}
-						start={"2016-01-01"}
+						start={"2015-01-01"}
 						end={"2018-12-31"} />
 
 					{ 

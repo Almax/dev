@@ -1,4 +1,5 @@
 var AssetList = {
+	loading: require('./loader.gif'),
 	team: require('./team.png'),
 	account: require('./ICONS/account.png'),
 	about: require('./ICONS/about.png'),
@@ -17,6 +18,10 @@ var AssetList = {
 	chat: require('./ICONS/chat.png'),
 	more: require('./ICONS/more.png'),
 	write: require('./ICONS/write.png'),
+
+	msg: require('./ICONS/msg.png'),
+	configure: require('./ICONS/configure.png'),
+
 	camera: require('./ICONS/camera.png'),
 	arrowRight: require('./ICONS/arrowRight.png'),
 	uploadPhoto: require('./ICONS/uploadPhoto.png'),

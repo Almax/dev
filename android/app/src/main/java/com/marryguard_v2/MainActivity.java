@@ -8,9 +8,20 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.imagepicker.ImagePickerPackage;
+import com.microsoft.codepush.react.CodePush;
+import me.jhen.react.BadgePackage;
+import io.neson.react.notification.NotificationPackage;
+import com.remobile.splashscreen.*;
 
 public class MainActivity extends ReactActivity {
+    private CodePush _codePush;
 
+    // the CodePush runtime determine where to get the JS
+    // bundle location from on each app start
+    @Override
+    protected String getJSBundleFile() {
+        return this._codePush.getBundleUrl("index.android.bundle");
+    }    
     /**
      * Returns the name of the main component registered from JavaScript.
      * This is used to schedule rendering of the component.
@@ -35,9 +46,14 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected List<ReactPackage> getPackages() {
+        this._codePush = new CodePush("POZhzesI9QquOX7zCnsv1aI_pXODEktE6aK2g", this, BuildConfig.DEBUG);
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
-            new ImagePickerPackage()
+            new ImagePickerPackage(),
+            new BadgePackage(),
+            new NotificationPackage(this),
+            new RCTSplashScreenPackage(this),
+            this._codePush.getReactPackage()
         );
     }
 }

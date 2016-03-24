@@ -1,6 +1,8 @@
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 import codePush from "react-native-code-push";
+import SplashScreen from '@remobile/react-native-splashscreen';
+
 import React, {
   AppRegistry,
   Platform,
@@ -25,6 +27,7 @@ class App extends React.Component {
   }
   componentDidMount() {
     codePush.sync();
+    SplashScreen.hide();
   }
   onBackAndroid = () => {
     const nav = this.navigator;

@@ -3,31 +3,25 @@ import React, {
 	View,
 	Text,
 	Alert,
+	DatePickerAndroid,
+	TimePickerAndroid,
+	Platform,
 	StyleSheet,
 } from 'react-native';
 import moment from 'moment';
-import DatePickerIOS from '../components/CustomPicker';
 import { connect } from 'react-redux';
-import {
-	Label,
-	Selectable,
-	FormRow,
-	FormBlock,
-	PureButton,
-	Input,
-	SoftInput,
-} from '../components/Form';
-import { 
-  BackStep,
-} from '../components/View';
+import { Label, Selectable, FormRow, FormBlock, PureButton, Input, SoftInput } from '../components/Form';
+import { BackStep } from '../components/View';
 import { update } from '../redux/modules/task';
-import DateTimePicker from '../components/Widget/DateTimePicker'
+import DateTimePicker from '../components/Widget/DateTimePicker';
+import Loading from './Loading';
 
 class TodoEdit extends React.Component {
 	constructor(props) {
 		super(props);
 		const { todo } = this.props;
 		this.state = {
+			isEditing: false,
 			...todo,
 			showPicker: false,
 			timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
@@ -36,6 +30,7 @@ class TodoEdit extends React.Component {
 	componentDidMount() {
 	}
 	async _save() {
+		this.setState({ isEditing: true });
 		await this.props.updateTask({
 			id: this.state.id,
 			task_name: this.state.task_name,
@@ -44,7 +39,7 @@ class TodoEdit extends React.Component {
 		});
 
 		Alert.alert("修改成功", "任务的内容已经修改完成", [
-			{text: '知道了', onPress: () => this.props.navigator.pop()},
+			{text: '知道了', onPress: () => this.setState({ isEditing: false }) },
 		]);
 	}
 	_scroll(offset) {
@@ -56,6 +51,38 @@ class TodoEdit extends React.Component {
 		this.setState({
 			end_date: date
 		})
+	}
+	async _showPicker() {
+		if(Platform.OS === 'android') {
+			try {
+			  const {action, year, month, day} = await DatePickerAndroid.open({
+			    date: this.state.end_date ? new Date(this.state.end_date) : new Date()
+			  });
+			  if (action !== DatePickerAndroid.dismissedAction) {
+				  const {action, hour, minute} = await TimePickerAndroid.open({
+				    hour: parseInt(moment().format("hh")),
+				    minute: parseInt(moment().format("mm")),
+				    is24Hour: false,
+				  });
+			  	if (month < 10) { month = `0${month + 1}`; } else { month = `${month + 1}`; }
+			  	if (day < 10) { day = `0${day}`; }
+
+				  if (action !== DatePickerAndroid.dismissedAction) {
+				  	if (hour < 10) { hour = `0${hour}`; }
+				  	if (minute < 10) { hour = `0${hour}`; }
+				  	const date = `${year}/${month}/${day} ${hour}:${minute}:00`;
+				  	this.setState({ end_date: new Date(date) });
+				  }else {
+				  	const date = `${year}/${month}/${day}`;
+				  	this.setState({ end_date: new Date(date) });
+				  }
+			  }
+			} catch ({code, message}) {
+			  console.warn('Cannot open date picker', message);
+			}
+		}else if(Platform.OS === 'ios') {
+			this.setState({ showPicker: true});
+		}
 	}
 	render() {
 		const todo = this.state;
@@ -86,15 +113,21 @@ class TodoEdit extends React.Component {
 					
 					<FormRow style={{ marginVertical: 10 }}>
 						<Label>截止日期</Label>
-						<Selectable onPress={() => this.setState({ showPicker: true})}>
+						<Selectable onPress={this._showPicker.bind(this)}>
 							{ todo.end_date ? moment(todo.end_date).format('YYYY年MM月DD日 a hh:mm:ss') : "选择日期"  }
 						</Selectable>
 
 
 
 					</FormRow>
+
 					<FormBlock>
-						<PureButton onPress={this._save.bind(this)}>保存</PureButton>
+						{ 
+							this.state.isEditing ?
+							<Loading />
+							:
+							<PureButton onPress={this._save.bind(this)}>保存</PureButton>
+						}
 					</FormBlock>
 
 				</ScrollView>

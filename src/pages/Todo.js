@@ -84,78 +84,86 @@ class Todo extends React.Component {
   renderRow(row, sectionId, rowId) {
   	return (
   		<View style={innerStyles.row}>
-        {
-          row.status ?
-          <TouchableOpacity onPress={this._cancelWork.bind(this, row, rowId)} activeOpacity={0.8} style={{  alignItems: 'center', marginTop: -25 }}>
-            <Image source={asset.work_done} style={{ height: 50 }} resizeMode={"contain"} />
-          </TouchableOpacity>
-           : 
-          <TouchableOpacity onPress={this._finishWork.bind(this, row, rowId)} activeOpacity={0.8} style={{  alignItems: 'center', marginTop: -25 }}>
-            <Image source={asset.work_in_progress} style={{ height: 50 }} resizeMode={"contain"} />
-          </TouchableOpacity>
-        }
 
-        <View style={{ flexDirection: 'row', marginTop: -10, alignItems: 'center', justifyContent: 'space-between' }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Image source={{ uri: row.master.photo }} style={{ height: 40, width: 40, borderRadius: 20 }} />
-            <View style={{ marginLeft: 10, justifyContent: 'center' }}>
-              <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>{row.master.name}</Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
-                <TimeAgo time={row.created_at} style={{ fontSize: 12, color: '#769AE4' }} />
+
+
+        <View style={{ backgroundColor: '#FFFFFF', paddingVertical: 20, paddingHorizontal: 10, borderRadius: 5 }}>
+
+          <View style={{ flexDirection: 'row', marginTop: -10, alignItems: 'center', justifyContent: 'space-between' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Image source={{ uri: row.master.photo }} style={{ height: 40, width: 40, borderRadius: 20 }} />
+              <View style={{ marginLeft: 10, justifyContent: 'center' }}>
+                <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>{row.master.name}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+                  <TimeAgo time={row.created_at} style={{ fontSize: 12, color: '#769AE4' }} />
+                </View>
               </View>
             </View>
+            <Catalog id={row.catalog_id} />
           </View>
 
-          <Catalog id={row.catalog_id} />
-        </View>
-
-        <Title onPress={() => 
-            this.props.navigator.push({ 
-              component: TodoAction, 
-              params: {
-                todo: row,
-                index: rowId 
-              } 
-            })}>
-          {row.task_name}
-        </Title>
-        
-        { row.task_detail ?  
-            <TouchableOpacity onPress={() => 
+          <Title onPress={() => 
               this.props.navigator.push({ 
                 component: TodoAction, 
                 params: {
                   todo: row,
                   index: rowId 
                 } 
-              })} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-              <Image source={asset.taskDesc} />
-              <View style={{ flex: 1, marginHorizontal: 5, flexWrap: 'wrap' }}>
-                <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>{row.task_detail}</Text> 
-              </View>
-            </TouchableOpacity>
-            : 
-            null 
-        }
-
-        <View style={{ height: 30 }} />
-
-        { row.users.length &&
-          (
-          <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <View style={{ flexDirection: 'row' }}>
-              { Object.keys(row.users).map((key) => <MemberHeader key={"_"+key} headimg={{ uri: row.users[key].photo }} name={row.users[key].name} /> ) }
-            </View>
-
-            <View style={{ backgroundColor: '#F4F4F4', padding: 10, borderRadius: 5, justifyContent: 'center' }}>
-              <Text style={{fontSize: 12, color: '#666666', fontWeight: '300'}}>
-                截止 {row.end_date ? moment(row.end_date).format("YYYY.MM.DD") : "未设置"}
-              </Text>
-            </View>
-          </View>
-          )
-        }
+              })}>
+            {row.task_name}
+          </Title>
         
+          { row.task_detail ?  
+              <TouchableOpacity onPress={() => 
+                this.props.navigator.push({ 
+                  component: TodoAction, 
+                  params: {
+                    todo: row,
+                    index: rowId 
+                  } 
+                })} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                <Image source={asset.taskDesc} />
+                <View style={{ flex: 1, marginHorizontal: 5, flexWrap: 'wrap' }}>
+                  <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>{row.task_detail}</Text> 
+                </View>
+              </TouchableOpacity>
+              : 
+              null 
+          }
+
+          <View style={{ height: 30 }} />
+
+          { row.users.length &&
+            (
+            <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <View style={{ flexDirection: 'row' }}>
+                { Object.keys(row.users).map((key) => <MemberHeader key={"_"+key} headimg={{ uri: row.users[key].photo }} name={row.users[key].name} /> ) }
+              </View>
+
+              <View style={{ backgroundColor: '#F4F4F4', padding: 10, borderRadius: 5, justifyContent: 'center' }}>
+                <Text style={{fontSize: 12, color: '#666666', fontWeight: '300'}}>
+                  截止 {row.end_date ? moment(row.end_date).format("YYYY.MM.DD") : "未设置"}
+                </Text>
+              </View>
+            </View>
+            )
+          }
+        </View>
+        
+
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, alignItems: 'center', justifyContent: 'center' }}>
+        {
+          row.status ?
+          <TouchableOpacity onPress={this._cancelWork.bind(this, row, rowId)} activeOpacity={0.8} style={{ alignItems: 'center', }}>
+            <Image source={asset.work_done} style={{ height: 50 }} resizeMode={"contain"} />
+          </TouchableOpacity>
+           : 
+          <TouchableOpacity onPress={this._finishWork.bind(this, row, rowId)} activeOpacity={0.8} style={{  alignItems: 'center' }}>
+            <Image source={asset.work_in_progress} style={{ height: 50 }} resizeMode={"contain"} />
+          </TouchableOpacity>
+        }
+        </View>
+
   		</View>
   	)
   }
@@ -220,18 +228,18 @@ class Todo extends React.Component {
     }else {
       return (
         <View style={{ flex: 1 }}>
-
           { this._renderStarter() }
-
           <ListView
             automaticallyAdjustContentInsets={false}
             dataSource={this.state.dataSource}
             renderRow={this.renderRow.bind(this)}
             renderFooter={this.renderFooter}
-            initialListSize={1}
-            pageSize={5}
+            
+            initialListSize={3}
+            pageSize={3}
             scrollRenderAheadDistance={2}
             removeClippedSubviews={true}
+
             refreshControl={
               <RefreshControl
                 refreshing={this.state.isRefreshing}
@@ -262,11 +270,10 @@ const innerStyles = {
   row: { 
     flex: 1, 
     width: width - 20,  
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 10,
+    backgroundColor: '#EFEFEF',
     paddingBottom: 5,
     marginHorizontal: 10,
-    marginTop: 40,
+    paddingTop: 25,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#EEEEEE',

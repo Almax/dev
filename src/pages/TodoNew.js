@@ -8,6 +8,8 @@ import React, {
 	TouchableOpacity,
 	Platform,
 	PushNotificationIOS,
+	DatePickerAndroid,
+	TimePickerAndroid,
   Dimensions,
 	StyleSheet,
 } from 'react-native';
@@ -46,6 +48,40 @@ class TodoNew extends React.Component {
 	}
 	_onSelect(date) {
 		this.setState({end_date: date});
+	}
+	async _showPicker() {
+		if(Platform.OS === 'android') {
+			try {
+			  const {action, year, month, day} = await DatePickerAndroid.open({
+			    date: this.state.end_date ? new Date(this.state.end_date) : new Date()
+			  });
+			  if (action !== DatePickerAndroid.dismissedAction) {
+				  const {action, hour, minute} = await TimePickerAndroid.open({
+				    hour: parseInt(moment().format("hh")),
+				    minute: parseInt(moment().format("mm")),
+				    is24Hour: false,
+				  });
+			  	if (month < 10) { month = `0${month + 1}`; } else { month = `${month + 1}`; }
+			  	if (day < 10) { day = `0${day}`; }
+
+				  if (action !== DatePickerAndroid.dismissedAction) {
+				  	if (hour < 10) { hour = `0${hour}`; }
+				  	if (minute < 10) { hour = `0${hour}`; }
+				  	const date = `${year}/${month}/${day} ${hour}:${minute}:00`;
+				  	this.setState({ end_date: new Date(date) });
+				  }else {
+				  	const date = `${year}/${month}/${day}`;
+				  	this.setState({ end_date: new Date(date) });
+				  }
+			  }
+			} catch ({code, message}) {
+			  console.warn('Cannot open date picker', message);
+			}
+		} else if (Platform.OS === 'ios') {
+			this.setState({
+				showPicker: true
+			})
+		}
 	}
 	nextStep() {
     if(this.state.task_name && this.state.end_date && this.state.catalog_id) {
@@ -138,7 +174,7 @@ class TodoNew extends React.Component {
 
 					<Subtitle>提醒日期</Subtitle>
 					<Selectable
-						onPress={ () => this.setState({ showPicker: true }) }
+						onPress={this._showPicker.bind(this)}
 						indicator={<Image source={asset.arrowRight}  />}>
 						{ this.state.end_date ? 
 								<Text style={innerStyles.date}>

@@ -28,8 +28,6 @@ class TodoList extends React.Component {
 			<View style={{flex: 1, backgroundColor: '#EFEFEF'}}>
 					<BackStep navigator={this.props.navigator} title={"待办"}></BackStep>
 					<Todo navigator={this.props.navigator} />
-
-
 	        <ActionButton 
 	        	position={"center"}
 	        	onPress={() => this.props.navigator.push({ component: TodoNew })}
@@ -46,9 +44,9 @@ class Home extends Component {
 		}
 	}
 	componentDidMount() {
-		this.props.navigator.push({
-			component: TodoList
-		})
+		// this.props.navigator.push({
+		// 	component: TodoList
+		// })
 	}
 	_invite() {
 		this.props.navigator.push({
@@ -125,6 +123,7 @@ class Home extends Component {
 		}
 	}
 }
+
 
 const styles = StyleSheet.create({
 	bannerWrapper: {

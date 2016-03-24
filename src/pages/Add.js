@@ -6,6 +6,7 @@ import React, {
 	TouchableOpacity,
 	StyleSheet,
 	Dimensions,
+	Platform,
 } from 'react-native';
 
 import TodoNew from './TodoNew';
@@ -17,12 +18,20 @@ export default class Add extends Component {
 		super(props);
 	}
 	componentDidMount() {
-		// this.props.navigator.push({
-		// 	component: TodoNew
-		// });
+		this.props.navigator.push({
+			component: AccountStore
+		});
 	}
 	render() {
 		const { navigator } = this.props;
+
+		let styles = null;
+		if (Platform.OS === 'android') {
+			styles = androidStyle;
+		} else if (Platform.OS === 'ios') {
+			styles = iosStyle;
+		}
+
 		return (
 			<View style={styles.container}>
 
@@ -47,7 +56,7 @@ export default class Add extends Component {
 	}
 }
 
-const styles = StyleSheet.create({
+const iosStyle = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#F06199',
@@ -79,4 +88,37 @@ const styles = StyleSheet.create({
 		width: 1,
 		backgroundColor: '#F06199',
 	}
-})
+});
+
+const androidStyle = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: '#F06199',
+	},
+	imageWrapper: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	buttonGroup: {
+		flexDirection: 'row',
+		backgroundColor: '#F47AAA',
+		width,
+		height: 150,
+	},
+	button: {
+		flex: 1,
+		height: 150,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	buttonText: {
+		color: '#FFFFFF',
+		fontSize: 18,
+	},
+	divider: {
+		height: 150,
+		width: 1,
+		backgroundColor: '#F06199',
+	}
+});

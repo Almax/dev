@@ -36,7 +36,7 @@ import {
 	FormRow,
 	SoftInput,
 	Label,
-	PureButton,
+	SubmitButton,
 	FormBlock,
 } from '../components/Form';
 import asset from '../assets'
@@ -65,11 +65,9 @@ class BasicProfile extends React.Component {
 			signature: this.props.state.signature,
 		})
 	}
-
 	viewScroll(offset) {
 		this.scrollView.scrollTo({ x:0 ,y: offset, animated: true })
 	}
-
 	changeProfile() {
 		if(/http\:\/\//.test(this.state.photo)) {
 			this.props.save({
@@ -182,10 +180,8 @@ class BasicProfile extends React.Component {
 								onChangeText={(signature) => this.setState({ signature })}
 								placeholder={"这里是我的签名"} />
 						</FormRow>
-
-						<FormBlock>
-							<PureButton onPress={this.changeProfile.bind(this)}>修改</PureButton>
-						</FormBlock>
+						<FormBlock />
+						<SubmitButton onPress={this.changeProfile.bind(this)}>修改</SubmitButton>
 					</View>
 				</ScrollView>
 			</View>
