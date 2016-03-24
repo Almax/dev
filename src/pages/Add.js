@@ -18,9 +18,9 @@ export default class Add extends Component {
 		super(props);
 	}
 	componentDidMount() {
-		this.props.navigator.push({
-			component: AccountStore
-		});
+		// this.props.navigator.push({
+		// 	component: AccountStore
+		// });
 	}
 	render() {
 		const { navigator } = this.props;
