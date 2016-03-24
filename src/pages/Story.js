@@ -175,9 +175,9 @@ class Memory extends React.Component {
 					</LazyloadScrollView>
 
 				  <ActionButton 
-				  	icon={<Image source={asset.takePhoto} />}
+				  	icon={<Image source={asset.takePhoto} style={{ height: 50, width: 50 }} />}
 				  	position={'center'} 
-				  	buttonColor={'rgba(231,76,60,1)'} 
+				  	buttonColor={'#F06199'} 
 				  	onPress={this._takePhoto.bind(this)}>
 				  </ActionButton>
 

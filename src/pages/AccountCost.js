@@ -169,41 +169,47 @@ class Cost extends React.Component {
 						ref={scrollView => this.scrollView = scrollView }
 						contentContainerStyle={innerStyles.container}>
 						
-						<Subtitle>支出类别</Subtitle>
-						<View>
+						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
+							<Subtitle>支出类别</Subtitle>
 							<CatalogSection id={this.state.catalog_id} onPress={this._selectCatalog.bind(this)} />
 						</View>
 
-						<Subtitle>具体金额</Subtitle>
-						<FormRow>
+						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
+
+						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
+							<Subtitle>金额</Subtitle>
+
 							<TouchableOpacity onPress={this._toggleNumberPad.bind(this)} style={{ flexDirection: 'row', alignItems: 'center' }}>
 								<Text style={{ color: '#E1759C', fontSize: 32, fontWeight: '500' }}>￥</Text>
 								<Text style={{ color: '#E1759C', fontSize: 32, fontWeight: '500' }}>
 									{ parseFloat(this.state.value).toFixed(2) }
 								</Text>
 							</TouchableOpacity>
-						</FormRow>
+						</View>
 
-						<Subtitle>已经支付?</Subtitle>
-						<FormRow>
+						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
+						
+						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
+							<Subtitle>已经支付?</Subtitle>
 			        <Switch
-			        	style={{ marginVertical: 10 }}
 			          onValueChange={(value) => this.setState({ pay_status: value })}
 			          value={this.state.pay_status ? true : false} />
-						</FormRow>
+						</View>
 
-						{ 
-							this.state.pay_status ? 
-							null :
-							<View>
-								<Subtitle>到期付款时间</Subtitle>
-								<FormRow>
-									
-									<Selectable onPress={this._showPicker.bind(this)}>{this.state.expired_at ? moment(this.state.expired_at).format('YYYY-MM-DD') : "选择日期"}</Selectable>
+						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
 
-								</FormRow>
-							</View>
-						}
+						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
+							<Subtitle>到期时间</Subtitle>
+							{ 
+								this.state.pay_status ? 
+								null 
+								:
+								<Selectable onPress={this._showPicker.bind(this)}>{this.state.expired_at ? moment(this.state.expired_at).format('YYYY-MM-DD') : "选择日期"}</Selectable>
+
+							}
+						</View>
+
+						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
 
 						<Subtitle>用途说明</Subtitle>
 						<FormRow>

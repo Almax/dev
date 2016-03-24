@@ -112,6 +112,7 @@ class AccountItem extends React.Component {
 
 
 					<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
+
 					<View style={innerStyles.row}>
 						<View style={{ backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center' }}>
 							<Text style={innerStyles.key}>已经支付?</Text>
@@ -150,22 +151,6 @@ class AccountItem extends React.Component {
 						<PureButton onPress={this._deleteItem.bind(this)} size={"small"}>删除</PureButton>
 					</FormBlock>
 
-					<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
-
-					{/*
-						<View style={innerStyles.msg}>
-							<Subtitle>留言区</Subtitle>
-							<FormRow>
-								<SoftInput
-									scroll={this._onScroll.bind(this)}
-									mutiline={true}
-									placeholder={"留言"} />
-
-								<PureButton size={"small"}>留言</PureButton>
-							</FormRow>
-						</View>
-					*/}
-
 				</ScrollView>
 			</View>
 		);
@@ -181,8 +166,7 @@ const innerStyles = StyleSheet.create({
 		flexWrap: 'wrap',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		paddingHorizontal: 10,
-		paddingVertical: 10,
+		padding: 10,
 		height: 50,
 	},
 	text: {

@@ -108,19 +108,27 @@ class Income extends React.Component {
 					<ScrollView
 						ref={scrollView => this.scrollView = scrollView }
 						contentContainerStyle={innerStyles.container}>
-						<Subtitle>收入类别</Subtitle>
-						<View>
+
+						
+						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
+							<Subtitle>收入类别</Subtitle>
 							<AccountCatalog id={this.state.catalog_id} onPress={this._selectCatalog.bind(this)} />
 						</View>
-						<Subtitle>具体金额</Subtitle>
-						<FormRow>
+						
+						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
+
+						<View style={{ flexDirection: 'row', height: 50, paddingHorizontal: 10, alignItems: 'center', justifyContent: 'space-between' }}>
+							<Subtitle>具体金额</Subtitle>
 							<TouchableOpacity onPress={this._toggleNumberPad.bind(this)} style={{ flexDirection: 'row', alignItems: 'center' }}>
 								<Text style={{ color: '#E1759C', fontSize: 32, fontWeight: '500' }}>￥</Text>
 								<Text style={{ color: '#E1759C', fontSize: 32, fontWeight: '500' }}>
 									{ parseFloat(this.state.value).toFixed(2) }
 								</Text>
 							</TouchableOpacity>
-						</FormRow>
+						</View>
+
+						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
+						
 						<Subtitle>收入来源说明</Subtitle>
 						<FormRow>
 							<SoftInput 
@@ -129,7 +137,7 @@ class Income extends React.Component {
 								onChangeText={(description) => this.setState({ description })}
 								placeholder={"收入来源说明/备注"} />
 						</FormRow>
-						
+
 						<FormBlock>
 							{ 
 								this.props.data ? 

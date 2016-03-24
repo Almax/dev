@@ -16,18 +16,18 @@ class CatalogSection extends React.Component {
 
 		if(row) {
 			return (
-				<TouchableOpacity onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0)', paddingHorizontal: 10, paddingVertical: 2 }}>
+				<TouchableOpacity onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0)', paddingLeft: 10, paddingVertical: 2 }}>
 					<Image source={row.icon} style={{ width: 24, height: 24 }} />
-					<View style={{ marginHorizontal: 10, alignItems: 'center', justifyContent: 'center' }}>
+					<View style={{ marginLeft: 5, alignItems: 'center', justifyContent: 'center' }}>
 						<Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>{row.name}</Text>
 					</View>
 				</TouchableOpacity>
 			);
 		}else {
 			return (
-				<TouchableOpacity onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0)', paddingHorizontal: 10, paddingVertical: 2 }}>
+				<TouchableOpacity onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0)', paddingLeft: 10, paddingVertical: 2 }}>
 					<View style={{ backgroundColor: '#9DE5FC', width: 24, height: 24 }} />
-					<View style={{ marginHorizontal: 10, alignItems: 'center', justifyContent: 'center' }}>
+					<View style={{ marginLeft: 5, alignItems: 'center', justifyContent: 'center' }}>
 						<Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>未分类</Text>
 					</View>
 				</TouchableOpacity>

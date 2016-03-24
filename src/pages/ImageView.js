@@ -15,7 +15,7 @@ class StoryView extends React.Component {
 		<View style={{ flex: 1, backgroundColor: '#000000' }}>
 			<BackStep navigator={this.props.navigator}/>
 
-				<Image source={{ uri: uri }} resizeMode={"contain"} style={{ flex: 1, width: width, height: height }} />
+				<Image source={{ uri: uri }} resizeMode={"contain"} style={{ flex: 1 }} />
 
 		</View>
 		);
