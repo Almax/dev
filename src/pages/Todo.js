@@ -50,10 +50,6 @@ class Todo extends React.Component {
     }
   }
   componentDidMount() {
-    // this.props.navigator.push({
-    //   component: TodoImport
-    // });
-
     InteractionManager.runAfterInteractions(() => {
       if(this.props.state === 'initial state') {
         this.props.init();
@@ -85,15 +81,13 @@ class Todo extends React.Component {
   	return (
   		<View style={innerStyles.row}>
 
-
-
         <View style={{ backgroundColor: '#FFFFFF', paddingVertical: 20, paddingHorizontal: 10, borderRadius: 5 }}>
 
           <View style={{ flexDirection: 'row', marginTop: -10, alignItems: 'center', justifyContent: 'space-between' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Image source={{ uri: row.master.photo }} style={{ height: 40, width: 40, borderRadius: 20 }} />
               <View style={{ marginLeft: 10, justifyContent: 'center' }}>
-                <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>{row.master.name}</Text>
+                <Text style={{ fontSize: 16, color: '#666666' }}>{row.master.name}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
                   <TimeAgo time={row.created_at} style={{ fontSize: 12, color: '#769AE4' }} />
                 </View>

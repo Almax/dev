@@ -9,9 +9,7 @@ import React, {
   BackAndroid,
   Navigator
 } from 'react-native';
-
 import NavigatorSceneConfigs from '../components/NavigatorSceneConfigs'
-
 import Splash from '../pages/Splash';
 
 class App extends React.Component {

@@ -9,7 +9,10 @@ import React, {
 	NativeModules,
 	StyleSheet,
 	DatePickerIOS,
+	DatePickerAndroid,
+	TimePickerAndroid,
 	ProgressViewIOS,
+	Platform,
 } from 'react-native'
 import moment from 'moment';
 import { Caption, Subtitle, HorizontalView, BackStep } from '../components/View'
@@ -75,6 +78,40 @@ class BasicMarry extends React.Component {
 		Alert.alert('更新成功', '我的资料 更新成功')
 	}
 
+	async _showPicker() {
+		if(Platform.OS === 'android') {
+			try {
+			  const {action, year, month, day} = await DatePickerAndroid.open({
+			    date: this.state.marry_date ? new Date(this.state.marry_date) : new Date()
+			  });
+			  if (action !== DatePickerAndroid.dismissedAction) {
+				  const {action, hour, minute} = await TimePickerAndroid.open({
+				    hour: parseInt(moment().format("hh")),
+				    minute: parseInt(moment().format("mm")),
+				    is24Hour: false,
+				  });
+			  	if (month < 10) { month = `0${month + 1}`; } else { month = `${month + 1}`; }
+			  	if (day < 10) { day = `0${day}`; }
+
+				  if (action !== DatePickerAndroid.dismissedAction) {
+				  	if (hour < 10) { hour = `0${hour}`; }
+				  	if (minute < 10) { hour = `0${hour}`; }
+				  	const date = `${year}/${month}/${day} ${hour}:${minute}:00`;
+				  	this.setState({ marry_date: new Date(date) });
+				  }else {
+				  	const date = `${year}/${month}/${day}`;
+				  	this.setState({ marry_date: new Date(date) });
+				  }
+			  }
+			} catch ({code, message}) {
+			  console.warn('Cannot open date picker', message);
+			}
+
+		}else if(Platform.OS === 'ios') {
+			this.setState({ showPicker: true });
+		}
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
@@ -106,17 +143,20 @@ class BasicMarry extends React.Component {
 								placeholder={"婚礼举办的城市"} />
 						</FormRow>
 
-						<FormRow>
+						<View style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingVertical: 10 }}>
 							<Label>婚礼日期</Label>
 							<Selectable
-								onPress={ () => this.setState({ showPicker: true }) } >
-								{ this.state.marry_date ? 
+								style={{ marginHorizontal: 10 }}
+								onPress={this._showPicker.bind(this)}>
+								{ this.state.marry_date ?
 										moment(this.state.marry_date).format('YYYY-MM-DD')
 										: 
-										"选择" 
+										"选择"
 								}
 							</Selectable>
-						</FormRow>
+						</View>
+
+						<FormRow />
 						
 						<View style={{ backgroundColor: '#FFF7DD', marginVertical: 20, padding: 10, borderWidth: 1, borderColor: '#E0DBC0' }}>
 							
