@@ -28,9 +28,9 @@ class Chat extends React.Component {
 		this.setState({
 			dataSource: this.state.dataSource.cloneWithRows(message)
 		});
-		this.setInterval(() => {
-			this.props.loadMessage();
-		}, 10000);
+		// this.setInterval(() => {
+		// 	this.props.loadMessage();
+		// }, 10000);
 	}
 	componentWillReceiveProps(nextProps) {
 		const { message } = nextProps;

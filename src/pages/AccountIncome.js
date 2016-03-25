@@ -128,7 +128,9 @@ class Income extends React.Component {
 
 						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
 						
-						<Subtitle>收入来源说明</Subtitle>
+						<View style={{ padding: 10 }}>
+							<Subtitle>收入来源说明</Subtitle>
+						</View>
 						<FormRow>
 							<SoftInput 
 								scroll={this._onScroll.bind(this)}
@@ -136,7 +138,7 @@ class Income extends React.Component {
 								onChangeText={(description) => this.setState({ description })}
 								placeholder={"收入来源说明/备注"} />
 						</FormRow>
-
+							
 						<FormBlock>
 							{ 
 								this.props.data ? 

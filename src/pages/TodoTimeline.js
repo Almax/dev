@@ -153,7 +153,7 @@ class TodoTimeline extends React.Component {
 			InteractionManager.runAfterInteractions(() => {
 				var data = [];
 				Object.keys(state).map((key) => {
-					if(moment(state[key].end_date).format('YYYY-MM') === moment().format('YYYY-MM')) {
+					if(moment(state[key].end_date).format('YYYY-MM') === this.state.currentDate) {
 						data = data.concat([state[key]])
 					}
 				})

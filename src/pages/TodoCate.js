@@ -4,6 +4,7 @@ import React, {
 	Image,
 	ListView,
 	TouchableOpacity,
+	InteractionManager,
 	StyleSheet,
 } from 'react-native';
 import asset from '../assets';
@@ -98,10 +99,10 @@ class TodoCate extends React.Component {
 			dataSource
 		};
 	}
-	componentWillReceiveProps(nextProps) {
+	componentDidMount() {
 		var group = {};
-		if(typeof this.props.state === 'object') {
-			const todos = this.props.state;
+		InteractionManager.runAfterInteractions(() => {
+			const todos = this.props.task;
 			Object.keys(todos).map((key) => {
 				const catalog_id = todos[key].catalog_id;
 				if(group[catalog_id]) {
@@ -112,6 +113,25 @@ class TodoCate extends React.Component {
 			});
 			this.setState({
 				dataSource: this.state.dataSource.cloneWithRowsAndSections(group)
+			});
+		});
+	}
+	componentWillReceiveProps(nextProps) {
+		var group = {};
+		if(typeof nextProps.task === 'object') {
+			InteractionManager.runAfterInteractions(() => {
+				const todos = nextProps.task;
+				Object.keys(todos).map((key) => {
+					const catalog_id = todos[key].catalog_id;
+					if(group[catalog_id]) {
+						group[catalog_id] = group[catalog_id].concat([todos[key]]);
+					}else {
+						group[catalog_id] = [todos[key]];
+					}
+				});
+				this.setState({
+					dataSource: this.state.dataSource.cloneWithRowsAndSections(group)
+				});
 			});
 		}
 	}
@@ -147,7 +167,7 @@ class TodoCate extends React.Component {
 }
 
 export default connect(
-	state => ({ state: state.task }),
+	state => ({ task: state.task }),
 	dispatch => ({
 		init: () => dispatch(init())
 	})

@@ -188,6 +188,19 @@ class Cost extends React.Component {
 						</View>
 
 						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
+
+						<View style={{ padding: 10 }}>
+							<Subtitle>用途说明</Subtitle>
+						</View>
+
+						<FormRow>
+							<SoftInput 
+								scroll={this._onScroll.bind(this)}
+								value={this.state.description}
+								onChangeText={(description) => this.setState({ description })}
+								placeholder={"花费说明"} />
+						</FormRow>
+
 						
 						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
 							<Subtitle>已经支付?</Subtitle>
@@ -210,15 +223,6 @@ class Cost extends React.Component {
 						</View>
 
 						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
-
-						<Subtitle>用途说明</Subtitle>
-						<FormRow>
-							<SoftInput 
-								scroll={this._onScroll.bind(this)}
-								value={this.state.description}
-								onChangeText={(description) => this.setState({ description })}
-								placeholder={"花费说明"} />
-						</FormRow>
 
 						<FormBlock>
 							{ this.props.data ? 
