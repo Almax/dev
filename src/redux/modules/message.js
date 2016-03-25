@@ -1,10 +1,14 @@
 import { loadInvitation, passInvitation } from '../../utils/syncdata';
 import { createAction, handleActions } from 'redux-actions';
 
+export const RESET_MESSAGE = 'app/message/reset_message';
 export const INITIAL_MESSAGE = 'app/message/initial_message';
 export const PASS_MESSAGE = 'app/message/pass_message';
 const initialState = 'initial state';
 const reducer = handleActions({
+	[RESET_MESSAGE]: (state, action) => {
+		return initialState;
+	},
 	[INITIAL_MESSAGE]: (state, action) => {
 		return action.payload
 	},
@@ -15,8 +19,15 @@ const reducer = handleActions({
 
 export default reducer;
 
+export const resetMessage = createAction(RESET_MESSAGE);
 export const initialMessage = createAction(INITIAL_MESSAGE);
 export const passMessage = createAction(PASS_MESSAGE);
+
+export function reset() {
+	return (dispatch) => {
+		dispatch(resetMessage());
+	}
+}
 
 export function load() {
 	return async(dispatch) => {
@@ -28,5 +39,6 @@ export function load() {
 export function pass(id) {
 	return async(dispatch) => {
 		dispatch(passMessage(await passInvitation(id)));
+		dispatch(initialMessage(await loadInvitation()));
 	}
 }

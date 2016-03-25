@@ -2,20 +2,22 @@ import {
 	loadTask,
 	createTask,
   updateTask
-} from '../../utils/syncdata'
-
+} from '../../utils/syncdata';
 import { createAction, handleActions } from 'redux-actions';
 
-export const INITIAL = 'app/task/initial'
-export const INITIAL_TASK = 'app/task/initial_task'
-export const FETCH_TASK = 'app/task/fetch_task'
-export const CREATE_TASK = 'app/task/create_task'
-export const UPDATE_TASK = 'app/task/update_task'
+export const RESET_TASK = 'app/task/reset_task';
+export const INITIAL_TASK = 'app/task/initial_task';
+export const FETCH_TASK = 'app/task/fetch_task';
+export const CREATE_TASK = 'app/task/create_task';
+export const UPDATE_TASK = 'app/task/update_task';
 
 
 const initialState = "initial state"
 
 const reducer = handleActions({
+  [RESET_TASK]: (state, action) => {
+    return initialState;
+  },
   [INITIAL_TASK]: (state, action) => {
     return action.payload;
   },
@@ -39,10 +41,17 @@ const reducer = handleActions({
 
 export default reducer;
 
-export const initialTask = createAction(INITIAL_TASK)
-export const fetchTask = createAction(FETCH_TASK)
-export const createNewTask = createAction(CREATE_TASK)
-export const updateTheTask = createAction(UPDATE_TASK)
+export const resetTask = createAction(RESET_TASK);
+export const initialTask = createAction(INITIAL_TASK);
+export const fetchTask = createAction(FETCH_TASK);
+export const createNewTask = createAction(CREATE_TASK);
+export const updateTheTask = createAction(UPDATE_TASK);
+
+export function reset() {
+  return async (dispatch) => {
+    dispatch(resetTask());
+  }
+}
 
 export function init() {
   return async (dispatch) => {

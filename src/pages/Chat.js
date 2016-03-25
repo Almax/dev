@@ -11,6 +11,8 @@ import styles from '../styles';
 import asset from '../assets';
 import { BackStep } from '../components/View';
 import { load, pass } from '../redux/modules/message';
+import { loadUser } from '../redux/modules/session';
+import Loading from './Loading';
 class Chat extends React.Component {
 	constructor(props) {
 		super(props);
@@ -28,7 +30,7 @@ class Chat extends React.Component {
 		});
 		this.setInterval(() => {
 			this.props.loadMessage();
-		}, 30000);
+		}, 10000);
 	}
 	componentWillReceiveProps(nextProps) {
 		const { message } = nextProps;
@@ -40,25 +42,23 @@ class Chat extends React.Component {
     this.intervals.map(clearInterval);
     this.intervals.push(setInterval.apply(null, arguments));
   }
-
   clearInterval() {
   	this.intervals.map(clearInterval);
   }
-
   componentWillMount() {
     this.intervals = [];
   }
-
 	componentWillUnmount() {
 		this.clearInterval()
 	}
 	_passRequest(invitation) {
 		this.props.pass(invitation.id);
+		this.props.loadSession();
 	}
 	_onRefresh() {
     this.setState({isRefreshing: true});
     setTimeout(() => {
-     	this.props.loadMessage();
+     	this.props.loadSession();
       this.setState({
         isRefreshing: false
       })
@@ -83,11 +83,11 @@ class Chat extends React.Component {
 							
 							{ row.pass ? 
 								<TouchableOpacity activeOpacity={1} style={{ backgroundColor: '#FFFFFF', padding: 10, borderRadius: 5 }}>
-									<Text style={{ fontSize: 14, color: '#999999' }}>已同意</Text>
+									<Text style={{ fontSize: 14, color: '#999999' }}>已通过</Text>
 								</TouchableOpacity>
 								: 
-								<TouchableOpacity onPress={this._passRequest.bind(this, row)} style={{ backgroundColor: '#5DC01D', padding: 10, borderRadius: 5 }}>
-									<Text style={{ color: '#FFFFFF' }}>通过</Text>
+								<TouchableOpacity activeOpacity={1} style={{ backgroundColor: '#FFFFFF', padding: 10, borderRadius: 5 }}>
+									<Text style={{ fontSize: 14, color: '#666666' }}>等待通过</Text>
 								</TouchableOpacity>
 							}
 
@@ -128,27 +128,39 @@ class Chat extends React.Component {
 		}
 	}
 	render() {
-		const { marry } = this.props;
-		return (
-			<View style={[styles.container, {backgroundColor: '#EFEFEF'}]}>
-				<BackStep title={"聊天"} />				
-				<ListView
-					automaticallyAdjustContentInsets={false}
-					dataSource={this.state.dataSource}
-					renderRow={this.renderRow.bind(this)}
-					refreshControl={
-            <RefreshControl
-              refreshing={this.state.isRefreshing}
-              onRefresh={this._onRefresh.bind(this)}
-              tintColor="#EEEEEE"
-              title="更新消息"
-              colors={['#F06199']}
-              progressBackgroundColor="#FFFFFF"
-            />
-          } />
-				
-			</View>
-		)
+		const { marry, message } = this.props;
+		if(typeof message === 'object') {
+			return (
+				<View style={[styles.container, {backgroundColor: '#EFEFEF'}]}>
+					<BackStep title={"聊天"} />
+
+					<ListView
+						automaticallyAdjustContentInsets={false}
+						dataSource={this.state.dataSource}
+						renderRow={this.renderRow.bind(this)}
+						refreshControl={
+	            <RefreshControl
+	              refreshing={this.state.isRefreshing}
+	              onRefresh={this._onRefresh.bind(this)}
+	              tintColor="#EEEEEE"
+	              title="更新消息"
+	              colors={['#F06199']}
+	              progressBackgroundColor="#FFFFFF"
+	            />} />
+				</View>
+			);
+		} else {
+			return (
+				<View style={[styles.container, {backgroundColor: '#EFEFEF'}]}>
+					<BackStep title={"聊天"} />
+
+					<View style={{ flex: 1 }}>
+						<Loading />
+					</View>
+
+				</View>
+			)
+		}
 	}
 }
 
@@ -157,5 +169,6 @@ export default connect(
 	dispatch=>({
 		pass: (id) => dispatch(pass(id)),
 		loadMessage: () => dispatch(load()),
+		loadSession: () => dispatch(loadUser()),
 	})
 )(Chat);

@@ -118,7 +118,7 @@ class Todo extends React.Component {
                 })} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                 <Image source={asset.taskDesc} />
                 <View style={{ flex: 1, marginHorizontal: 5, flexWrap: 'wrap' }}>
-                  <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>{row.task_detail}</Text> 
+                  <Text style={{ fontSize: 16, color: '#666666' }}>{row.task_detail}</Text> 
                 </View>
               </TouchableOpacity>
               : 
@@ -229,9 +229,8 @@ class Todo extends React.Component {
             renderRow={this.renderRow.bind(this)}
             renderFooter={this.renderFooter}
             
-            initialListSize={3}
+            initialListSize={5}
             pageSize={3}
-            scrollRenderAheadDistance={2}
             removeClippedSubviews={true}
 
             refreshControl={

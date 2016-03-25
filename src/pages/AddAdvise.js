@@ -41,11 +41,12 @@ class AddAdvise extends React.Component {
 	}
 
 	renderRow(row, sid, rid) {
+		const id = parseInt(rid);
 		return (
 			<TouchableOpacity onPress={this.select.bind(this, row.task)} activeOpacity={0.7} style={styles.row}>
-				<Text style={styles.text}>{rid+1}. {row.task}</Text>
+				<Text style={styles.text}>{id+1}. {row.task}</Text>
 			</TouchableOpacity>
-		)
+		);
 	}
   
   _onScroll(offset) {

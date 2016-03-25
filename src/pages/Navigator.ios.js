@@ -12,18 +12,12 @@ import Add from './Add';
 import Chat from './Chat';
 import More from './More';
 import FindPartner from './FindPartner';
-import { getMyMarry } from '../redux/modules/marry'
-
 class Navigator extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       selectedTab: "home"
     }
-  }
-  componentDidMount() {
-    this.props.loadMarry();
   }
   componentWillReceiveProps(nextProps) {
     if(nextProps.marry === null) {
@@ -113,6 +107,6 @@ class Navigator extends React.Component {
 export default connect(
   state => ({ marry: state.marry }),
   dispatch => ({
-    loadMarry: () => dispatch(getMyMarry())
+    
   })
 )(Navigator)

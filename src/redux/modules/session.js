@@ -5,7 +5,11 @@ import {
 	storeUserSession, 
 	updateName,
 	updateBasicProfile
-} from '../../utils/session'
+} from '../../utils/session';
+
+import { getMyMarry, resetMyMarry } from './marry';
+import { load as loadTask, reset as resetTask } from './task';
+import { load as loadMessage, reset as resetMessage } from './message';
 
 import { createAction, handleActions } from 'redux-actions'
 /* action type */
@@ -41,6 +45,9 @@ export function login(username, password) {
 		const user = await userLogin(username, password);
 		if(user) {
 			dispatch(loadSession(user));
+			dispatch(getMyMarry());
+			dispatch(loadTask());
+			dispatch(loadMessage());
 		}else {
 			dispatch(reloadSession());
 		}
@@ -52,7 +59,10 @@ export function loadUser() {
 	return async (dispatch) => {
 		var user =  await currentUser()
 		if(user) {
-			dispatch(loadSession(user))
+			dispatch(loadSession(user));
+			dispatch(getMyMarry());
+			dispatch(loadTask());
+			dispatch(loadMessage());
 		}else {
 			dispatch(cleanSession())
 		}
@@ -63,6 +73,9 @@ export function loadUser() {
 export function logout() {
 	return async (dispatch) => {
 		dispatch(cleanSession(await cleanUser()));
+		dispatch(resetMyMarry());
+		dispatch(resetTask());
+		dispatch(resetMessage());
 	}
 }
 
@@ -70,6 +83,9 @@ export function logout() {
 export function store(session) {
 	return async (dispatch) => {
 		dispatch(loadSession(await storeUserSession(session)))
+			dispatch(getMyMarry());
+			dispatch(loadTask());
+			dispatch(loadMessage());
 	}
 }
 

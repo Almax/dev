@@ -15,12 +15,15 @@ import { BackStep } from '../components/View';
 import { findUser } from '../utils/session';
 import FillMyProfile from './FillMyProfile';
 import { createInvitation } from '../utils/syncdata';
+import { load } from '../redux/modules/message';
 class FindPartner extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			account: null,
 		}
+	}
+	componentDidMount() {
 	}
 	shouldComponentUpdate(nextProps, nextState) {
 		if(/\d{11}/.test(nextState.account) == false) {
@@ -30,13 +33,20 @@ class FindPartner extends React.Component {
 		}
 	}
 	async _search() {
-		if(this.state.account === this.props.user.username) {
+		if(this.state.account === this.props.session.username) {
 			Alert.alert("无法匹配自己", "请更换搜索的账号");
 			return ;
 		}
 		var target = await findUser(this.state.account);
 		if(target && target.error) {
-			Alert.alert('没有找到用户', '原因: '+JSON.stringify(target.error));
+			Alert.alert(
+				'没有找到用户', 
+				`原因: ${target.error}`,
+				[
+					{text: '重试', onPress: () => true },
+					{text: '跳过', onPress: () => this.props.navigator.push({ component: FillMyProfile }) }
+				]
+			);
 		}else {
 			Alert.alert('找到用户', `是否邀请${this.state.account}加入我的婚礼?`, [
         {text: '取消', onPress: () => console.log('Cancel Pressed!')},
@@ -46,9 +56,10 @@ class FindPartner extends React.Component {
 	}
 	async _sendInvitation(target) {
 		var resp = await createInvitation({ 
-			from_user_id: this.props.user.id, 
+			from_user_id: this.props.session.id, 
 			to_user_id: target.id 
-		});		
+		});
+		this.props.loadMessage();
 		Alert.alert('发送成功','进入一下一步继续完善资料', 
 		[
 			{text: '下一步', onPress: () => this.props.navigator.push({ component: FillMyProfile }) }
@@ -59,10 +70,25 @@ class FindPartner extends React.Component {
 			component: FillMyProfile
 		});
 	}
+	_renderNav() {
+		if(this.props.marry === null || this.props.marry === 'initial state') {
+			return (
+				<BackStep title={"邀请另一半"} buttonTitle={"跳过"} buttonPress={this._skip.bind(this)} />
+			);
+		}
+
+		if(typeof this.props.marry === 'object') {
+			return (
+				<BackStep navigator={this.props.navigator} title={"邀请另一半"} buttonTitle={"跳过"} buttonPress={this._skip.bind(this)} />
+			);
+		}
+	}
 	render() {
 		return (
 			<View style={{ flex: 1, height: height, backgroundColor: '#EFEFEF' }}>
-				<BackStep title={"邀请另一半"} buttonTitle={"跳过"} buttonPress={this._skip.bind(this)} />
+				
+				{this._renderNav()}
+					
 				<ScrollView 
 					bounces={false}
 					style={{ flex: 1, margin: 10, padding: 10, borderRadius: 5, backgroundColor: '#FFFFFF' }}>
@@ -106,18 +132,8 @@ class FindPartner extends React.Component {
 }
 
 export default connect(
-	state=>({ user: state.session })
+	state=>({ session: state.session, marry: state.marry }),
+	dispatch=>({
+		loadMessage: () => dispatch(load())
+	})
 )(FindPartner);
-
-					// { 
-					// 	false ? 
-					// 	<View style={styles.yellow_box}>
-					// 		<Text>告诉另一半如何加入:</Text>
-					// 		<Text>1.打开App Store</Text>
-					// 		<Text>2.进入App Store, 选择搜索 "婚格"</Text>
-					// 		<Text>3.点击安装</Text>
-					// 		<Text>4.打开婚格，使用手机号注册</Text>
-					// 		<Text>5.搜索框里填入他/她的手机号，发送邀请</Text> 
-					// 	</View>
-					//  : null 
-					// }

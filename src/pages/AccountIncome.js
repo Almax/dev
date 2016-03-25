@@ -5,6 +5,7 @@ import React, {
 	Switch,
 	TouchableOpacity,
 	SegmentedControlIOS,
+	Alert,
 	StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -67,11 +68,8 @@ class Income extends React.Component {
 			catalog_id: this.state.catalog_id,
 			compute_sign: 1,
 		};
-		//console.warn(JSON.stringify(cost));
 		await createMoney(this.props.marry, cost);
-		
 		this.props.load(this.props.marry);
-
 		this.setState({
 			success: true
 		});
@@ -97,6 +95,7 @@ class Income extends React.Component {
 		if(this.props.reload) {
 			await this.props.reload();
 		}
+		Alert.alert('编辑完成', '已经成功编辑账本');
 		this.props.navigator.pop();
 	}
 	render() {

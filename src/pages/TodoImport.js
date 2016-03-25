@@ -1,3 +1,7 @@
+const IMPORT_LIST = [
+	5,6,7,8,9,12,14,19,21,24,30,31,34,44,50,52,56,57,65,74,80,86,87,91
+];
+
 import React, {
 	View,
 	Text,
@@ -34,7 +38,7 @@ class TodoImport extends React.Component {
 	async _importMock() {
 		this.setState({ flag: true });
 		const { task } = mock;
-		let keys = Object.keys(task).reverse();
+		let keys = IMPORT_LIST.reverse();
 		for(id in keys) {
 			var key = keys[id];
 			const newTask = {
@@ -45,7 +49,6 @@ class TodoImport extends React.Component {
 				end_date: moment(this.state.marry_date).subtract(task[key].period.full, 'day').format("YYYY-MM-DD"),
 				users: this.props.marry.users,
 			};
-			
 			await createTask(newTask);
 			this.setState({
 				currentTask: newTask.task_name

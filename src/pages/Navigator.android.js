@@ -25,17 +25,6 @@ class Navigator extends React.Component {
     }
   }
 
-	onActionSelected(action) {
-		if(action === 1) {
-			this.props.navigator.push({ component: TodoTimeline });
-		}else if(action === 2) {
-			this.props.navigator.push({ component: TodoCate });
-		}else if(action === 3) {
-			this.props.navigator.push({ component: More });
-		}else if(action === 0) {
-			this.props.navigator.push({ component: TodoNew });
-		}
-	}
 	render() {
 		return (
 			<Home navigator={this.props.navigator} />

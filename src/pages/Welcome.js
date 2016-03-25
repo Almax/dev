@@ -36,7 +36,6 @@ class Welcome extends React.Component {
 
 						<SubmitButton onPress={this._enter.bind(this)}>进入</SubmitButton>
 
-
 				</View>	
 			</View>
 		);

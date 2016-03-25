@@ -24,5 +24,7 @@ export function init() {
 }
 
 export function load(marry) {
-	return async (dispatch) => dispatch(loadMoney(await getMoney(marry)))
+	return async (dispatch) => {
+		dispatch(loadMoney(await getMoney(marry)))
+	} 
 }

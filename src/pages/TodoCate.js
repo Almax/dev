@@ -98,9 +98,6 @@ class TodoCate extends React.Component {
 			dataSource
 		};
 	}
-	componentDidMount() {
-		this.props.init();
-	}
 	componentWillReceiveProps(nextProps) {
 		var group = {};
 		if(typeof this.props.state === 'object') {

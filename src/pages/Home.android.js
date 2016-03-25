@@ -8,6 +8,7 @@ import React, {
 } from 'react-native';
 import { connect } from 'react-redux';
 import asset from '../assets';
+import globalStyles from '../styles';
 import { setMyMarry } from '../redux/modules/marry';
 import moment from 'moment';
 import Swiper from 'react-native-swiper2';
@@ -21,7 +22,7 @@ import ActionButton from 'react-native-action-button';
 import Schedule from './Schedule';
 import Chat from './Chat';
 import More from './More';
-
+import FindPartner from './FindPartner';
 class Home extends Component {
 	constructor(props) {
 		super(props);
@@ -29,13 +30,14 @@ class Home extends Component {
 			mock: null
 		}
 	}
-	componentDidMount() {
+	_invite() {
+		this.props.navigator.push({
+			component: FindPartner
+		});
 	}
  	render() {
-		const { state, navigator } = this.props;
-
-		if(this.props.marry) {
-			const { marry } = this.props;
+		const { marry, navigator } = this.props;
+		if(typeof marry === 'object') {
 			return (
 				<View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
 						<Swiper height={200} showsPagination={true} showsButtons={false}>
@@ -53,46 +55,63 @@ class Home extends Component {
 								</View>
 							</View>
 						</Swiper>
-						<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
-							<TouchableOpacity
-									onPress={ () => navigator.push({ component: AccountBook }) }
-									style={styles.textIcon}>
-								<Image source={asset.accountBook} style={styles.icon} />
-								<Text style={styles.text}>账本</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-									onPress={ () => navigator.push({ component: Schedule }) }
-									style={styles.textIcon}>
-								<Image source={asset.taskBook} style={styles.icon} />
-								<Text style={styles.text}>待办</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-									onPress={ () => navigator.push({ component: Story }) }
-									style={styles.textIcon}>
-								<Image source={asset.storyBook} style={styles.icon} />
-								<Text style={styles.text}>故事</Text>
-							</TouchableOpacity>
+
+						<View style={{ flex: 1 }}>
+							<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
+								<TouchableOpacity
+										onPress={ () => navigator.push({ component: AccountBook }) }
+										style={styles.textIcon}>
+									<Image source={asset.accountBook} style={styles.icon} />
+									<Text style={styles.text}>账本</Text>
+								</TouchableOpacity>
+								<TouchableOpacity
+										onPress={ () => navigator.push({ component: Schedule }) }
+										style={styles.textIcon}>
+									<Image source={asset.taskBook} style={styles.icon} />
+									<Text style={styles.text}>待办</Text>
+								</TouchableOpacity>
+								<TouchableOpacity
+										onPress={ () => navigator.push({ component: Story }) }
+										style={styles.textIcon}>
+									<Image source={asset.storyBook} style={styles.icon} />
+									<Text style={styles.text}>故事</Text>
+								</TouchableOpacity>
+							</View>
+							<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
+								<TouchableOpacity
+										onPress={ () => navigator.push({ component: OurWedding }) }
+										style={styles.textIcon}>
+									<Image source={asset.marryBook} style={styles.icon} />
+									<Text style={styles.text}>婚礼</Text>
+								</TouchableOpacity>
+								<TouchableOpacity
+										onPress={ () => navigator.push({ component: Chat }) }
+										style={styles.textIcon}>
+									<Image source={asset.msg} style={styles.icon} />
+									<Text style={styles.text}>聊天</Text>
+								</TouchableOpacity>
+								<TouchableOpacity
+										onPress={ () => navigator.push({ component: More }) }
+										style={styles.textIcon}>
+									<Image source={asset.configure} style={styles.icon} />
+									<Text style={styles.text}>设置</Text>
+								</TouchableOpacity>
+							</View>
 						</View>
-						<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
-							<TouchableOpacity
-									onPress={ () => navigator.push({ component: OurWedding }) }
-									style={styles.textIcon}>
-								<Image source={asset.marryBook} style={styles.icon} />
-								<Text style={styles.text}>婚礼</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-									onPress={ () => navigator.push({ component: Chat }) }
-									style={styles.textIcon}>
-								<Image source={asset.msg} style={styles.icon} />
-								<Text style={styles.text}>聊天</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-									onPress={ () => navigator.push({ component: More }) }
-									style={styles.textIcon}>
-								<Image source={asset.configure} style={styles.icon} />
-								<Text style={styles.text}>设置</Text>
-							</TouchableOpacity>
-						</View>
+
+						{
+							marry.users.length == 1 ? 
+							<View style={[{ flexDirection: 'row', height: 80, alignItems: 'center', marginBottom: 100 }, globalStyles.yellow_box]}>
+								<Image source={asset.couple} style={{ height: 40 }} resizeMode={"contain"} />
+								<View style={{ flex: 1, paddingHorizontal: 10 }}>
+									<TouchableOpacity onPress={this._invite.bind(this)}><Text style={{ fontSize: 14, color: '#666666' }}>
+										你现在是单人模式, 邀请另一半加入婚礼, 双人模式 筹备婚礼更简单哦~ <Text style={{ fontWeight: '500' }}>点我邀请</Text></Text>
+									</TouchableOpacity>
+								</View>
+							</View>
+							: 
+							null
+						}
 
         <ActionButton onPress={() => this.props.navigator.push({ component: Add })} buttonColor="#F06199">
         </ActionButton>

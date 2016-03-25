@@ -794,6 +794,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.marrynovo.hunge;
 				PRODUCT_NAME = "婚格 - 让你结婚更简单";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -815,6 +816,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.marrynovo.hunge;
 				PRODUCT_NAME = "婚格 - 让你结婚更简单";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

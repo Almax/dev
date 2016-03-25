@@ -16,6 +16,11 @@ const loadStories = createAction(LOAD_STORIES);
 
 export function load(marry) {
 	return async (dispatch) => {
-		dispatch(loadStories(await getStories(marry)));
+		const stories = await getStories(marry);
+		if(stories) {
+			dispatch(loadStories(stories));
+		}else {
+			dispatch(loadStories([]));
+		}
 	}
 }

@@ -30,6 +30,7 @@ import React, {
 	NativeModules,
 	Alert,
 	Navigator,
+	Platform,
 	Dimensions,
 } from 'react-native';
 const ImagePickerManager = NativeModules.ImagePickerManager;

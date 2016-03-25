@@ -55,11 +55,9 @@ async function request(url, options) {
 }
 
 export async function getMarry() {
-  console.log('now, getMarry');
   const options = { method: 'get' };
   const url = baseUrl.concat('syncdata/');
   return await request(url, options);
-
 }
 
 export async function setMarry(data) {
@@ -118,7 +116,7 @@ export async function createStory(marry, data) {
 }
 
 export async function getMoney(marry) {
-  const options = { method: 'get', body: JSON.stringify({}) };
+  const options = { method: 'get' };
   const url = `${baseUrl}syncdata/${marry.id}/money`;
   return await request(url, options);
 }
