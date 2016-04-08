@@ -1,4 +1,5 @@
 var AssetList = {
+	userhead: require('./ICONS/userhead.png'),
 	loading: require('./loader.gif'),
 	team: require('./team.png'),
 	account: require('./ICONS/account.png'),

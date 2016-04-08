@@ -35,7 +35,6 @@ const reducer = handleActions({
         newState[key] = payload;
       }
     });
-
     return newState;
   }
 }, initialState);
@@ -75,6 +74,5 @@ export function create(data) {
 export function update(data) {
   return async (dispatch) => {
     dispatch(updateTheTask(await updateTask(data)));
-    dispatch(initialTask(await loadTask()));
   }
 }

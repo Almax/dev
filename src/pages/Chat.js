@@ -1,11 +1,11 @@
 import React, {
 	View,
 	Text,
-	Image,
 	ListView,
 	RefreshControl,
 	TouchableOpacity,
-} from 'react-native'
+} from 'react-native';
+import Image from '../components/Image';
 import { connect } from 'react-redux';
 import styles from '../styles';
 import asset from '../assets';
@@ -13,6 +13,7 @@ import { BackStep } from '../components/View';
 import { load, pass } from '../redux/modules/message';
 import { loadUser } from '../redux/modules/session';
 import Loading from './Loading';
+import ChatPage from './ChatPage';
 class Chat extends React.Component {
 	constructor(props) {
 		super(props);
@@ -28,9 +29,6 @@ class Chat extends React.Component {
 		this.setState({
 			dataSource: this.state.dataSource.cloneWithRows(message)
 		});
-		// this.setInterval(() => {
-		// 	this.props.loadMessage();
-		// }, 10000);
 	}
 	componentWillReceiveProps(nextProps) {
 		const { message } = nextProps;
@@ -63,6 +61,14 @@ class Chat extends React.Component {
       })
     }, 2000);
 	}
+	_chatWith(user) {
+		this.props.navigator.push({
+			component: ChatPage,
+			params: {
+				object: user
+			}
+		})
+	}
 	renderRow(row, sectionId, rowId) {
 		const { fromUser, toUser } = row;
 
@@ -72,7 +78,8 @@ class Chat extends React.Component {
 					<Image source={{ uri: toUser.photo }} style={{ height: 50, width: 50, borderRadius: 25, margin: 10, }} />
 						
 					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-						<TouchableOpacity style={{ flex: 1, height: 70, justifyContent: 'center' }}>
+
+						<TouchableOpacity onPress={this._chatWith.bind(this, toUser)} style={{ flex: 1, height: 70, justifyContent: 'center' }}>
 							<Text style={{ fontSize: 18, color: '#666666', fontWeight: '500' }}>{toUser.name}</Text>
 							<View style={{ height: 10, }} />
 							<Text style={{ fontSize: 14, color: '#999999' }}>我是{toUser.role}{toUser.name},我已经看到了你的邀请</Text>
@@ -101,7 +108,7 @@ class Chat extends React.Component {
 					<Image source={{ uri: fromUser.photo }} style={{ height: 50, width: 50, borderRadius: 25, margin: 10, }} />
 						
 					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-						<TouchableOpacity style={{ flex: 1, height: 70, justifyContent: 'center' }}>
+						<TouchableOpacity onPress={this._chatWith.bind(this, fromUser)} style={{ flex: 1, height: 70, justifyContent: 'center' }}>
 							<Text style={{ fontSize: 18, color: '#666666', fontWeight: '500' }}>{fromUser.name}</Text>
 							<View style={{ height: 10, }} />
 							<Text style={{ fontSize: 14, color: '#999999' }}>我是{fromUser.role}{fromUser.name},你快加入到婚礼里来</Text>

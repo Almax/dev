@@ -40,7 +40,7 @@ class App extends React.Component {
     // if (Platform.OS === 'ios') {
     //   codePush.sync();
     // }else if(Platform.OS === 'android') {
-    if(Platform.OS === 'ios') {
+    if(Platform.OS === 'ios' && __DEV__ === false) {
       let result = await codePush.checkForUpdate();
       if(result) {
         codePush.sync({ 

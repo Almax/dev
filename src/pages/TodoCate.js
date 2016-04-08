@@ -38,10 +38,10 @@ class TodoCard extends React.Component {
 		});
 	}
   _finishWork(row, index) {
-    this.props.updateTask({ id: row.id, status: true, index });
+    this.props.update({ id: row.id, status: true, index });
   }
   _cancelWork(row, index) {
-    this.props.updateTask({ id: row.id, status: false, index });
+    this.props.update({ id: row.id, status: false, index });
   }
   shouldComponentUpdate(nextProps, nextState) {
   	if(nextProps === this.props) {
@@ -54,18 +54,16 @@ class TodoCard extends React.Component {
     const { master, task_name, status, created_at } = this.props.data;
     return (
       <View style={styles.card}>
-          
         { 
         	status ?
-          <TouchableOpacity onPress={this._cancelWork.bind(this, this.props.data, this.props.rowId)}>
+          <TouchableOpacity activeOpacity={0.8} onPress={this._cancelWork.bind(this, this.props.data, this.props.rowId)}>
             <Image source={asset.work_done} style={{ height: 28, width: 28, marginRight: 10 }} /> 
           </TouchableOpacity>
           :
-          <TouchableOpacity onPress={this._finishWork.bind(this, this.props.data, this.props.rowId)}>
+          <TouchableOpacity activeOpacity={0.8} onPress={this._finishWork.bind(this, this.props.data, this.props.rowId)}>
             <Image source={asset.work_in_progress} style={{ height: 28, width: 28, marginRight: 10 }} />
           </TouchableOpacity>
         }
-          
         <TouchableOpacity
           onPress={this._open.bind(this, this.props.data, this.props.rowId)}
           style={{ flex: 1 }}>
@@ -80,7 +78,7 @@ const TodoCardRedux = connect(
 	state=>({}),
 	dispatch=>({
     init: () => dispatch(init()),
-		updateTask: (data) => dispatch(update(data))
+		update: (data) => dispatch(update(data))
 	})
 )(TodoCard);
 

@@ -138,7 +138,8 @@ class TodoTimeline extends React.Component {
 		if(typeof state === 'object') {
 			var data = [];
 			Object.keys(state).map((key) => {
-				if(moment(state[key].end_date).format('YYYY-MM') === dateObject.date) {
+
+				if(state[key].end_date && moment(state[key].end_date).format('YYYY-MM') === dateObject.date) {
 					data.push(state[key])
 				}
 			});

@@ -16,7 +16,7 @@ class Navigator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: "home"
+      selectedTab: "chat"
     }
   }
   componentWillReceiveProps(nextProps) {
