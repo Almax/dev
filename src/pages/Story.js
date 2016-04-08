@@ -94,6 +94,8 @@ class Memory extends React.Component {
 		   	this.setState({
 		   		stories: this.state.stories
 		   	});
+
+		   	this.props.load(this.props.marry);
 		  }
 		});	
 	}

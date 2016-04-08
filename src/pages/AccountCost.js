@@ -191,17 +191,14 @@ class Cost extends React.Component {
 
 						<View style={{ padding: 10 }}>
 							<Subtitle>用途说明</Subtitle>
-						</View>
-
-						<FormRow>
 							<SoftInput 
 								scroll={this._onScroll.bind(this)}
 								value={this.state.description}
 								onChangeText={(description) => this.setState({ description })}
 								placeholder={"花费说明"} />
-						</FormRow>
+						</View>
+						<FormRow />
 
-						
 						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
 							<Subtitle>已经支付?</Subtitle>
 			        <Switch
@@ -224,13 +221,13 @@ class Cost extends React.Component {
 
 						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
 
-						<FormBlock>
-							{ this.props.data ? 
-								<PureButton onPress={this._update.bind(this)}>更新支出</PureButton>
-								: 
-								<PureButton onPress={this._submit.bind(this)}>添加支出</PureButton>
-							}
-						</FormBlock>
+						<View style={{ height: 20 }} />
+						{ this.props.data ? 
+							<SubmitButton onPress={this._update.bind(this)}>更新支出</SubmitButton>
+							: 
+							<SubmitButton onPress={this._submit.bind(this)}>添加支出</SubmitButton>
+						}
+	
 
 					</ScrollView>
 
@@ -248,7 +245,7 @@ class Cost extends React.Component {
 		}else {
 			if(this.props.data) {
 	 			return (
-					<View style={innerStyles.container}>
+					<View style={innerStyles.centerContainer}>
 							<Subtitle>更新完成</Subtitle>
 							<FormBlock>
 								<PureButton onPress={this._back.bind(this)}>返回</PureButton>
@@ -257,7 +254,7 @@ class Cost extends React.Component {
 				)
 			}else {
 	 			return (
-					<View style={innerStyles.container}>
+					<View style={innerStyles.centerContainer}>
 							<Subtitle>添加完成</Subtitle>
 							<FormBlock>
 								<PureButton onPress={this._resetData.bind(this)}>继续添加</PureButton>
@@ -277,6 +274,15 @@ const innerStyles = StyleSheet.create({
 		borderRadius: 5,
 		margin: 10,
 		padding: 10,
+	},
+	centerContainer: {
+		flex: 1,
+		backgroundColor: '#FFFFFF',
+		borderRadius: 5,
+		margin: 10,
+		padding: 10,
+		alignItems: 'center',
+		justifyContent: 'center',
 	},
 	segmented: { 
 		marginVertical: 10, 

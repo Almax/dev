@@ -147,8 +147,8 @@ class AccountItem extends React.Component {
 					<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
 
 					<FormBlock>
-						<PureButton onPress={this._editItem.bind(this)} size={"small"}>编辑</PureButton>
-						<PureButton onPress={this._deleteItem.bind(this)} size={"small"}>删除</PureButton>
+						<PureButton onPress={this._editItem.bind(this)}>编辑</PureButton>
+						<PureButton onPress={this._deleteItem.bind(this)}>删除</PureButton>
 					</FormBlock>
 
 				</ScrollView>

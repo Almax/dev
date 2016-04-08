@@ -49,7 +49,7 @@ import {
   ButtonGroup,
   BackStep,
 } from '../components/View';
-import { FormBlock, FormRow, SoftInput, PureButton, HideButton } from '../components/Form'
+import { SubmitButton, FormBlock, FormRow, SoftInput, PureButton, HideButton } from '../components/Form'
 const { height, width } = Dimensions.get('window')
 import asset from '../assets'
 import styles from '../styles'
@@ -303,8 +303,10 @@ class TodoAction extends React.Component {
 		        <Line color={"#EEEEEE"} />
 
 		        <ButtonGroup>
+
+		        	<PureButton onPress={this._editTask.bind(this)}>编辑</PureButton>
 		        	<PureButton onPress={this._sortTask.bind(this)}>分类</PureButton>
-		          <PureButton onPress={this._editTask.bind(this)}>编辑</PureButton>
+		          
 		        </ButtonGroup>
 		  		</View>
 
@@ -336,17 +338,17 @@ class TodoAction extends React.Component {
 		  			}
 		  			</View>
 
-
-		  			<FormBlock>
-
-		  				{ this.state.addDone ? 
-		  				<PureButton onPress={this._submit.bind(this)}>
+		  			<View style={{ marginVertical: 10 }}>
+	  				{ 
+	  				this.state.addDone ? 
+		  				<SubmitButton onPress={this._submit.bind(this)}>
 		  					添加备忘
-		  				</PureButton>
+		  				</SubmitButton>
 		  				 : 
 		  				 <Loading /> 
-		  				}
-		  			</FormBlock>
+	  				}
+	  				</View>
+
 
 		  			{this.renderRemark()}
 

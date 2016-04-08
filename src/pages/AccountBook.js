@@ -261,7 +261,6 @@ const innerStyles = StyleSheet.create({
 	},
 	item: {
 		fontSize: 16,
-		fontWeight: '500',
 		color: '#666666',
 	},
 	cost: {

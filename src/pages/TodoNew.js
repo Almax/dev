@@ -28,6 +28,7 @@ import AddCategories from './AddCategories';
 import data from './mock.json';
 import DateTimePicker from '../components/Widget/DateTimePicker';
 import { create, load } from '../redux/modules/task';
+import Notification from 'react-native-system-notification';
 
 class TodoNew extends React.Component {
 	constructor(props) {
@@ -35,8 +36,8 @@ class TodoNew extends React.Component {
 		this.state = {
 			done: false,
 			task_name: null,
-			catalog_id: null,
-			end_date: null,
+			catalog_id: 0,
+			end_date: new Date(),
 			showPicker: false,
 		};
 	}
@@ -84,7 +85,7 @@ class TodoNew extends React.Component {
 		}
 	}
 	nextStep() {
-    if(this.state.task_name && this.state.end_date && this.state.catalog_id) {
+    if(this.state.task_name && this.state.end_date && this.state.catalog_id !== null) {
       this.props.create({
         task_name: this.state.task_name,
         status: false,
@@ -106,24 +107,34 @@ class TodoNew extends React.Component {
           soundName: 'default'
         })
       }else if(Platform.OS === 'android') {
-
+				Notification.create({
+				  subject: `我的提醒`,
+				  message: `任务: ${this.state.task_name}`,
+				  sendAt: new Date(moment(this.state.end_date).format('YYYY/MM/DD hh:mm:ss'))
+				});
       }
     }else {
       Alert.alert("添加失败","任务信息还没有完善");
     }
 	}
+
 	render() {
 		const { navigator } = this.props;
 		if(this.state.done === true) {
 			return (
-				<View	style={{ flex: 1, backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center' }}>
-					<Text>任务分配好了</Text>
-					<TouchableOpacity 
-						onPress={() => navigator.popToTop()} 
-						style={{ alignItems: 'center', justifyContent: 'center', height: 100, width: 100 }}>						
-						<Text>返回</Text>
-					</TouchableOpacity>
-
+				<View	style={{
+					flex: 1,
+					backgroundColor: '#FFFFFF',
+					borderRadius: 5,
+					margin: 10,
+					padding: 10,
+					alignItems: 'center',
+					justifyContent: 'center',
+				}}>
+					<Subtitle>任务分配好了</Subtitle>
+					<FormBlock>
+						<PureButton onPress={() => navigator.popToTop()} >返回</PureButton>
+					</FormBlock>
 				</View>
 			)
 		}else {
@@ -166,7 +177,7 @@ class TodoNew extends React.Component {
             })}
             indicator={<Image source={asset.arrowRight}  />}>
 
-            { this.state.catalog_id ? <CatalogSection id={this.state.catalog_id} /> : "选择"  }
+            { this.state.catalog_id !== null ? <CatalogSection id={this.state.catalog_id} /> : "选择"  }
 
             </Selectable>
 
@@ -185,11 +196,11 @@ class TodoNew extends React.Component {
 						}
 						</Selectable>
 					<FormRow />
-					
 
-					<FormBlock>
-						<SubmitButton onPress={this.nextStep.bind(this)}>添加任务</SubmitButton>
-					</FormBlock>
+
+					<View style={{ height: 20 }} />
+					<SubmitButton onPress={this.nextStep.bind(this)}>添加任务</SubmitButton>
+
 				</ScrollView>
 
 				<DateTimePicker 

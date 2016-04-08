@@ -17,6 +17,7 @@ import asset from '../assets';
 import { FormRow, Selectable, SubmitButton } from '../components/Form';
 import { BackStep, Subtitle } from '../components/View';
 import { createTask } from '../utils/syncdata';
+import { init } from '../redux/modules/task';
 import FindPartner from './FindPartner';
 import mock from './mock.json';
 import Loading from './Loading';
@@ -59,6 +60,8 @@ class TodoImport extends React.Component {
 			flag: false,
 			currentTask: "创建完成"
 		});
+
+		this.props.init();
 	}
 	_onDateChange(date) {
 		this.setState({
@@ -141,6 +144,7 @@ class TodoImport extends React.Component {
 export default connect(
 	state=>({ todo: state.todo, marry: state.marry }),
 	dispatch=>({
-		create: (data) => dispatch(create(data))
+		create: (data) => dispatch(create(data)),
+		init: () => dispatch(init()),
 	})
 )(TodoImport);

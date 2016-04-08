@@ -75,7 +75,7 @@ class BasicMarry extends React.Component {
 			marry_date: this.state.marry_date,
 		}
 		await this.props.update(marry);
-		Alert.alert('更新成功', '我的资料 更新成功')
+		Alert.alert('更新成功', '我的婚礼信息更新成功')
 	}
 
 	async _showPicker() {

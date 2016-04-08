@@ -93,7 +93,6 @@ export function store(session) {
 export function updateProfile(basic_profile) {
 	return async (dispatch) => {
 		var session = await updateBasicProfile(basic_profile);
-		console.warn('session:', session);
 		if(session == null) {
 			dispatch(loadSession(session));
 		}else {

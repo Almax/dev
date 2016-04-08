@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { currentUser, cleanUser } from './session';
 const baseUrl = 'http://test.marrynovo.com/api/v1/';
-//const baseUrl = 'http://192.168.199.152:3000/api/v1/';
+// const baseUrl = 'http://192.168.199.152:3000/api/v1/';
 
 async function request(url, options) {
   const me = await currentUser();
@@ -37,19 +37,19 @@ async function request(url, options) {
     }
 
     const resp = await response.json();
-    if(resp === null) {
+    if ( resp === null ) {
       //空数据返回
       return null;
-    }else if(resp.error) {
+    } else if (resp.error) {
       //服务器异常 清空数据
       Alert.alert('请求错误','网络请求异常，请关闭重试');
       await cleanUser();
-    }else {
+    } else {
       //返回正常
       return resp;
     }
 
-  } catch(e) {
+  } catch (e) {
     console.log('throw: ', e);
   }
 }

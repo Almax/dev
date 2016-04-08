@@ -15,12 +15,21 @@ const { width, height } = Dimensions.get('window');
 import Time from '../components/View/Time';
 import moment from 'moment';
 import { 
+  Line, 
+  Caption, 
+  Subtitle, 
+  Title, 
+  Detail, 
   PureText, 
+  MemberHeader, 
+  PhotoPreview, 
+  HorizontalLayout,
+  ButtonGroup
 } from '../components/View';
 import TodoAction from './TodoAction';
 import Loading from './Loading';
 import { update } from '../redux/modules/task';
-
+import TodoImport from './TodoImport';
 class TodoCard extends React.Component {
 	_open(row) {
 		this.props.navigator.push({ 
@@ -99,50 +108,8 @@ class TodoTimeline extends React.Component {
 			offsetY: 0,
 			offsetX: 0,
 		}
-		// this.offsetX = 0;
-		// this.offsetY = 0;
 	}
-	componentWillMount() {
-		// this._panResponder = PanResponder.create({
-		// 	onStartShouldSetPanResponder: (evt, gestureState) => true,
-		// 	onStartShouldSetPanResponderCapture: (evt, gestureState) => false,
-		// 	onMoveShouldSetPanResponder: (evt, gestureState) => true,
-		// 	onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
-		// 	onPanResponderGrant: (evt, gestureState) => {
-		// 	},
-		// 	onPanResponderMove: (evt, gestureState) => {
-
-		// 	},
-		// 	onPanResponderStart: (evt, gestureState) => {
-		// 		//this.offsetX = gestureState.moveX;
-		// 		// this.offsetY = gestureState.moveY;
-		// 		this.setState({
-		// 			offsetX: gestureState.moveX,
-		// 			offsetY: gestureState.moveY,
-		// 		})
-
-		// 		console.warn(gestureState.moveX, gestureState.moveY)
-		// 	},
-		// 	onPanResponderEnd: (evt, gestureState) => {
-		// 		if(gestureState.moveX - this.state.offsetX > 200) {
-		// 			//this.setState({ currentDate: moment(this.state.currentDate).subtract(1, 'month').format('YYYY-MM') });
-		// 			this.timeline.moveTo(moment(this.state.currentDate).format('YYYY-MM'));
-		// 		}else {
-		// 			//this.setState({ currentDate: moment(this.state.currentDate).add(1, 'month').format('YYYY-MM') });
-		// 			this.timeline.moveTo(moment(this.state.currentDate).format('YYYY-MM'));
-		// 		}
-		// 	},
-		// 	onPanResponderTerminationRequest: (evt, gestureState) => true,
-		// 	onPanResponderRelease: (evt, gestureState) => {
-
-		// 	},
-		// 	onPanResponderTerminate: (evt, gestureState) => {
-
-		// 	},
-		// 	onShouldBlockNativeResponder: (evt, gestureState) => {
-		// 		return true;
-		// 	}
-		// });		
+	componentWillMount() {		
 	}
 	componentDidMount() {
 
@@ -188,6 +155,50 @@ class TodoTimeline extends React.Component {
 	_backToday() {
 		this.timeline.moveTo(moment().format('YYYY-MM'));
 	}
+	_renderHeader() {
+    const { state } = this.props;
+    if(state.length===0) {
+      return (
+        <View style={{ margin: 10, padding: 10, borderRadius: 10, backgroundColor: '#FBFFDF' }}>
+
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Image source={asset.girl} style={{ height: 40, width: 40, borderRadius: 20 }} />
+              <View>
+                <Text style={{ fontSize: 16 }}>格小格</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+                  <Text style={{ fontSize: 12, color: '#769AE4' }}>1分钟前</Text>
+                </View>
+              </View>
+            </View>
+
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Image source={asset.i_41} style={{ width: 30, height: 30 }} />
+              <Text style={{ fontSize: 12, fontWeight: '400', color: '#666666' }}>新手任务</Text>
+            </TouchableOpacity>
+          </View>
+
+          <Title onPress={() => 
+              this.props.navigator.push({ 
+                component: TodoImport, 
+              })}>
+            格小格的简单婚礼筹备流程攻略
+          </Title>
+
+          <TouchableOpacity onPress={() =>  this.props.navigator.push({ component: TodoImport })} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+            <Image source={asset.taskDesc} />
+            <View style={{ flex: 1, marginHorizontal: 5, flexWrap: 'wrap' }}>
+              <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>
+              	快速生成你的婚礼待办事项列表,我们将会一步步教你筹备婚礼
+              </Text> 
+            </View>
+          </TouchableOpacity>
+
+        </View>
+      );
+    }
+	}
 	render() {
 		const { state } = this.props;
 		if(state === 'initial state') {
@@ -218,6 +229,7 @@ class TodoTimeline extends React.Component {
 					<ListView
 						bounces={true}
 						dataSource={this.state.dataSource}
+						renderHeader={this._renderHeader.bind(this)}
 						renderRow={this._renderRow.bind(this)}
 						renderFooter={() => <View style={{ height: 50 }} />} />
 				</View>

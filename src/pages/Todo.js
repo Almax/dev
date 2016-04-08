@@ -199,14 +199,14 @@ class Todo extends React.Component {
             格小格的简单婚礼筹备流程攻略
           </Title>
 
-            <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-              <Image source={asset.taskDesc} />
-              <View style={{ flex: 1, marginHorizontal: 5, flexWrap: 'wrap' }}>
-                <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>
+          <TouchableOpacity onPress={() =>  this.props.navigator.push({ component: TodoImport })} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+            <Image source={asset.taskDesc} />
+            <View style={{ flex: 1, marginHorizontal: 5, flexWrap: 'wrap' }}>
+              <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>
                 快速生成你的婚礼待办事项列表,我们将会一步步教你筹备婚礼
-                </Text> 
-              </View>
+              </Text> 
             </View>
+          </TouchableOpacity>
 
         </View>
       );

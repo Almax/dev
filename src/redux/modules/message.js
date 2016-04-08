@@ -1,6 +1,6 @@
 import { loadInvitation, passInvitation } from '../../utils/syncdata';
 import { createAction, handleActions } from 'redux-actions';
-
+import { loadUser } from './session';
 export const RESET_MESSAGE = 'app/message/reset_message';
 export const INITIAL_MESSAGE = 'app/message/initial_message';
 export const PASS_MESSAGE = 'app/message/pass_message';
@@ -40,5 +40,6 @@ export function pass(id) {
 	return async(dispatch) => {
 		dispatch(passMessage(await passInvitation(id)));
 		dispatch(initialMessage(await loadInvitation()));
+		dispatch(loadUser());
 	}
 }

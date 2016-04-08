@@ -5,7 +5,7 @@ import {
 } from '../../utils/syncdata';
 import { createAction, handleActions } from 'redux-actions';
 import { load as loadMoney } from './money';
-import { load as loadStory } from './story';
+import { load as loadStory, reset as resetStory } from './story';
 
 export const RESET_MARRY = 'app/marry/reset_marry';
 export const LOAD_MARRY = 'app/marry/load_marry';
@@ -36,6 +36,7 @@ export const hitMarry = createAction(HEART_BEAT);
 export function resetMyMarry() {
 	return async (dispatch) => {
 		dispatch(resetMarry());
+		dispatch(resetStory());
 	}
 }
 //GET 

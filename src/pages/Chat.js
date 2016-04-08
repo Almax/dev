@@ -53,7 +53,6 @@ class Chat extends React.Component {
 	}
 	_passRequest(invitation) {
 		this.props.pass(invitation.id);
-		this.props.loadSession();
 	}
 	_onRefresh() {
     this.setState({isRefreshing: true});

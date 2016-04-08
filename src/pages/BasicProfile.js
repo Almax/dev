@@ -39,13 +39,15 @@ import {
 	SubmitButton,
 	FormBlock,
 } from '../components/Form';
-import asset from '../assets'
-import { connect } from 'react-redux'
-import { updateProfile } from '../redux/modules/session'
+import asset from '../assets';
+import { connect } from 'react-redux';
+import { updateProfile } from '../redux/modules/session';
+import Loading from './Loading';
 class BasicProfile extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			loaded: true,
 			option: 1,
 			photo: null,
 			role: "保密",
@@ -65,10 +67,15 @@ class BasicProfile extends React.Component {
 			signature: this.props.state.signature,
 		})
 	}
+	componentWillReceiveProps(nextProps) {
+		this.setState({ loaded: true });
+		Alert.alert('更新成功', '我的资料更新成功');
+	}
 	viewScroll(offset) {
 		this.scrollView.scrollTo({ x:0 ,y: offset, animated: true })
 	}
 	changeProfile() {
+		this.setState({ loaded: false });
 		if(/http\:\/\//.test(this.state.photo)) {
 			this.props.save({
 				name: this.state.name,
@@ -87,9 +94,7 @@ class BasicProfile extends React.Component {
 				signature: this.state.signature,
 			});
 		}
-		Alert.alert('更新成功', '我的资料 更新成功')
 	}
-
 	_takePhoto() {
 		ImagePickerManager.showImagePicker(options, (response) => {
 		  console.log('Response = ', response);
@@ -181,7 +186,9 @@ class BasicProfile extends React.Component {
 								placeholder={"这里是我的签名"} />
 						</FormRow>
 						<FormBlock />
-						<SubmitButton onPress={this.changeProfile.bind(this)}>修改</SubmitButton>
+							
+						{ this.state.loaded ? <SubmitButton onPress={this.changeProfile.bind(this)}>修改</SubmitButton> : <Loading /> }
+
 					</View>
 				</ScrollView>
 			</View>

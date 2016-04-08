@@ -1,5 +1,6 @@
 import React, {
-	Component,
+	ScrollView,
+	RefreshControl,
 	View,
 	Text,
 	Image,
@@ -10,6 +11,7 @@ import { connect } from 'react-redux';
 import asset from '../assets';
 import globalStyles from '../styles';
 import { setMyMarry } from '../redux/modules/marry';
+import { loadUser } from '../redux/modules/session';
 import moment from 'moment';
 import Swiper from 'react-native-swiper2';
 import Story from './Story';
@@ -23,17 +25,29 @@ import Schedule from './Schedule';
 import Chat from './Chat';
 import More from './More';
 import FindPartner from './FindPartner';
-class Home extends Component {
+
+class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			mock: null
+			mock: null,
+			isRefreshing: false
 		}
 	}
 	_invite() {
 		this.props.navigator.push({
 			component: FindPartner
 		});
+	}
+	_onRefresh() {
+		this.setState({isRefreshing: true});
+		setTimeout(() => {
+			this.props.loadSession();
+		  this.setState({
+		    isRefreshing: false
+		  });
+		}, 2000);
+		
 	}
  	render() {
 		const { marry, navigator } = this.props;
@@ -56,7 +70,19 @@ class Home extends Component {
 							</View>
 						</Swiper>
 
-						<View style={{ flex: 1 }}>
+
+						<ScrollView 
+							contentContainerStyle={{ flex: 1 }}
+			        refreshControl={
+			          <RefreshControl
+			            refreshing={this.state.isRefreshing}
+			            onRefresh={this._onRefresh.bind(this)}
+			            tintColor="#F06199"
+			            title="正在更新..."
+			            colors={['#F06199']}
+			            progressBackgroundColor="#FFFFFF"
+			          />
+			        }>
 							<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
 								<TouchableOpacity
 										onPress={ () => navigator.push({ component: AccountBook }) }
@@ -79,12 +105,6 @@ class Home extends Component {
 							</View>
 							<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
 								<TouchableOpacity
-										onPress={ () => navigator.push({ component: OurWedding }) }
-										style={styles.textIcon}>
-									<Image source={asset.marryBook} style={styles.icon} />
-									<Text style={styles.text}>婚礼</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
 										onPress={ () => navigator.push({ component: Chat }) }
 										style={styles.textIcon}>
 									<Image source={asset.msg} style={styles.icon} />
@@ -96,8 +116,13 @@ class Home extends Component {
 									<Image source={asset.configure} style={styles.icon} />
 									<Text style={styles.text}>设置</Text>
 								</TouchableOpacity>
+								<TouchableOpacity
+										onPress={ () => {} }
+										style={styles.emptyIcon}>
+
+								</TouchableOpacity>
 							</View>
-						</View>
+						</ScrollView>
 
 						{
 							marry.users.length == 1 ? 
@@ -113,8 +138,9 @@ class Home extends Component {
 							null
 						}
 
-        <ActionButton onPress={() => this.props.navigator.push({ component: Add })} buttonColor="#F06199">
-        </ActionButton>
+        	<ActionButton 
+        		onPress={() => this.props.navigator.push({ component: Add })} 
+        		buttonColor="#F06199" position={"center"} />
 
 				</View>
 			);
@@ -180,6 +206,7 @@ const styles = StyleSheet.create({
 export default connect(
 	state => ({ marry: state.marry }),
 	dispatch => ({
-		updateMarry: (data) => dispatch(setMyMarry(data))
+		updateMarry: (data) => dispatch(setMyMarry(data)),
+		loadSession: () => dispatch(loadUser()),
 	})
 )(Home)

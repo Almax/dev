@@ -1,8 +1,9 @@
 import React, {
-	Component,
+	ScrollView,
 	View,
 	Text,
 	Image,
+	RefreshControl,
 	StyleSheet,
 	TouchableOpacity,
 } from 'react-native';
@@ -10,6 +11,7 @@ import { connect } from 'react-redux';
 import asset from '../assets';
 import globalStyles from '../styles';
 import { setMyMarry } from '../redux/modules/marry';
+import { loadUser } from '../redux/modules/session';
 import moment from 'moment';
 import Swiper from 'react-native-swiper2';
 import Story from './Story';
@@ -21,7 +23,6 @@ import { PureButton } from '../components/Form';
 import FindPartner from './FindPartner';
 import TodoNew from './TodoNew';
 import ActionButton from 'react-native-action-button';
-
 class TodoList extends React.Component {
 	render() {
 		return (
@@ -36,11 +37,12 @@ class TodoList extends React.Component {
 		);
 	}
 }
-class Home extends Component {
+class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			mock: null
+			mock: null,
+			isRefreshing: false,
 		}
 	}
 	componentDidMount() {
@@ -49,6 +51,16 @@ class Home extends Component {
 		this.props.navigator.push({
 			component: FindPartner
 		});
+	}
+	_onRefresh() {
+		this.setState({isRefreshing: true});
+		setTimeout(() => {
+			this.props.loadSession();
+		  this.setState({
+		    isRefreshing: false
+		  });
+		}, 2000);
+		
 	}
  	render() {
 		const { state, navigator } = this.props;
@@ -73,6 +85,18 @@ class Home extends Component {
 							</View>
 						</Swiper>
 
+						<ScrollView 
+							contentContainerStyle={{ flex: 1 }}
+			        refreshControl={
+			          <RefreshControl
+			            refreshing={this.state.isRefreshing}
+			            onRefresh={this._onRefresh.bind(this)}
+			            tintColor="#EEEEEE"
+			            title="正在更新..."
+			            colors={['#EEEEEE']}
+			            progressBackgroundColor="#FFFFFF"
+			          />
+			        }>
 						<View style={{ flex: 1 }}>
               <View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
                 <TouchableOpacity
@@ -110,6 +134,7 @@ class Home extends Component {
 							null
 						}
 
+						</ScrollView>
 						<View style={{ height: 50 }} />
 				</View>
 			);
@@ -176,6 +201,7 @@ const styles = StyleSheet.create({
 export default connect(
 	state => ({ marry: state.marry }),
 	dispatch => ({
-		updateMarry: (data) => dispatch(setMyMarry(data))
+		updateMarry: (data) => dispatch(setMyMarry(data)),
+		loadSession: () => dispatch(loadUser()),
 	})
 )(Home)

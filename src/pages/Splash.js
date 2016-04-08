@@ -7,7 +7,6 @@ import React, {
 	NetInfo,
 	Alert
 } from 'react-native';
-
 import Store from 'react-native-store';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -23,13 +22,14 @@ import { load as loadMessage } from '../redux/modules/message';
 import { load as LoadMoney } from '../redux/modules/money';
 import { init as loadTodos } from '../redux/modules/task';
 import { load as loadStories } from '../redux/modules/story';
-class Splash extends React.Component {
 
+class Splash extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			network: null,
 			selected_date: null,
+
 		}
 	}
 	componentDidMount() {

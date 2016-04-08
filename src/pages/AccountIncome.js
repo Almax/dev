@@ -130,23 +130,21 @@ class Income extends React.Component {
 						
 						<View style={{ padding: 10 }}>
 							<Subtitle>收入来源说明</Subtitle>
-						</View>
-						<FormRow>
 							<SoftInput 
 								scroll={this._onScroll.bind(this)}
 								value={this.state.description}
 								onChangeText={(description) => this.setState({ description })}
 								placeholder={"收入来源说明/备注"} />
-						</FormRow>
-							
-						<FormBlock>
+						</View>
+						<FormRow />
+						
+						<View style={{ height: 20 }} />
 							{ 
 								this.props.data ? 
-								<PureButton onPress={this._update.bind(this)}>编辑收入</PureButton>
+								<SubmitButton onPress={this._update.bind(this)}>编辑收入</SubmitButton>
 									:
-								<PureButton onPress={this._submit.bind(this)}>添加收入</PureButton>
+								<SubmitButton onPress={this._submit.bind(this)}>添加收入</SubmitButton>
 							 }
-						</FormBlock>
 
 					</ScrollView>
 
@@ -158,7 +156,7 @@ class Income extends React.Component {
 			);
 		}else {
 			return (
-				<View style={innerStyles.container}>
+				<View style={innerStyles.centerContainer}>
 					<Subtitle>添加完成</Subtitle>
 					<FormBlock>
 						<PureButton onPress={this._resetData.bind(this)}>继续添加</PureButton>
@@ -177,6 +175,15 @@ const innerStyles = StyleSheet.create({
 		borderRadius: 5,
 		margin: 10,
 		padding: 10,
+	},
+	centerContainer: {
+		flex: 1,
+		backgroundColor: '#FFFFFF',
+		borderRadius: 5,
+		margin: 10,
+		padding: 10,
+		alignItems: 'center',
+		justifyContent: 'center',
 	},
 	segmented: { 
 		marginVertical: 10, 
