@@ -6,7 +6,7 @@ import {
 	updateName,
 	updateBasicProfile
 } from '../../utils/session';
-
+import { init } from '../../utils/contact';
 import { getMyMarry, resetMyMarry } from './marry';
 import { load as loadTask, reset as resetTask } from './task';
 import { load as loadMessage, reset as resetMessage } from './message';
@@ -44,6 +44,7 @@ export function login(username, password) {
 	return async (dispatch) => {
 		const user = await userLogin(username, password);
 		if(user) {
+			await init();
 			dispatch(loadSession(user));
 			dispatch(getMyMarry());
 			dispatch(loadTask());

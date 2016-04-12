@@ -5,6 +5,7 @@ import SplashScreen from '@remobile/react-native-splashscreen';
 
 import React, {
   AppRegistry,
+  StatusBar,
   View,
   Text,
   Platform,
@@ -95,7 +96,7 @@ class App extends React.Component {
     if (Platform.OS === 'ios') {
       return NavigatorSceneConfigs.PushFromRight;
     }
-    return NavigatorSceneConfigs.FloatFromBottomAndroid;
+    return NavigatorSceneConfigs.PushFromRight;
   }
   renderScene(route, navigator) {
     const Component = route.component;
@@ -107,11 +108,17 @@ class App extends React.Component {
     if(this.state.finished) {
       return (
         <Provider store={store} key="provider">
+          <View style={{ flex: 1 }}>
+           <StatusBar
+              translucent={true}
+              backgroundColor="#F06199"
+              barStyle="light-content" />
           <Navigator
             ref={(nav) => this.navigator = nav}
             initialRoute={this.initialRoute}
             configureScene={(route) => this.configureScene(route)}
             renderScene={(route, navigator) => this.renderScene(route, navigator)} />
+          </View>
         </Provider>
       );
     }else {

@@ -29,6 +29,7 @@
 		816A1FEB1C8D273F00622F4B /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 816A1FDC1C8D26F600622F4B /* libRNImagePicker.a */; };
 		816A1FF21C9116B200622F4B /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 816A1FF11C91169900622F4B /* libCodePush.a */; };
 		816A1FF41C9116CD00622F4B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 816A1FF31C9116CD00622F4B /* libz.tbd */; };
+		81B6DD831CBB532000B44A29 /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B6DD751CBB531900B44A29 /* libRCTContacts.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -138,6 +139,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = CodePush;
 		};
+		81B6DD741CBB531900B44A29 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 81B6DD6E1CBB531800B44A29 /* RCTContacts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1441618E1BD0A79300FA4F59;
+			remoteInfo = RCTContacts;
+		};
 		832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */;
@@ -176,6 +184,7 @@
 		816A1FDD1C8D271400622F4B /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		816A1FEC1C91169900622F4B /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		816A1FF31C9116CD00622F4B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		81B6DD6E1CBB531800B44A29 /* RCTContacts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTContacts.xcodeproj; path = "../node_modules/react-native-contacts/ios/RCTContacts.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -191,6 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81B6DD831CBB532000B44A29 /* libRCTContacts.a in Frameworks */,
 				8145FB951CA3C6CE00414F9D /* libRCTSplashScreen.a in Frameworks */,
 				816A1FF41C9116CD00622F4B /* libz.tbd in Frameworks */,
 				816A1FF21C9116B200622F4B /* libCodePush.a in Frameworks */,
@@ -358,9 +368,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		81B6DD6F1CBB531800B44A29 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				81B6DD751CBB531900B44A29 /* libRCTContacts.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				81B6DD6E1CBB531800B44A29 /* RCTContacts.xcodeproj */,
 				8145FB811CA3C6B800414F9D /* RCTSplashScreen.xcodeproj */,
 				816A1FEC1C91169900622F4B /* CodePush.xcodeproj */,
 				816A1FDD1C8D271400622F4B /* RCTPushNotification.xcodeproj */,
@@ -486,6 +505,10 @@
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
+				},
+				{
+					ProductGroup = 81B6DD6F1CBB531800B44A29 /* Products */;
+					ProjectRef = 81B6DD6E1CBB531800B44A29 /* RCTContacts.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -645,6 +668,13 @@
 			fileType = archive.ar;
 			path = libCodePush.a;
 			remoteRef = 816A1FF01C91169900622F4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		81B6DD751CBB531900B44A29 /* libRCTContacts.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTContacts.a;
+			remoteRef = 81B6DD741CBB531900B44A29 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		832341B51AAA6A8300B99B32 /* libRCTText.a */ = {

@@ -13,7 +13,9 @@ import { BackStep } from '../components/View';
 import { load, pass } from '../redux/modules/message';
 import { loadUser } from '../redux/modules/session';
 import Loading from './Loading';
+import ChatMenu from '../components/ChatMenu';
 import ChatPage from './ChatPage';
+import ChatContact from './ChatContact';
 class Chat extends React.Component {
 	constructor(props) {
 		super(props);
@@ -29,6 +31,9 @@ class Chat extends React.Component {
 		this.setState({
 			dataSource: this.state.dataSource.cloneWithRows(message)
 		});
+		// this.props.navigator.push({
+		// 	component: ChatContact
+		// })
 	}
 	componentWillReceiveProps(nextProps) {
 		const { message } = nextProps;
@@ -133,13 +138,17 @@ class Chat extends React.Component {
 			);
 		}
 	}
+	_addContacts() {
+		this.props.navigator.push({
+			component: ChatContact
+		})
+	}
 	render() {
 		const { marry, message } = this.props;
 		if(typeof message === 'object') {
 			return (
 				<View style={[styles.container, {backgroundColor: '#EFEFEF'}]}>
-					<BackStep title={"聊天"} />
-
+					<BackStep title={"聊天"} buttonTitle={'添加'} buttonPress={this._addContacts.bind(this)} />
 					<ListView
 						automaticallyAdjustContentInsets={false}
 						dataSource={this.state.dataSource}

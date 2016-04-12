@@ -137,4 +137,5 @@ dependencies {
     compile project(':react-native-android-badge')
     compile project(':react-native-system-notification')
     compile project(':react-native-splashscreen')
+    compile project(':react-native-contacts')
 }

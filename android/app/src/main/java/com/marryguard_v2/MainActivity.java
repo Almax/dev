@@ -12,6 +12,7 @@ import com.microsoft.codepush.react.CodePush;
 import me.jhen.react.BadgePackage;
 import io.neson.react.notification.NotificationPackage;
 import com.remobile.splashscreen.*;
+import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 
 public class MainActivity extends ReactActivity {
     private CodePush _codePush;
@@ -53,6 +54,7 @@ public class MainActivity extends ReactActivity {
             new BadgePackage(),
             new NotificationPackage(this),
             new RCTSplashScreenPackage(this),
+            new ReactNativeContacts(),
             this._codePush.getReactPackage()
         );
     }

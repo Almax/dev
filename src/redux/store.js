@@ -8,9 +8,9 @@ const middleWares = [
   thunkMiddleware,
 ];
 
-if (__DEV__) {
-  middleWares.unshift(createLogger());
-}
+// if (__DEV__) {
+//   middleWares.unshift(createLogger());
+// }
 
 const finalCreateStore = applyMiddleware(
   ...middleWares

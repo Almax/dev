@@ -11,6 +11,7 @@
   "dependencies": {
     "@remobile/react-native-splashscreen": "^1.0.3",
     "immutable": "^3.7.6",
+    "md5": "^2.1.0",
     "moment": "^2.11.1",
     "moment-range": "^2.1.0",
     "react-native": "^0.21.0",
@@ -19,6 +20,8 @@
     "react-native-animatable": "^0.4.1",
     "react-native-chart": "^0.1.12",
     "react-native-code-push": "^1.8.0-beta",
+    "react-native-contacts": "^0.2.4",
+    "react-native-gifted-messenger": "0.0.24",
     "react-native-http-cache": "^0.1.1",
     "react-native-image-picker": "^0.18.2",
     "react-native-keyboard-aware-scroll-view": "0.0.4",
