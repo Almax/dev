@@ -124,9 +124,7 @@ class Memory extends React.Component {
 			);
 		}else {
 			return (
-				<View style={{ flex: 1 }}>
-
-					<BackStep navigator={this.props.navigator} title={"故事"} />
+				<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
 					<LazyloadScrollView 
 						name="lazyload-list"
 						refreshControl={

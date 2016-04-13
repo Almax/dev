@@ -120,7 +120,6 @@ class BasicProfile extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<BackStep title={"基本资料"} navigator={this.props.navigator} />
 				<ScrollView
 					ref={scrollView => this.scrollView = scrollView}
 					contentContainerStyle={{ padding: 10, }}

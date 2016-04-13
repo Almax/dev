@@ -13,7 +13,7 @@ module.exports = StyleSheet.create({
 	tabContainer: {
 		alignItems: 'center',
 		justifyContent: 'flex-end',
-		height: 58,
+		height: 40,
 		paddingBottom: 5,
 	},
 

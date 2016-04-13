@@ -82,8 +82,6 @@ class AccountOut extends React.Component {
 	render() {
 		return (
 			<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-				<BackStep title={"已花费"} navigator={this.props.navigator} />
-
 				<ScrollView
 					contentContainerStyle={{ padding: 10 }}>
 

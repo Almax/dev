@@ -182,7 +182,7 @@ class TodoCate extends React.Component {
             格小格的简单婚礼筹备流程攻略
           </Title>
 
-          <TouchableOpacity onPress={() =>  this.props.navigator.push({ component: TodoImport })} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+          <TouchableOpacity onPress={() =>  this.props.navigator.push({ component: TodoImport, title: '设置婚礼任务' })} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
             <Image source={asset.taskDesc} />
             <View style={{ flex: 1, marginHorizontal: 5, flexWrap: 'wrap' }}>
               <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>

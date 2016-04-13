@@ -169,8 +169,6 @@ class AccountBook extends React.Component {
 	render() {
 		return (
 			<View style={[styles.container, { backgroundColor: '#EFEFEF' }]}>
-				<BackStep navigator={this.props.navigator} title={"账本"} />
-
 				<View style={{ height: 1/PixelRatio.get() }} />
 				<View style={innerStyles.buttonRow}>
 					<TouchableOpacity onPress={() => this.props.navigator.push({ component: AccountBudget })} style={innerStyles.button}>

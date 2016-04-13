@@ -248,7 +248,6 @@ class TodoAction extends React.Component {
 		const { todo } = this.state;
 		return (
 			<View style={{flex:1, height, backgroundColor: '#EEEEEE'}}>
-			<BackStep navigator={this.props.navigator} title={"任务详情"} />
 			<ScrollView
 				automaticallyAdjustContentInsets={false}
 				bounces={true}

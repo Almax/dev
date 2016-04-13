@@ -6,6 +6,7 @@ import React, {
 	Image,
 	ListView,
 	RefreshControl,
+	InteractionManager,
 	StyleSheet,
 } from 'react-native';
 import { BackStep } from '../components/View';
@@ -20,11 +21,13 @@ class ChatContact extends React.Component {
 			isRefreshing: false
 		}
 	}
-	async componentDidMount() {
-		await load((contacts) => {
-		  this.setState({
-		  	ds: this.state.ds.cloneWithRows(contacts)
-		  });
+	componentDidMount() {
+		InteractionManager.runAfterInteractions( async () => {
+			await load((contacts) => {
+			  this.setState({
+			  	ds: this.state.ds.cloneWithRows(contacts)
+			  });
+			});
 		});
 	}
 	_renderContact(contact) {
@@ -62,18 +65,18 @@ class ChatContact extends React.Component {
 	async _onRefresh() {
     this.setState({isRefreshing: true});
     await reload((contacts) => {
-		  this.setState({
-		  	ds: this.state.ds.cloneWithRows(contacts),
-		  	isRefreshing: false
-		  });
-		  Alert.alert('更新通讯录成功!')
+    	if(this.isMounted()) {
+			  this.setState({
+			  	ds: this.state.ds.cloneWithRows(contacts),
+			  	isRefreshing: false
+			  });
+			  Alert.alert('更新通讯录成功!');
+    	}
     })
 	}
 	render() {
 		return (
 			<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-				<BackStep navigator={this.props.navigator} title={'我的联系人'} />
-				<ChatMenu />
 				<ListView 
 					initialListSize={20}
 					dataSource={this.state.ds} 

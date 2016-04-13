@@ -164,7 +164,6 @@ class Cost extends React.Component {
 		if(this.state.success === false) {
 			return (
 				<View style={{ flex: 1 }}>
-					
 					<ScrollView
 						ref={scrollView => this.scrollView = scrollView }
 						contentContainerStyle={innerStyles.container}>

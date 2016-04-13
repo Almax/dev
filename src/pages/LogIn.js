@@ -22,7 +22,6 @@ import styles from './LogIn.styles';
 import asset from '../assets';
 import { login } from '../redux/modules/session';
 import Register from './Register';
-import CreatePartyDate from './CreatePartyDate';
 import FindPassword from './FindPassword';
 
 class Login extends React.Component {

@@ -140,7 +140,6 @@ class TodoNew extends React.Component {
 		}else {
 		return (
 			<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-				<BackStep navigator={this.props.navigator} title={"添加任务"} />
 				<ScrollView
 					bounces={false}
 					ref={scrollView => this.scrollView = scrollView}

@@ -20,8 +20,6 @@ class BasicSecurity extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<BackStep navigator={this.props.navigator} title={"安全信息"} />
-
 				<ScrollView contentContainerStyle={{ padding: 10, }}>
 					<Subtitle>安全信息</Subtitle>
 					<View style={styles.form}>

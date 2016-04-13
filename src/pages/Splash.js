@@ -11,7 +11,6 @@ import Store from 'react-native-store';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { Link } from '../components/Form';
-import CreatePartyDate from './CreatePartyDate';
 import LogIn from './LogIn';
 import Starter from './Starter';
 import Navigator from './Navigator';

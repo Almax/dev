@@ -16,6 +16,8 @@ import Loading from './Loading';
 import ChatMenu from '../components/ChatMenu';
 import ChatPage from './ChatPage';
 import ChatContact from './ChatContact';
+import ChatFind from './ChatFind';
+
 class Chat extends React.Component {
 	constructor(props) {
 		super(props);
@@ -31,9 +33,9 @@ class Chat extends React.Component {
 		this.setState({
 			dataSource: this.state.dataSource.cloneWithRows(message)
 		});
-		// this.props.navigator.push({
-		// 	component: ChatContact
-		// })
+		this.props.navigator.push({
+			component: ChatFind
+		})
 	}
 	componentWillReceiveProps(nextProps) {
 		const { message } = nextProps;
@@ -68,6 +70,7 @@ class Chat extends React.Component {
 	}
 	_chatWith(user) {
 		this.props.navigator.push({
+			title: '聊天',
 			component: ChatPage,
 			params: {
 				object: user
@@ -143,12 +146,39 @@ class Chat extends React.Component {
 			component: ChatContact
 		})
 	}
+	_onMenuPress(id) {
+		const { navigator } = this.props;
+		switch(id) {
+			case 0: {
+				navigator.push({
+					component: ChatFind,
+					title: '搜索用户'
+				})
+				break;
+			}
+			case 1: {
+				console.warn('contacts');
+				break;
+			}
+			case 2: {
+				navigator.push({
+					title: '通讯录',
+					component: ChatContact
+				});
+				break;
+			}
+			case 3: {
+				console.warn('group');
+				break;
+			}
+		}
+	}
 	render() {
 		const { marry, message } = this.props;
 		if(typeof message === 'object') {
 			return (
 				<View style={[styles.container, {backgroundColor: '#EFEFEF'}]}>
-					<BackStep title={"聊天"} buttonTitle={'添加'} buttonPress={this._addContacts.bind(this)} />
+					<ChatMenu onPress={this._onMenuPress.bind(this)} navigator={this.props.navigator} />
 					<ListView
 						automaticallyAdjustContentInsets={false}
 						dataSource={this.state.dataSource}

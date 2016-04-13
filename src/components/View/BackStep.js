@@ -26,7 +26,6 @@ class BackStep extends React.Component {
 
 		return (
 			<View style={styles.container}>
-
 				{
 					navigator ? 
 						<TouchableOpacity style={styles.button} onPress={ () => navigator.pop() }>
@@ -43,7 +42,6 @@ class BackStep extends React.Component {
 				<TouchableOpacity style={styles.buttonR} onPress={buttonPress}>
 					<Text style={[styles.text, { color }]}>{buttonTitle}</Text>
 				</TouchableOpacity>
-
 			</View>
 		)
 	}
@@ -88,7 +86,7 @@ const androidStyles = StyleSheet.create({
 		justifyContent: 'space-between',
 		backgroundColor: '#F06199',
 		paddingTop: 20,
-		height: 55,
+		height: 60,
 		paddingHorizontal: 10,
 	},
 	title: {

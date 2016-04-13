@@ -1,4 +1,5 @@
 var AssetList = {
+	find: require('./img/find.png'),
 	userhead: require('./ICONS/userhead.png'),
 	loading: require('./loader.gif'),
 	team: require('./team.png'),

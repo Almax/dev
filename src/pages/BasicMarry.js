@@ -115,7 +115,6 @@ class BasicMarry extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<BackStep title={"我的婚礼信息"} navigator={this.props.navigator} />
 				<ScrollView
 					ref={scrollView => this.scrollView = scrollView}
 					contentContainerStyle={{ padding: 10, }}

@@ -64,7 +64,6 @@ class AccountItem extends React.Component {
 		}
 		return (
 			<View style={[styles.container, innerStyles.container]}>
-				<BackStep navigator={navigator} title={title} />
 				<ScrollView 
 					ref={scrollView => this.scrollView = scrollView}
 					contentContainerStyle={innerStyles.card}>

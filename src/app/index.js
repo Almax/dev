@@ -1,7 +1,6 @@
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 import codePush from "react-native-code-push";
-import SplashScreen from '@remobile/react-native-splashscreen';
 
 import React, {
   AppRegistry,
@@ -14,33 +13,18 @@ import React, {
   ProgressViewIOS,
   TouchableOpacity,
   Alert,
+  Dimensions,
 } from 'react-native';
-import NavigatorSceneConfigs from '../components/NavigatorSceneConfigs'
-import Splash from '../pages/Splash';
-
+import Navigation from './navigation';
 class App extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       progress: null,
       finished: true,
     }
   }
-  componentWillMount() {
-    if (Platform.OS === 'android') {
-      BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
-    }
-  }
-  componentWillUnmount() {
-    if (Platform.OS === 'android') {
-      BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
-    }
-  }
   async componentDidMount() {
-    // if (Platform.OS === 'ios') {
-    //   codePush.sync();
-    // }else if(Platform.OS === 'android') {
     if(Platform.OS === 'ios' && __DEV__ === false) {
       let result = await codePush.checkForUpdate();
       if(result) {
@@ -74,51 +58,12 @@ class App extends React.Component {
         });
       }
     }
-
-    SplashScreen.hide();
-  }
-  onBackAndroid = () => {
-    const nav = this.navigator;
-    const routers = nav.getCurrentRoutes();
-    if (routers.length > 1) {
-      nav.pop();
-      return true;
-    }
-    return false;
-  };
-  initialRoute = {
-    component: Splash,
-  };
-  configureScene(route) {
-    if(route.scene) {
-      return route.scene;
-    }
-    if (Platform.OS === 'ios') {
-      return NavigatorSceneConfigs.PushFromRight;
-    }
-    return NavigatorSceneConfigs.PushFromRight;
-  }
-  renderScene(route, navigator) {
-    const Component = route.component;
-    return (
-      <Component {...route.params} navigator={navigator} />
-    );
   }
   render() {
     if(this.state.finished) {
       return (
         <Provider store={store} key="provider">
-          <View style={{ flex: 1 }}>
-           <StatusBar
-              translucent={true}
-              backgroundColor="#F06199"
-              barStyle="light-content" />
-          <Navigator
-            ref={(nav) => this.navigator = nav}
-            initialRoute={this.initialRoute}
-            configureScene={(route) => this.configureScene(route)}
-            renderScene={(route, navigator) => this.renderScene(route, navigator)} />
-          </View>
+          <Navigation />
         </Provider>
       );
     }else {

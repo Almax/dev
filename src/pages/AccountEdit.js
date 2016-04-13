@@ -13,7 +13,6 @@ class AccountEdit extends React.Component {
 		if(this.props.data.compute_sign === 1) {
 			return (
 				<View style={[styles.container, innerStyles.container]}>
-					<BackStep navigator={this.props.navigator} title={"编辑收入"} />
 					<AccountIncome
 						reload={this.props.reload}
 						data={this.props.data}
@@ -24,8 +23,6 @@ class AccountEdit extends React.Component {
 		}else if(this.props.data.compute_sign === -1) {
 			return (
 				<View style={[styles.container, innerStyles.container]}>
-					<BackStep navigator={this.props.navigator} title={"编辑支出"} />
-
 					<AccountCost
 						reload={this.props.reload}
 						data={this.props.data}

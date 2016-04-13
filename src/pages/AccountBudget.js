@@ -100,8 +100,6 @@ class AccountBudget extends React.Component {
 	render() {
 		return (
 			<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-				<BackStep title={"我的预算"} navigator={this.props.navigator} />
-
 				<ScrollView
 					contentContainerStyle={{ padding: 10 }}>
 

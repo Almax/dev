@@ -27,7 +27,6 @@ class TodoList extends React.Component {
 	render() {
 		return (
 			<View style={{flex: 1, backgroundColor: '#EFEFEF'}}>
-				<BackStep navigator={this.props.navigator} title={"待办"}></BackStep>
 				<Todo navigator={this.props.navigator} />
         <ActionButton 
         	position={"center"}

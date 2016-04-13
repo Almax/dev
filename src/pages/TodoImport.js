@@ -115,27 +115,23 @@ class TodoImport extends React.Component {
 	}
 	render() {
 		return (
-			<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-				<BackStep navigator={this.props.navigator} title={"设置婚礼流程任务"} />
+			<View style={{ flex: 1, margin: 10, padding: 10, borderRadius: 5, backgroundColor: '#FFFFFF' }}>
+				<Subtitle>设置结婚日期</Subtitle>
 				
-				<View style={{ flex: 1, margin: 10, padding: 10, borderRadius: 5, backgroundColor: '#FFFFFF' }}>
-					<Subtitle>设置结婚日期</Subtitle>
+				<View style={{ alignItems: 'center', justifyContent: 'center' }}>
 					
-					<View style={{ alignItems: 'center', justifyContent: 'center' }}>
-						
-					{ this._renderPicker() }
-					
-					</View>
-
-					<FormRow />
-
-					<View style={{ height: 50, padding: 10 }}>
-						<Subtitle>{this.state.currentTask}</Subtitle>
-					</View>
-
-					{ this.state.flag ? <Loading /> : <SubmitButton onPress={this._importMock.bind(this)}>创建任务流程</SubmitButton> }
-
+				{ this._renderPicker() }
+				
 				</View>
+
+				<FormRow />
+
+				<View style={{ height: 50, padding: 10 }}>
+					<Subtitle>{this.state.currentTask}</Subtitle>
+				</View>
+
+				{ this.state.flag ? <Loading /> : <SubmitButton onPress={this._importMock.bind(this)}>创建任务流程</SubmitButton> }
+
 			</View>
 		);
 	}

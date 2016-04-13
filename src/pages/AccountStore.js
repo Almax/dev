@@ -83,8 +83,6 @@ class AccountStore extends React.Component {
 		if (this.state.selectedIndex === 0) {
 			return (
 				<View style={[styles.container, { backgroundColor: '#EFEFEF' }]}>
-					<BackStep navigator={this.props.navigator} title={"支出"} />
-
 					<View style={innerStyles.segmented}>
 						
 						{ this._renderSegmentedControl() }
@@ -98,8 +96,6 @@ class AccountStore extends React.Component {
 		} else if (this.state.selectedIndex === 1) {
 			return (
 				<View style={[styles.container, { backgroundColor: '#EFEFEF' }]}>
-					<BackStep navigator={this.props.navigator} title={"预算"} />
-
 					<View style={innerStyles.segmented}>
 						
 						{ this._renderSegmentedControl() }

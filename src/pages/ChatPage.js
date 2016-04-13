@@ -1,172 +1,226 @@
+'use strict';
+
 import React, {
-	TouchableOpacity,
-	View,
-	Text,
-	Image,
-	TextInput,
-	Dimensions,
-	Platform,
+  LinkingIOS,
+  Platform,
+  ActionSheetIOS,
+  Dimensions,
+  View,
+  Text
 } from 'react-native';
-const { height, width } = Dimensions.get('window');
-import GiftedMessenger from 'react-native-gifted-messenger';
 import { connect } from 'react-redux';
-import styles from '../styles';
-import { BackStep } from '../components/View';
-import io from 'socket.io-client/socket.io';
+import GiftedMessenger from 'react-native-gifted-messenger';
+import Communications from 'react-native-communications';
 import { getRoom, append, load } from '../utils/tmpchat';
-
-const navBarHeight = (Platform.OS === 'android' ? 56 : 64);
-const statusBarHeight = (Platform.OS === 'android' ? 25 : 0);
-
+import io from 'socket.io-client/socket.io';
+const MESSAGE_NUMBER = 5;
 class ChatPage extends React.Component {
-	constructor(props) {
-		super(props);
-		const { user, object } = this.props;
-		const room_id = getRoom(user.id, object.id);
-		this.state = {
-			messages: [],
-			text: null,
-			room_id
-		}
-		this.socket = io.connect('ws://192.168.199.152:3031', { jsonp: false });
-		this.socket.emit('subscribe', room_id);
-	}
-	async componentDidMount() {
-		const { user, object } = this.props;
-		let messages = [];
-		let records = await load(this.state.room_id);
-		Object.keys(records).map((key) => {
-			if(records[key].uid === user.uid) {
-				let message = {
-					text: records[key].messageText,
-					name: '我',
-					image: {uri: user.photo},
-					position: 'right',
-					date: records[key].date
-				}
-				messages.push(message);
-			} else {
-				let message = {
-					text: records[key].messageText,
-					name: object.name,
-					image: {uri: object.photo},
-					position: 'left',
-					date: records[key].date
-				}
-				messages.push(message);
-			}
-		});
-		this._GiftedMessenger.appendMessages(messages);
-	}
-	_refBind(ref) {
-		this._GiftedMessenger = ref;
-		this.socket.on('chat', this._receiveMessage.bind(this));
-	}
-	_receiveMessage(data) {
-		const me = this.props.user;
-		if(data.uid !== me.uid) {
-			this._GiftedMessenger.appendMessage({
-				...data,
-				position: 'left'
-			});
-		}
-	}
-	async _appendMessage(messageObject, rowId) {
-		const message = {
-			uid: this.props.user.uid,
-			name: this.props.user.name,
-			text: messageObject.text,
-			image: { uri: this.props.user.photo },
-			position: 'right',
-			date: new Date(),
-		};
-		this._GiftedMessenger.setMessageStatus('正在发送', rowId)
-		var resp = await append(this.state.room_id, message.uid, message.text, message.date);
-		if(resp.id) {
-			this._GiftedMessenger.setMessageStatus('发送成功', rowId);
-		} else {
-			this._GiftedMessenger.setMessageStatus('发送错误', rowId);
-		}
-		this.socket.emit('chat', { message , room_id: this.state.room_id });
-	}
+  constructor(props) {
+    super(props);
+    const { user, object } = this.props;
+    const room_id = getRoom(user.id, object.id);
+    this.messages = [];
+    this.state = {
+      room_id,
+    };
+    this.socket = io.connect('ws://182.254.159.146:3031', { jsonp: false });
+    this.socket.emit('subscribe', room_id);
+    this.socket.on('chat', this._receiveMessage.bind(this));
+  }
+  async componentDidMount() {
+    const { user, object } = this.props;
+    let messages = [];
+    let records = await load(this.state.room_id);
+    Object.keys(records).map((key) => {
+      if(records[key].uid === user.uid) {
+        let message = {
+          text: records[key].messageText,
+          name: '我',
+          image: { uri: user.photo },
+          position: 'right',
+          date: records[key].date
+        }
+        messages.push(message);
+      } else {
+        let message = {
+          text: records[key].messageText,
+          name: object.name,
+          image: { uri: object.photo },
+          position: 'left',
+          date: records[key].date
+        }
+        messages.push(message);
+      }
+    });
 
-	async _getInitialMessages() {
+    let showItems=[];
+    if(messages.length < MESSAGE_NUMBER) {
+      showItems = messages;
+    } else {
+      showItems = messages.splice(messages.length-MESSAGE_NUMBER);
+      this.messages = messages;
+    }
+    this._GiftedMessenger.appendMessages(showItems);
+  }
+  getMessages() {
     return [
-
+      {
+        text: '开始聊天', 
+        position: 'right',
+        name: '我',
+        image: { uri: this.props.user.photo }, 
+        date: new Date(2014, 0, 1, 20, 0),
+      }
     ];
-	}
-	_onLoadEarlierMessages() {
+  }
+  _receiveMessage(data) {
+    const me = this.props.user;
+    if(data.uid !== me.uid) {
+      this._GiftedMessenger.appendMessage({
+        ...data,
+        position: 'left'
+      });
+    }
+  }
+  async handleSend(messageObject = {}, rowID = null) {
+    const message = {
+      uid: this.props.user.uid,
+      name: this.props.user.name,
+      text: messageObject.text,
+      image: { uri: this.props.user.photo },
+      position: 'right',
+      date: new Date(),
+    };
 
-	}
-	render() {
-		const { object } = this.props;
+    let resp = await append(this.state.room_id, message.uid, message.text, message.date);
+    this.socket.emit('chat', { message , room_id: this.state.room_id });
+  }
+  
+  // @oldestMessage is the oldest message already added to the list
+  onLoadEarlierMessages(oldestMessage = {}, callback = () => {}) {
+    let endLoaded = false;
+    let earlierMessages = [];
+    if(this.messages.length < 5) {
+      earlierMessages = this.messages.splice(this.messages.length);
+      endLoaded = true;
+    } else {
+      earlierMessages = this.messages.splice(this.messages.length-5);
+    }
+
+    setTimeout( async () => {
+      await callback(earlierMessages, endLoaded);
+    }, 1000);
+  }
+  
+  handleReceive(message = {}) {
+    this._GiftedMessenger.appendMessage(message);
+  }
+  
+  onErrorButtonPress(message = {}, rowID = null) {
+    // Your logic here
+    // Eg: Re-send the message to your server
+    
+    setTimeout(() => {
+      // will set the message to a custom status 'Sent' (you can replace 'Sent' by what you want - it will be displayed under the row)
+      this._GiftedMessenger.setMessageStatus('Sent', rowID);
+      setTimeout(() => {
+        // will set the message to a custom status 'Seen' (you can replace 'Seen' by what you want - it will be displayed under the row)
+        this._GiftedMessenger.setMessageStatus('Seen', rowID);
+        setTimeout(() => {
+          // append an answer
+          this.handleReceive({text: 'I saw your message', name: 'React-Native', image: {uri: 'https://facebook.github.io/react/img/logo_og.png'}, position: 'left', date: new Date()});
+        }, 500);
+      }, 1000);
+    }, 500);
+  }
+  
+  // will be triggered when the Image of a row is touched
+  onImagePress(rowData = {}, rowID = null) {
+    // Your logic here
+    // Eg: Navigate to the user profile
+  }
+  
+  render() {
     return (
-			<View style={[styles.container, { flexWrap: 'wrap', backgroundColor: '#EFEFEF'}]}>
-				<BackStep navigator={this.props.navigator} title={`与${object.name}聊天`} />
-	      <GiftedMessenger
-	        ref={this._refBind.bind(this)}
-	        autoFocus={false}
-	        messages={[]}
-	        handleSend={this._appendMessage.bind(this)}
-	        onErrorButtonPress={() => true}
-	        maxHeight={Dimensions.get('window').height - navBarHeight - statusBarHeight}
-	        loadEarlierMessagesButton={true}
+      <GiftedMessenger
+        ref={(c) => this._GiftedMessenger = c}
+    
+        styles={{
+          bubbleRight: {
+            marginLeft: 70,
+            backgroundColor: '#007aff',
+          },
+        }}
+        
+        autoFocus={false}
+        messages={this.getMessages()}
+        handleSend={this.handleSend.bind(this)}
+        onErrorButtonPress={this.onErrorButtonPress}
+        maxHeight={Dimensions.get('window').height - navBarHeight - statusBarHeight}
+        loadEarlierMessagesButton={true}
+        loadEarlierMessagesButtonText={'之前的聊天记录'}
+        onLoadEarlierMessages={this.onLoadEarlierMessages.bind(this)}
 
-	        displayNames={true}
-	        parseText={true}
-	        onLoadEarlierMessages={this._onLoadEarlierMessages.bind(this)}
-	        placeholder={'写下你要说的'}
-	        
-	        senderName={'我'}
-	        senderImage={{ uri: this.props.user.photo }}
-	        sendButtonText={'发送'}
-	        maxHeight={Dimensions.get('window').height - 50}
-	        style={{ paddingTop: 20, backgroundColor: '#EEEEEE' }}
-	        styles={{
-	          bubbleLeft: {
-	          	flexWrap: 'wrap',
-	            backgroundColor: '#FFFFFF',
-	            marginRight: 70,
-	            borderWidth: 1,
-	            borderColor: '#EFEFEF',
-	          },
-	          bubbleRight: {
-	          	flexWrap: 'wrap',
-	            backgroundColor: '#49D25C',
-	            marginLeft: 70,
-	          },
-	        }}
-	      />
-	    </View>
+        senderName={this.props.user.name}
+        senderImage={{ uri: this.props.user.photo }}
+        onImagePress={this.onImagePress}
+        displayNames={true}
+        
+        parseText={true} // enable handlePhonePress and handleUrlPress
+        handlePhonePress={this.handlePhonePress}
+        handleUrlPress={this.handleUrlPress}
+        handleEmailPress={this.handleEmailPress}
+        
+        inverted={true}
+      />
+
     );
-		return (
-			<View style={[styles.container, {backgroundColor: '#EFEFEF'}]}>
-				<BackStep navigator={this.props.navigator} title={`与${object.name}聊天`} />
-				<TextInput
-					value={this.state.text}
-					onChangeText={(text) => this.setState({ text })}
-					style={{ height: 40, width: width, borderWidth: 1, borderColor: '#FFFFFF' }} />
-				<TouchableOpacity onPress={this._appendMessage.bind(this)} style={{ padding: 10 }}><Text>发送</Text></TouchableOpacity>
+  }
+  
+  handleUrlPress(url) {
+    if (Platform.OS !== 'android') {
+      LinkingIOS.openURL(url);
+    }
+  }
 
-				{Object.keys(this.state.messages).map((key) => {
-					return (
-						<View key={key} style={{ backgroundColor: '#FFFFFF', padding: 10, marginBottom: 1 }}>
-							<Text>
-								{this.state.messages[key].user === 0 ? "系统提示" :this.state.messages[key].user }
-								:
-								{this.state.messages[key].text}
-							</Text>
-						</View>
-					);
-				})}
-
-			</View>
-		);
-	}
+  handlePhonePress(phone) {
+    if (Platform.OS !== 'android') {
+      var BUTTONS = [
+        'Text message',
+        'Call',
+        'Cancel',
+      ];
+      var CANCEL_INDEX = 2;
+    
+      ActionSheetIOS.showActionSheetWithOptions({
+        options: BUTTONS,
+        cancelButtonIndex: CANCEL_INDEX
+      },
+      (buttonIndex) => {
+        switch (buttonIndex) {
+          case 0:
+            Communications.phonecall(phone, true);
+            break;
+          case 1:
+            Communications.text(phone);
+            break;
+        }
+      });
+    }
+  }
+  
+  handleEmailPress(email) {
+    Communications.email(email, null, null, null, null);
+  }
 }
 
+var navBarHeight = (Platform.OS === 'android' ? 56 : 64);
+// warning: height of android statusbar depends of the resolution of the device
+// http://stackoverflow.com/questions/3407256/height-of-status-bar-in-android
+// @todo check Navigator.NavigationBar.Styles.General.NavBarHeight
+var statusBarHeight = (Platform.OS === 'android' ? 25 : 0);
 
 export default connect(
-	state=>({ user: state.session }),
-	dispatch=>({})
+  state=>({ user: state.session }),
+  dispatch=>({})
 )(ChatPage);

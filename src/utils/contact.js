@@ -22,7 +22,7 @@ export async function load(call) {
 		let new_contacts = [];
 		let cachedContacts = await session.load({ key: 'contacts' });
 		if(cachedContacts.length > 0) {
-			call(cachedContacts);
+			return call(cachedContacts);
 		}
 		Contacts.getAll((err, contacts) => {
 		  if( err && err.type === 'permissionDenied' ){
@@ -52,13 +52,13 @@ export async function load(call) {
 			  		key: 'contacts',
 			  		rawData: new_contacts
 			  	});
-			  	call(new_contacts);
+			  	return call(new_contacts);
 				});
 		  }
 		});
 	} catch(e) {
 		console.log('error: ', e);
-		//await init();
+		await init();
 	}
 }
 
@@ -93,7 +93,7 @@ export async function reload(call) {
 			  		key: 'contacts',
 			  		rawData: new_contacts
 			  	});
-			  	call(new_contacts);
+			  	return call(new_contacts);
 				});
 
 		  }
