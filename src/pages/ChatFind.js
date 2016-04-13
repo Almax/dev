@@ -8,10 +8,18 @@ import React, {
 	ScrollView,
 	StyleSheet,
 } from 'react-native';
+import { connect } from 'react-redux';
 import asset from '../assets';
 import { findUser } from '../utils/session';
+import { inviteFriend } from '../utils/chat';
 import { SubmitButton, FormBlock } from '../components/Form';
 class ChatUser extends React.Component {
+	async _invite() {
+		let resp = await inviteFriend(this.props.user.uid);
+		if(resp === false) {
+			Alert.alert('添加成功,等待对方同意...');
+		}
+	}
 	render() {
 		const { user } = this.props;
 		return (
@@ -47,7 +55,9 @@ class ChatUser extends React.Component {
 						<SubmitButton size={'small'}>留言</SubmitButton>
 					</FormBlock>
 					<FormBlock>
-						<SubmitButton size={'small'}>添加好友</SubmitButton>
+						<SubmitButton 
+							onPress={this._invite.bind(this)}
+							size={'small'}>添加好友</SubmitButton>
 					</FormBlock>
 				</View>
 
@@ -61,25 +71,20 @@ class ChatFind extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: '18616911410',
+			username: '15601923212',
 			user: null,
 		}
 	}
 	async componentDidMount() {
-		let user = await findUser(this.state.username);
-		if(user.error) {
-			Alert.alert(user.error);
-		} else {
-			this.setState({
-				user
-			});
-		}
+
 	}
 	async _findUsername() {
 		if(/\d{11}/.test(this.state.username)) {
 			let user = await findUser(this.state.username);
 			if(user.error) {
 				Alert.alert(user.error);
+			} else if(user.uid === this.props.user.uid) {
+				Alert.alert('无法添加你自己为好友');
 			} else {
 				this.setState({
 					user
@@ -154,4 +159,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'center' 
 	}
 });
-export default ChatFind;
+export default connect(
+	state=>({ user: state.session })
+)(ChatFind);

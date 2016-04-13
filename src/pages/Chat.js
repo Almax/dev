@@ -17,7 +17,7 @@ import ChatMenu from '../components/ChatMenu';
 import ChatPage from './ChatPage';
 import ChatContact from './ChatContact';
 import ChatFind from './ChatFind';
-
+import ChatMessage from './ChatMessage';
 class Chat extends React.Component {
 	constructor(props) {
 		super(props);
@@ -28,14 +28,11 @@ class Chat extends React.Component {
 			isRefreshing: false,
 		}
 	}
-	componentDidMount() {
+	async componentDidMount() {
 		const { message } = this.props;
 		this.setState({
 			dataSource: this.state.dataSource.cloneWithRows(message)
 		});
-		this.props.navigator.push({
-			component: ChatFind
-		})
 	}
 	componentWillReceiveProps(nextProps) {
 		const { message } = nextProps;
@@ -82,7 +79,7 @@ class Chat extends React.Component {
 
 		if(this.props.me.id === fromUser.id) {
 			return (
-				<View style={{ backgroundColor: '#FFFFFF', marginBottom: 1, flexDirection: 'row' }}>
+				<View style={{ paddingVertical: 10, backgroundColor: '#FFFFFF', marginBottom: 1, flexDirection: 'row' }}>
 					<Image source={{ uri: toUser.photo }} style={{ height: 50, width: 50, borderRadius: 25, margin: 10, }} />
 						
 					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -90,7 +87,7 @@ class Chat extends React.Component {
 						<TouchableOpacity onPress={this._chatWith.bind(this, toUser)} style={{ flex: 1, height: 70, justifyContent: 'center' }}>
 							<Text style={{ fontSize: 18, color: '#666666', fontWeight: '500' }}>{toUser.name}</Text>
 							<View style={{ height: 10, }} />
-							<Text style={{ fontSize: 14, color: '#999999' }}>我是{toUser.role}{toUser.name},我已经看到了你的邀请</Text>
+							<Text style={{ fontSize: 16, color: '#999999', lineHeight: 18 }}>我是{toUser.role}{toUser.name},我已经看到了你的邀请</Text>
 						</TouchableOpacity>
 
 						<View style={{ backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center', height: 70, width: 80 }}>
@@ -112,14 +109,14 @@ class Chat extends React.Component {
 			);
 		}else if(this.props.me.id === toUser.id) {
 			return (
-				<View style={{ backgroundColor: '#FFFFFF', marginBottom: 1, flexDirection: 'row' }}>
+				<View style={{ paddingVertical: 10, backgroundColor: '#FFFFFF', marginBottom: 1, flexDirection: 'row' }}>
 					<Image source={{ uri: fromUser.photo }} style={{ height: 50, width: 50, borderRadius: 25, margin: 10, }} />
 						
 					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 						<TouchableOpacity onPress={this._chatWith.bind(this, fromUser)} style={{ flex: 1, height: 70, justifyContent: 'center' }}>
 							<Text style={{ fontSize: 18, color: '#666666', fontWeight: '500' }}>{fromUser.name}</Text>
 							<View style={{ height: 10, }} />
-							<Text style={{ fontSize: 14, color: '#999999' }}>我是{fromUser.role}{fromUser.name},你快加入到婚礼里来</Text>
+							<Text style={{ fontSize: 16, color: '#999999', lineHeight: 18 }}>我是{fromUser.role}{fromUser.name},你快加入到婚礼里来</Text>
 						</TouchableOpacity>
 
 						<View style={{ backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center', height: 70, width: 80 }}>
@@ -168,7 +165,10 @@ class Chat extends React.Component {
 				break;
 			}
 			case 3: {
-				console.warn('group');
+				this.props.navigator.push({
+					title: '通知消息',
+					component: ChatMessage
+				})
 				break;
 			}
 		}

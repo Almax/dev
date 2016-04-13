@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import styles from '../styles';
 import { BackStep } from '../components/View';
 import io from 'socket.io-client/socket.io';
-import { getRoom, append, load } from '../utils/tmpchat';
+import { getRoom, append, load } from '../utils/chat';
 
 const navBarHeight = (Platform.OS === 'android' ? 56 : 64);
 const statusBarHeight = (Platform.OS === 'android' ? 25 : 0);

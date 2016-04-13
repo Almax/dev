@@ -11,7 +11,7 @@ import React, {
 import { connect } from 'react-redux';
 import GiftedMessenger from 'react-native-gifted-messenger';
 import Communications from 'react-native-communications';
-import { getRoom, append, load } from '../utils/tmpchat';
+import { getRoom, append, load } from '../utils/chat';
 import io from 'socket.io-client/socket.io';
 const MESSAGE_NUMBER = 5;
 class ChatPage extends React.Component {
@@ -53,14 +53,14 @@ class ChatPage extends React.Component {
       }
     });
 
-    let showItems=[];
-    if(messages.length < MESSAGE_NUMBER) {
-      showItems = messages;
-    } else {
-      showItems = messages.splice(messages.length-MESSAGE_NUMBER);
-      this.messages = messages;
-    }
-    this._GiftedMessenger.appendMessages(showItems);
+    // let showItems=[];
+    // if(messages.length < MESSAGE_NUMBER) {
+    //   showItems = messages;
+    // } else {
+    //   showItems = messages.splice(messages.length-MESSAGE_NUMBER);
+    //   this.messages = messages;
+    // }
+    this._GiftedMessenger.appendMessages(messages);
   }
   getMessages() {
     return [
@@ -98,18 +98,19 @@ class ChatPage extends React.Component {
   
   // @oldestMessage is the oldest message already added to the list
   onLoadEarlierMessages(oldestMessage = {}, callback = () => {}) {
-    let endLoaded = false;
-    let earlierMessages = [];
-    if(this.messages.length < 5) {
-      earlierMessages = this.messages.splice(this.messages.length);
-      endLoaded = true;
-    } else {
-      earlierMessages = this.messages.splice(this.messages.length-5);
-    }
+    // let endLoaded = false;
+    // let earlierMessages = [];
+    // console.warn(this.messages.length);
+    // if(this.messages.length < 5) {
+    //   earlierMessages = this.messages.splice(this.messages.length);
+    //   endLoaded = true;
+    // } else {
+    //   earlierMessages = this.messages.splice(this.messages.length-5);
+    // }
 
-    setTimeout( async () => {
-      await callback(earlierMessages, endLoaded);
-    }, 1000);
+    // setTimeout( async () => {
+    //   await callback(earlierMessages, endLoaded);
+    // }, 1000);
   }
   
   handleReceive(message = {}) {

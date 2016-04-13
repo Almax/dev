@@ -61,7 +61,46 @@ export async function append(room_id, user_id, messageText, date) {
 	  	}
 	  })
 	});
-
 	return await response.json();
+}
 
+export async function inviteFriend(friend_uid) {
+  const me = await currentUser();
+  if (!me) {
+    return;
+  }
+	const { uid, authentication_token } = me;
+	let response = await fetch(`${baseUrl}/friendships`, {
+	  headers: {
+	    Accept: 'application/json',
+	    'Content-Type': 'application/json',
+	    'X-User-Id': uid,
+	    'X-User-Token': authentication_token,
+	  },
+	  method: 'post',
+	  body: JSON.stringify({
+	  	friendship: {
+	  		uid: friend_uid
+	  	}
+	  })
+	});
+	return await response.json();
+}
+
+export async function getInvitedMessages() {
+  const me = await currentUser();
+  if (!me) {
+    return;
+  }
+	const { uid, authentication_token } = me;
+	let response = await fetch(`${baseUrl}/friendships/invited`, {
+	  headers: {
+	    Accept: 'application/json',
+	    'Content-Type': 'application/json',
+	    'X-User-Id': uid,
+	    'X-User-Token': authentication_token,
+	  },
+	  method: 'get'
+	});
+	return await response.json();
 }

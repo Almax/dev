@@ -12,6 +12,7 @@ import React, {
 import { BackStep } from '../components/View';
 import ChatMenu from '../components/ChatMenu';
 import { load, reload } from '../utils/contact';
+
 class ChatContact extends React.Component {
 	constructor(props) {
 		super(props);
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
 	},
 	addButton: {
 		padding: 10,
-		backgroundColor: '#9DE5FC',
+		backgroundColor: '#5DC01D',
 		borderRadius: 5,
 	},
 	inviteButton: {
