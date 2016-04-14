@@ -6,7 +6,7 @@ import React, {
 	ListView,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { getInvitedMessages } from '../utils/chat';
+import { getInvitedMessages, passInviteRequest } from '../utils/chat';
 class ChatMessage extends React.Component {
 	constructor(props) {
 		super(props);
@@ -24,8 +24,8 @@ class ChatMessage extends React.Component {
 	_chatWith(user) {
 
 	}
-	_passRequest(user) {
-
+	async _passRequest(user) {
+		await passInviteRequest(user.uid);
 	}
 	_renderRow(user) {
 		return (
@@ -33,7 +33,7 @@ class ChatMessage extends React.Component {
 				<Image source={{ uri: user.photo }} style={{ height: 50, width: 50, borderRadius: 25, margin: 10, }} />
 					
 				<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-					
+
 					<TouchableOpacity onPress={this._chatWith.bind(this, user)} style={{ flex: 1, height: 70, justifyContent: 'center' }}>
 						<Text style={{ fontSize: 18, color: '#666666', fontWeight: '500' }}>{user.name}</Text>
 						<View style={{ height: 10, }} />

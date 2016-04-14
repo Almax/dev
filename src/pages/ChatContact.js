@@ -12,6 +12,7 @@ import React, {
 import { BackStep } from '../components/View';
 import ChatMenu from '../components/ChatMenu';
 import { load, reload } from '../utils/contact';
+import { inviteFriend } from '../utils/chat';
 
 class ChatContact extends React.Component {
 	constructor(props) {
@@ -30,6 +31,12 @@ class ChatContact extends React.Component {
 			  });
 			});
 		});
+	}
+	async _inviteFriend(uid) {
+		let resp = await inviteFriend(uid);
+		if(resp === false) {
+			Alert.alert('添加成功,等待对方同意...');
+		}
 	}
 	_renderContact(contact) {
 		return (
@@ -50,7 +57,7 @@ class ChatContact extends React.Component {
 
 				<View>
 					{ contact.user ?
-						<TouchableOpacity style={styles.addButton}>
+						<TouchableOpacity onPress={this._inviteFriend.bind(this, contact.user.uid)} style={styles.addButton}>
 							<Text style={styles.textButton}>添加好友</Text>
 						</TouchableOpacity>
 					 :
@@ -66,13 +73,11 @@ class ChatContact extends React.Component {
 	async _onRefresh() {
     this.setState({isRefreshing: true});
     await reload((contacts) => {
-    	if(this.isMounted()) {
-			  this.setState({
-			  	ds: this.state.ds.cloneWithRows(contacts),
-			  	isRefreshing: false
-			  });
-			  Alert.alert('更新通讯录成功!');
-    	}
+		  this.setState({
+		  	ds: this.state.ds.cloneWithRows(contacts),
+		  	isRefreshing: false
+		  });
+		  Alert.alert('更新通讯录成功!');
     })
 	}
 	render() {

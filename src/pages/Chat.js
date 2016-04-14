@@ -18,6 +18,7 @@ import ChatPage from './ChatPage';
 import ChatContact from './ChatContact';
 import ChatFind from './ChatFind';
 import ChatMessage from './ChatMessage';
+import ChatFriends from './ChatFriends';
 class Chat extends React.Component {
 	constructor(props) {
 		super(props);
@@ -154,7 +155,10 @@ class Chat extends React.Component {
 				break;
 			}
 			case 1: {
-				console.warn('contacts');
+				navigator.push({
+					title: '联系人',
+					component: ChatFriends
+				})
 				break;
 			}
 			case 2: {
@@ -197,12 +201,9 @@ class Chat extends React.Component {
 		} else {
 			return (
 				<View style={[styles.container, {backgroundColor: '#EFEFEF'}]}>
-					<BackStep title={"聊天"} />
-
 					<View style={{ flex: 1 }}>
 						<Loading />
 					</View>
-
 				</View>
 			)
 		}

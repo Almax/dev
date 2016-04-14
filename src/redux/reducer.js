@@ -1,16 +1,17 @@
 import { combineReducers } from 'redux';
-import sessionReducer from './modules/session';
-import taskReducer from './modules/task';
-import marryReducer from './modules/marry';
-import storyReducer from './modules/story';
-import moneyReducer from './modules/money';
-import messageReducer from './modules/message';
-
+import session from './modules/session';
+import task from './modules/task';
+import marry from './modules/marry';
+import story from './modules/story';
+import money from './modules/money';
+import message from './modules/message';
+import friend from './modules/friend';
 export default combineReducers({
-	session: sessionReducer,
-  task: taskReducer,
-  marry: marryReducer,
-  story: storyReducer,
-  money: moneyReducer,
-  message: messageReducer,
+	session,
+  task,
+  marry,
+  story,
+  money,
+  message,
+  friend,
 });

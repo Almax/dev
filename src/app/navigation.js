@@ -125,8 +125,14 @@ class Navigation extends React.Component {
       <Navigator.NavigationBar
         style={{
           alignItems: 'center',
-          backgroundColor: '#F06199'
-        }}
+          backgroundColor: '#F06199',
+          shadowOffset:{
+              width: 1,
+              height: 0.5,
+          },
+          shadowColor: '#F06199',
+          shadowOpacity: 0.8,          
+          }}
         routeMapper={routeMapper}
       />
     );
@@ -161,8 +167,14 @@ class Navigation extends React.Component {
       <Navigator.NavigationBar
         style={{
           alignItems: 'center',
-          backgroundColor: '#F06199'
-        }}
+          backgroundColor: '#F06199',
+          shadowOffset:{
+              width: 1,
+              height: 0.5,
+          },
+          shadowColor: '#F06199',
+          shadowOpacity: 0.8,          
+          }}
         routeMapper={routeMapper}
       />
     );
@@ -176,7 +188,7 @@ class Navigation extends React.Component {
             backgroundColor="rgba(0,0,0,0)"
             barStyle="light-content" />
           <Navigator
-            ref={(nav) => this.navigator = nav}
+            ref={(nav) => { this.navigator = nav;global.nav = nav;} }
             initialRoute={this.initialRoute}
             configureScene={(route) => this.configureScene(route)}
             renderScene={(route, navigator) => this.renderScene(route, navigator)}
@@ -192,7 +204,7 @@ class Navigation extends React.Component {
             backgroundColor="rgba(0,0,0,0)"
             barStyle="light-content" />
           <Navigator
-            ref={(nav) => this.navigator = nav}
+            ref={(nav) => { this.navigator = nav;global.nav = nav;} }
             initialRoute={this.initialRoute}
             configureScene={(route) => this.configureScene(route)}
             renderScene={(route, navigator) => this.renderScene(route, navigator)}

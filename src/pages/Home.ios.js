@@ -67,8 +67,7 @@ class Home extends React.Component {
 			const { marry } = this.props;
 			return (
 				<View style={{ flex: 1 }}>
-
-						<Swiper height={180} showsPagination={true} showsButtons={false}>
+						<Swiper height={140} showsPagination={true} showsButtons={false}>
 							<View style={styles.bannerWrapper}>
 								<Image source={asset.homeBanner} style={styles.bannerImage} resizeMode={"contain"} />
 							</View>
@@ -150,7 +149,7 @@ const styles = StyleSheet.create({
 	bannerWrapper: {
 		alignItems: 'center',
 		justifyContent: 'center',
-		height: 200,
+		height: 140,
 		backgroundColor: '#F06199'
 	},
 	bannerImage: {

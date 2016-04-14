@@ -6,13 +6,16 @@ import React, {
   ActionSheetIOS,
   Dimensions,
   View,
-  Text
+  Text,
+  InteractionManager,
 } from 'react-native';
+import io from 'socket.io-client/socket.io';
 import { connect } from 'react-redux';
 import GiftedMessenger from 'react-native-gifted-messenger';
 import Communications from 'react-native-communications';
 import { getRoom, append, load } from '../utils/chat';
-import io from 'socket.io-client/socket.io';
+import { newSession } from '../utils/chat';
+import Loading from './Loading';
 const MESSAGE_NUMBER = 5;
 class ChatPage extends React.Component {
   constructor(props) {
@@ -21,46 +24,52 @@ class ChatPage extends React.Component {
     const room_id = getRoom(user.id, object.id);
     this.messages = [];
     this.state = {
+      loaded: false,
       room_id,
     };
-    this.socket = io.connect('ws://182.254.159.146:3031', { jsonp: false });
-    this.socket.emit('subscribe', room_id);
-    this.socket.on('chat', this._receiveMessage.bind(this));
-  }
-  async componentDidMount() {
-    const { user, object } = this.props;
-    let messages = [];
-    let records = await load(this.state.room_id);
-    Object.keys(records).map((key) => {
-      if(records[key].uid === user.uid) {
-        let message = {
-          text: records[key].messageText,
-          name: '我',
-          image: { uri: user.photo },
-          position: 'right',
-          date: records[key].date
-        }
-        messages.push(message);
-      } else {
-        let message = {
-          text: records[key].messageText,
-          name: object.name,
-          image: { uri: object.photo },
-          position: 'left',
-          date: records[key].date
-        }
-        messages.push(message);
-      }
-    });
 
-    // let showItems=[];
-    // if(messages.length < MESSAGE_NUMBER) {
-    //   showItems = messages;
-    // } else {
-    //   showItems = messages.splice(messages.length-MESSAGE_NUMBER);
-    //   this.messages = messages;
-    // }
-    this._GiftedMessenger.appendMessages(messages);
+    this.socket = io.connect('ws://182.254.159.146:3031', { jsonp: false });
+  }
+  async _saveSession(user) {
+    await newSession(user);
+
+  }
+  componentDidMount() {
+    InteractionManager.runAfterInteractions( async () => {
+      const { user, object } = this.props;
+      await this._saveSession(object);
+      let messages = [];
+      let records = await load(this.state.room_id);
+      Object.keys(records).map((key) => {
+        if(records[key].uid === user.uid) {
+          let message = {
+            text: records[key].messageText,
+            name: '我',
+            image: { uri: user.photo },
+            position: 'right',
+            date: records[key].date
+          }
+          messages.push(message);
+        } else {
+          let message = {
+            text: records[key].messageText,
+            name: object.name,
+            image: { uri: object.photo },
+            position: 'left',
+            date: records[key].date
+          }
+          messages.push(message);
+        }
+      });
+      this.setState({ loaded: true });
+      this.socket.emit('subscribe', this.state.room_id);
+      this.socket.on('chat', this._receiveMessage.bind(this));
+      try {
+        this._GiftedMessenger.appendMessages(messages);
+      } catch (e) {
+        console.warn(JSON.stringify(e))
+      }
+    });    
   }
   getMessages() {
     return [
@@ -74,12 +83,15 @@ class ChatPage extends React.Component {
     ];
   }
   _receiveMessage(data) {
+    let _this = this;
     const me = this.props.user;
     if(data.uid !== me.uid) {
-      this._GiftedMessenger.appendMessage({
-        ...data,
-        position: 'left'
-      });
+      if(_this._GiftedMessenger) {
+        _this._GiftedMessenger.appendMessage({
+          ...data,
+          position: 'left'
+        });
+      }
     }
   }
   async handleSend(messageObject = {}, rowID = null) {
@@ -96,7 +108,6 @@ class ChatPage extends React.Component {
     this.socket.emit('chat', { message , room_id: this.state.room_id });
   }
   
-  // @oldestMessage is the oldest message already added to the list
   onLoadEarlierMessages(oldestMessage = {}, callback = () => {}) {
     // let endLoaded = false;
     // let earlierMessages = [];
@@ -118,9 +129,6 @@ class ChatPage extends React.Component {
   }
   
   onErrorButtonPress(message = {}, rowID = null) {
-    // Your logic here
-    // Eg: Re-send the message to your server
-    
     setTimeout(() => {
       // will set the message to a custom status 'Sent' (you can replace 'Sent' by what you want - it will be displayed under the row)
       this._GiftedMessenger.setMessageStatus('Sent', rowID);
@@ -142,40 +150,45 @@ class ChatPage extends React.Component {
   }
   
   render() {
-    return (
-      <GiftedMessenger
-        ref={(c) => this._GiftedMessenger = c}
-    
-        styles={{
-          bubbleRight: {
-            marginLeft: 70,
-            backgroundColor: '#007aff',
-          },
-        }}
-        
-        autoFocus={false}
-        messages={this.getMessages()}
-        handleSend={this.handleSend.bind(this)}
-        onErrorButtonPress={this.onErrorButtonPress}
-        maxHeight={Dimensions.get('window').height - navBarHeight - statusBarHeight}
-        loadEarlierMessagesButton={true}
-        loadEarlierMessagesButtonText={'之前的聊天记录'}
-        onLoadEarlierMessages={this.onLoadEarlierMessages.bind(this)}
+    if(this.state.loaded) {
+      return (
+        <GiftedMessenger
+          ref={(c) => this._GiftedMessenger = c}
+          styles={{
+            bubbleRight: {
+              marginLeft: 70,
+              backgroundColor: '#007aff',
+            },
+          }}
+          
+          autoFocus={true}
+          messages={this.getMessages()}
+          handleSend={this.handleSend.bind(this)}
+          onErrorButtonPress={this.onErrorButtonPress}
+          maxHeight={Dimensions.get('window').height - navBarHeight - statusBarHeight}
+          loadEarlierMessagesButton={true}
+          loadEarlierMessagesButtonText={'之前的聊天记录'}
+          onLoadEarlierMessages={this.onLoadEarlierMessages.bind(this)}
 
-        senderName={this.props.user.name}
-        senderImage={{ uri: this.props.user.photo }}
-        onImagePress={this.onImagePress}
-        displayNames={true}
-        
-        parseText={true} // enable handlePhonePress and handleUrlPress
-        handlePhonePress={this.handlePhonePress}
-        handleUrlPress={this.handleUrlPress}
-        handleEmailPress={this.handleEmailPress}
-        
-        inverted={true}
-      />
+          senderName={this.props.user.name}
+          senderImage={{ uri: this.props.user.photo }}
+          onImagePress={this.onImagePress}
+          displayNames={true}
+          
+          parseText={true} // enable handlePhonePress and handleUrlPress
+          handlePhonePress={this.handlePhonePress}
+          handleUrlPress={this.handleUrlPress}
+          handleEmailPress={this.handleEmailPress}
+          
+          inverted={true}
+        />
 
-    );
+      );
+    } else {
+      return (
+        <Loading />
+      );
+    }
   }
   
   handleUrlPress(url) {

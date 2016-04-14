@@ -10,7 +10,7 @@ import { init } from '../../utils/contact';
 import { getMyMarry, resetMyMarry } from './marry';
 import { load as loadTask, reset as resetTask } from './task';
 import { load as loadMessage, reset as resetMessage } from './message';
-
+import { loadFriends } from './friend';
 import { createAction, handleActions } from 'redux-actions'
 /* action type */
 export const RELOAD_USER = 'app/session/reload_user';
@@ -49,6 +49,7 @@ export function login(username, password) {
 			dispatch(getMyMarry());
 			dispatch(loadTask());
 			dispatch(loadMessage());
+			dispatch(loadFriends());
 		}else {
 			dispatch(reloadSession());
 		}
@@ -64,6 +65,7 @@ export function loadUser() {
 			dispatch(getMyMarry());
 			dispatch(loadTask());
 			dispatch(loadMessage());
+			dispatch(loadFriends());
 		}else {
 			dispatch(cleanSession())
 		}
@@ -83,10 +85,11 @@ export function logout() {
 /* 提供正确的session也能登陆成用户状态 */
 export function store(session) {
 	return async (dispatch) => {
-		dispatch(loadSession(await storeUserSession(session)))
+			dispatch(loadSession(await storeUserSession(session)))
 			dispatch(getMyMarry());
 			dispatch(loadTask());
 			dispatch(loadMessage());
+			dispatch(loadFriends());
 	}
 }
 

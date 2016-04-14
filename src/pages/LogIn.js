@@ -52,7 +52,6 @@ class Login extends React.Component {
 	render() {
 		return (
       <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
-        <BackStep title={"登陆到婚格"}/>
         <ScrollView
           ref={scrollView=>this.scrollView = scrollView}
           bounces={false}

@@ -1,13 +1,13 @@
 import md5 from 'md5';
 import Storage from 'react-native-storage';
 import { currentUser, cleanUser } from './session';
-// const session = new Storage({
-//     size: 5000,    
-//     defaultExpires: 1000 * 3600 * 24 * 365,
-//     enableCache: true,
-//     sync: {
-//     }
-// });
+const session = new Storage({
+    size: 5000,    
+    defaultExpires: 1000 * 3600 * 24 * 365,
+    enableCache: true,
+    sync: {
+    }
+});
 
 //const baseUrl = 'http://test.marrynovo.com/api/v1';
 const baseUrl = 'http://192.168.199.152:3000/api/v1';
@@ -20,87 +20,98 @@ export function getRoom(me_id, object_id) {
 	}
 }
 
-export async function load(room_id) {
+export async function request(url, options) {
   const me = await currentUser();
   if (!me) {
     return;
   }
 	const { uid, authentication_token } = me;
-	let response = await fetch(`${baseUrl}/chats/${room_id}`, {
-	  headers: {
-	    Accept: 'application/json',
-	    'Content-Type': 'application/json',
-	    'X-User-Id': uid,
-	    'X-User-Token': authentication_token,
-	  },
-	  method: 'get'
-	});
-	return response.json();
+	const { method, body } = options;
+	if(method === 'post' || method === 'put') {
+		let response = await fetch(`${baseUrl}${url}`, {
+		  headers: {
+		    Accept: 'application/json',
+		    'Content-Type': 'application/json',
+		    'X-User-Id': uid,
+		    'X-User-Token': authentication_token,
+		  },
+		  method: method,
+		  body: JSON.stringify(body)
+		});
+		return response.json();
+	} else {
+		let response = await fetch(`${baseUrl}${url}`, {
+		  headers: {
+		    Accept: 'application/json',
+		    'Content-Type': 'application/json',
+		    'X-User-Id': uid,
+		    'X-User-Token': authentication_token,
+		  },
+		  method: method
+		});
+		return response.json();
+	}
+
+}
+
+export async function load(room_id) {
+	return await request(`/chats/${room_id}`, { method: 'get' });
 }
 
 export async function append(room_id, user_id, messageText, date) {
-  const me = await currentUser();
-  if (!me) {
-    return;
-  }
-	const { uid, authentication_token } = me;
-	let response = await fetch(`${baseUrl}/chats`, {
-	  headers: {
-	    Accept: 'application/json',
-	    'Content-Type': 'application/json',
-	    'X-User-Id': uid,
-	    'X-User-Token': authentication_token,
-	  },
-	  method: 'post',
-	  body: JSON.stringify({
-	  	chat: {
+	return await request('/chats', {
+		method: 'post', 
+		body: {
+			chat: {
 	  		room_id,
 	  		uid: user_id,
 	  		messageText,
 	  		date
-	  	}
-	  })
+			}
+		} 
 	});
-	return await response.json();
+}
+
+export async function listFriends() {
+	return await request('/friendships', { method: 'get' });
 }
 
 export async function inviteFriend(friend_uid) {
-  const me = await currentUser();
-  if (!me) {
-    return;
-  }
-	const { uid, authentication_token } = me;
-	let response = await fetch(`${baseUrl}/friendships`, {
-	  headers: {
-	    Accept: 'application/json',
-	    'Content-Type': 'application/json',
-	    'X-User-Id': uid,
-	    'X-User-Token': authentication_token,
-	  },
-	  method: 'post',
-	  body: JSON.stringify({
+	return request('/friendships', {
+		method: 'post',
+		body: {
 	  	friendship: {
 	  		uid: friend_uid
 	  	}
-	  })
-	});
-	return await response.json();
+		}
+	})
 }
 
 export async function getInvitedMessages() {
-  const me = await currentUser();
-  if (!me) {
-    return;
-  }
-	const { uid, authentication_token } = me;
-	let response = await fetch(`${baseUrl}/friendships/invited`, {
-	  headers: {
-	    Accept: 'application/json',
-	    'Content-Type': 'application/json',
-	    'X-User-Id': uid,
-	    'X-User-Token': authentication_token,
-	  },
-	  method: 'get'
-	});
-	return await response.json();
+	return await request('/friendships/invited', {
+		method: 'get'
+	})
+}
+
+export async function passInviteRequest(friend_uid) {
+	return await request('/friendships/approve', {
+		method: 'post',
+		body: {
+			'friendship': {
+				uid: friend_uid
+			}
+		}
+	})
+}
+
+export async function newSession(friend) {
+	try {
+		let chats = await session.load({ key: 'chats' });
+		Object.keys(chats).map((key) => {
+			console.warn(chats[key].uid);
+		});
+	} catch(e) {
+		const list = [friend];
+		await session.save({ key: 'chats', rawData: list });	
+	}
 }
