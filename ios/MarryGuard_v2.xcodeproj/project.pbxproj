@@ -24,6 +24,7 @@
 		8145FB951CA3C6CE00414F9D /* libRCTSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8145FB8F1CA3C6B900414F9D /* libRCTSplashScreen.a */; };
 		8145FB981CA3C7A500414F9D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8145FB961CA3C7A500414F9D /* LaunchScreen.xib */; };
 		8145FB9B1CA3C7B700414F9D /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 8145FB9A1CA3C7B700414F9D /* splash.png */; };
+		81552B1B1CC0C83D00BB5FD2 /* RCTPushNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81552B191CC0C83D00BB5FD2 /* RCTPushNotificationManager.m */; };
 		816A1FE91C8D273F00622F4B /* libRCTHttpCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 816A1FCE1C8D26E200622F4B /* libRCTHttpCache.a */; };
 		816A1FEA1C8D273F00622F4B /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 816A1FE21C8D271400622F4B /* libRCTPushNotification.a */; };
 		816A1FEB1C8D273F00622F4B /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 816A1FDC1C8D26F600622F4B /* libRNImagePicker.a */; };
@@ -179,6 +180,8 @@
 		8145FB811CA3C6B800414F9D /* RCTSplashScreen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSplashScreen.xcodeproj; path = "../node_modules/@remobile/react-native-splashscreen/ios/RCTSplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		8145FB961CA3C7A500414F9D /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = "../node_modules/@remobile/react-native-splashscreen/ios/RCTSplashScreen/SplashScreenResource/LaunchScreen.xib"; sourceTree = "<group>"; };
 		8145FB9A1CA3C7B700414F9D /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = ../splash.png; sourceTree = "<group>"; };
+		81552B191CC0C83D00BB5FD2 /* RCTPushNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCTPushNotificationManager.m; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotificationManager.m"; sourceTree = "<group>"; };
+		81552B1A1CC0C83D00BB5FD2 /* RCTPushNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCTPushNotificationManager.h; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotificationManager.h"; sourceTree = "<group>"; };
 		816A1FC71C8D26E200622F4B /* RCTHttpCache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTHttpCache.xcodeproj; path = "../node_modules/react-native-http-cache/ios/RCTHttpCache.xcodeproj"; sourceTree = "<group>"; };
 		816A1FD71C8D26F600622F4B /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		816A1FDD1C8D271400622F4B /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
@@ -299,6 +302,8 @@
 		13B07FAE1A68108700A75B9A /* MarryGuard_v2 */ = {
 			isa = PBXGroup;
 			children = (
+				81552B191CC0C83D00BB5FD2 /* RCTPushNotificationManager.m */,
+				81552B1A1CC0C83D00BB5FD2 /* RCTPushNotificationManager.h */,
 				8145FB9A1CA3C7B700414F9D /* splash.png */,
 				8145FB961CA3C7A500414F9D /* LaunchScreen.xib */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -737,6 +742,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81552B1B1CC0C83D00BB5FD2 /* RCTPushNotificationManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -815,6 +821,7 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-code-push/**",
 					"$(SRCROOT)/../node_modules/@remobile/react-native-splashscreen/ios/RCTSplashScreen",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = MarryGuard_v2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -840,6 +847,7 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-code-push/**",
 					"$(SRCROOT)/../node_modules/@remobile/react-native-splashscreen/ios/RCTSplashScreen",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = MarryGuard_v2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

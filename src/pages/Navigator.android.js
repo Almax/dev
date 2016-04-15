@@ -11,7 +11,6 @@ import TodoNew from './TodoNew';
 import ActionButton from 'react-native-action-button';
 import FindPartner from './FindPartner';
 import { getMyMarry } from '../redux/modules/marry'
-
 class Navigator extends React.Component {
 
   componentDidMount() {

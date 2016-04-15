@@ -23,22 +23,23 @@ class Chat extends React.Component {
 	constructor(props) {
 		super(props);
 		var dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1!==r2 });
+		var chats = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1!==r2 });
 		this.state = {
 			objects: [],
 			dataSource,
+			chats,
 			isRefreshing: false,
 		}
 	}
 	async componentDidMount() {
-		const { message } = this.props;
 		this.setState({
-			dataSource: this.state.dataSource.cloneWithRows(message)
+			dataSource: this.state.dataSource.cloneWithRows(this.props.message.concat(this.props.chat.session)),
 		});
 	}
 	componentWillReceiveProps(nextProps) {
-		const { message } = nextProps;
+		let messages = nextProps.message.concat(nextProps.chat.session);
 		this.setState({
-			dataSource: this.state.dataSource.cloneWithRows(message)
+			dataSource: this.state.dataSource.cloneWithRows(messages),
 		});
 	}
   setInterval() {
@@ -76,6 +77,34 @@ class Chat extends React.Component {
 		})
 	}
 	renderRow(row, sectionId, rowId) {
+		if(row.uid) {
+			return (
+				<View style={{ paddingVertical: 10, backgroundColor: '#FFFFFF', marginBottom: 1, flexDirection: 'row' }}>
+					<Image source={{ uri: row.photo }} style={{ height: 50, width: 50, borderRadius: 25, margin: 10, }} />
+					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+
+						<TouchableOpacity onPress={this._chatWith.bind(this, row)} style={{ flex: 1, height: 70, justifyContent: 'center' }}>
+							<Text style={{ fontSize: 18, color: '#666666', fontWeight: '500' }}>{row.name}</Text>
+							<Text style={{ fontSize: 14, color: '#999999'}}>{row.username}</Text>
+							<Text style={{ fontSize: 16, color: '#999999'}}>{row.signature}</Text>
+						</TouchableOpacity>
+
+						<View style={{ backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center', height: 70, width: 80 }}>
+							
+						<TouchableOpacity activeOpacity={1} style={{ backgroundColor: '#FFFFFF', padding: 10, borderRadius: 5 }}>
+							<Text style={{ fontSize: 14, color: '#999999' }}>联系人</Text>
+						</TouchableOpacity>
+
+						</View>
+					</View>
+				</View>
+			);
+		}
+
+		if(row.pass) {
+			return null;
+		}
+
 		const { fromUser, toUser } = row;
 
 		if(this.props.me.id === fromUser.id) {
@@ -177,6 +206,30 @@ class Chat extends React.Component {
 			}
 		}
 	}
+	_renderChats(user) {
+		return (
+				<View style={{ paddingVertical: 10, backgroundColor: '#FFFFFF', marginBottom: 1, flexDirection: 'row' }}>
+					<Image source={{ uri: user.photo }} style={{ height: 50, width: 50, borderRadius: 25, margin: 10, }} />
+						
+					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+						<TouchableOpacity onPress={this._chatWith.bind(this, user)} style={{ flex: 1, height: 70, justifyContent: 'center' }}>
+							<Text style={{ fontSize: 18, color: '#666666', fontWeight: '500' }}>{user.name}</Text>
+							<View style={{ height: 10, }} />
+							<Text style={{ fontSize: 16, color: '#999999', lineHeight: 18 }}>我是{user.role}{user.name},你快加入到婚礼里来</Text>
+						</TouchableOpacity>
+
+						<View style={{ backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center', height: 70, width: 80 }}>
+							
+							<TouchableOpacity onPress={this._passRequest.bind(this, user)} style={{ backgroundColor: '#5DC01D', padding: 10, borderRadius: 5 }}>
+								<Text style={{ color: '#FFFFFF' }}>通过</Text>
+							</TouchableOpacity>
+
+						</View>
+					</View>
+
+				</View>
+		);
+	}
 	render() {
 		const { marry, message } = this.props;
 		if(typeof message === 'object') {
@@ -184,7 +237,6 @@ class Chat extends React.Component {
 				<View style={[styles.container, {backgroundColor: '#EFEFEF'}]}>
 					<ChatMenu onPress={this._onMenuPress.bind(this)} navigator={this.props.navigator} />
 					<ListView
-						automaticallyAdjustContentInsets={false}
 						dataSource={this.state.dataSource}
 						renderRow={this.renderRow.bind(this)}
 						refreshControl={
@@ -211,7 +263,12 @@ class Chat extends React.Component {
 }
 
 export default connect(
-	state=>({ marry: state.marry, me: state.session, message: state.message }),
+	state=>({ 
+		marry: state.marry, 
+		me: state.session, 
+		message: state.message,
+		chat: state.chat 
+	}),
 	dispatch=>({
 		pass: (id) => dispatch(pass(id)),
 		loadMessage: () => dispatch(load()),

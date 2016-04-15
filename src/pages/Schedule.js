@@ -2,12 +2,9 @@ import React, {
 	View,
 	Text
 } from 'react-native'
-
 import asset from '../assets'
 import styles from '../styles'
-
 import Switchtab from '../components/View/Switchtab'
-
 import Todo from './Todo'
 import { IconButton } from '../components/Form';
 import TodoNav from './TodoNav';

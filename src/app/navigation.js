@@ -1,6 +1,5 @@
 import React, {
   AppRegistry,
-  StatusBar,
   View,
   Text,
   Platform,
@@ -183,10 +182,6 @@ class Navigation extends React.Component {
     if(this.state.showTabBar) {
       return (
         <View style={{ flex: 1 }}>
-          <StatusBar
-            translucent={true}
-            backgroundColor="rgba(0,0,0,0)"
-            barStyle="light-content" />
           <Navigator
             ref={(nav) => { this.navigator = nav;global.nav = nav;} }
             initialRoute={this.initialRoute}
@@ -199,10 +194,6 @@ class Navigation extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <StatusBar
-            translucent={true}
-            backgroundColor="rgba(0,0,0,0)"
-            barStyle="light-content" />
           <Navigator
             ref={(nav) => { this.navigator = nav;global.nav = nav;} }
             initialRoute={this.initialRoute}

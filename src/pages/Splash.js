@@ -21,7 +21,7 @@ import { load as loadMessage } from '../redux/modules/message';
 import { load as LoadMoney } from '../redux/modules/money';
 import { init as loadTodos } from '../redux/modules/task';
 import { load as loadStories } from '../redux/modules/story';
-
+import Subscriber from './Subscriber';
 class Splash extends React.Component {
 	constructor(props) {
 		super(props);
@@ -35,13 +35,13 @@ class Splash extends React.Component {
 		this.props.loadSession();
 	}
 	componentWillReceiveProps(nextProps) {
-		const { session } = nextProps
-		if (session === 'initial state' || session === null) {
+		const { user } = nextProps
+		if (user === 'initial state' || user === null) {
 			this.props.navigator.popToTop();
 		}
 	}
 	render() {
-		const { session } = this.props;
+		const { user } = this.props;
 		if (this.state.network === false) {
 			return (
 				<View style={styles.centerLayout}>
@@ -49,19 +49,22 @@ class Splash extends React.Component {
 				</View>
 			);
 		}
-		if (session === 'initial state') {
+		if (user === 'initial state') {
 			return (
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 					<Image source={asset.splash} />
 				</View>
 			);
-		} else if(session === null) {
+		} else if(user === null) {
 			return (
 				<LogIn navigator={this.props.navigator} />
 			);
 		} else {
 			return (
+			<View style={{ flex: 1 }}>
 				<Navigator navigator={this.props.navigator} />
+				<Subscriber />
+			</View>
 			);
 		}
 
@@ -70,7 +73,7 @@ class Splash extends React.Component {
 
 export default connect(
 	state => ({ 
-		session: state.session, 
+		user: state.session, 
 		money: state.money, 
 		marry: state.marry,
 		task: state.task,

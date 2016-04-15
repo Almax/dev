@@ -23,6 +23,7 @@ import { PureButton } from '../components/Form';
 import FindPartner from './FindPartner';
 import TodoNew from './TodoNew';
 import ActionButton from 'react-native-action-button';
+
 class TodoList extends React.Component {
 	render() {
 		return (
@@ -42,10 +43,8 @@ class Home extends React.Component {
 		this.state = {
 			mock: null,
 			isRefreshing: false,
-		}
+		};
 	}
-	componentDidMount() {
-	}	
 	_invite() {
 		this.props.navigator.push({
 			component: FindPartner
@@ -59,7 +58,6 @@ class Home extends React.Component {
 		    isRefreshing: false
 		  });
 		}, 2000);
-		
 	}
  	render() {
 		const { state, navigator } = this.props;
@@ -133,6 +131,7 @@ class Home extends React.Component {
 						}
 
 						</ScrollView>
+
 						<View style={{ height: 50 }} />
 				</View>
 			);
@@ -197,7 +196,7 @@ const styles = StyleSheet.create({
 })
 
 export default connect(
-	state => ({ marry: state.marry }),
+	state => ({ marry: state.marry, chat: state.chat }),
 	dispatch => ({
 		updateMarry: (data) => dispatch(setMyMarry(data)),
 		loadSession: () => dispatch(loadUser()),

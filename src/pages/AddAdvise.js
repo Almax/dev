@@ -72,7 +72,6 @@ class AddAdvise extends React.Component {
 	render() {
 		return (
 			<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-				<BackStep navigator={this.props.navigator} />
         
         <FormRow style={{ backgroundColor: '#FFFFFF', paddingLeft: 10 }}>
           <SoftInput 

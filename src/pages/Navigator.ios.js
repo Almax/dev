@@ -33,6 +33,7 @@ class Navigator extends React.Component {
         <Loading />
       )
     }else {
+      const { chat } = this.props;
       return (
         <TabBarIOS
           tintColor="#F06199"
@@ -76,6 +77,7 @@ class Navigator extends React.Component {
 
           <TabBarIOS.Item
             title="聊天"
+            badge={chat.message.length > 0 ? chat.message.length : null}
             icon={ asset.chat }
             selected={this.state.selectedTab === 'chat'}
             onPress={() => {
@@ -98,6 +100,7 @@ class Navigator extends React.Component {
             <More navigator={navigator} />
           </TabBarIOS.Item>
 
+          
         </TabBarIOS>
       )
     }
@@ -105,7 +108,7 @@ class Navigator extends React.Component {
 }
 
 export default connect(
-  state => ({ marry: state.marry }),
+  state => ({ marry: state.marry, chat: state.chat }),
   dispatch => ({
     
   })

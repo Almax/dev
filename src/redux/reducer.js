@@ -6,6 +6,7 @@ import story from './modules/story';
 import money from './modules/money';
 import message from './modules/message';
 import friend from './modules/friend';
+import chat from './modules/chat';
 export default combineReducers({
 	session,
   task,
@@ -14,4 +15,5 @@ export default combineReducers({
   money,
   message,
   friend,
+  chat,
 });

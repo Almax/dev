@@ -4,7 +4,7 @@ import { loadUser } from './session';
 export const RESET_MESSAGE = 'app/message/reset_message';
 export const INITIAL_MESSAGE = 'app/message/initial_message';
 export const PASS_MESSAGE = 'app/message/pass_message';
-const initialState = 'initial state';
+const initialState = [];
 const reducer = handleActions({
 	[RESET_MESSAGE]: (state, action) => {
 		return initialState;

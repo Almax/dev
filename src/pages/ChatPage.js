@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import GiftedMessenger from 'react-native-gifted-messenger';
 import Communications from 'react-native-communications';
 import { getRoom, append, load } from '../utils/chat';
-import { newSession } from '../utils/chat';
+import { newChatSession } from '../redux/modules/chat';
 import Loading from './Loading';
 const MESSAGE_NUMBER = 5;
 class ChatPage extends React.Component {
@@ -30,9 +30,11 @@ class ChatPage extends React.Component {
 
     this.socket = io.connect('ws://182.254.159.146:3031', { jsonp: false });
   }
+  componentWillReceiveProps(nextProps) {
+    console.warn(nextProps);
+  }
   async _saveSession(user) {
-    await newSession(user);
-
+     this.props.newChatSession(user);
   }
   componentDidMount() {
     InteractionManager.runAfterInteractions( async () => {
@@ -62,8 +64,12 @@ class ChatPage extends React.Component {
         }
       });
       this.setState({ loaded: true });
+      
+      //这个地方修改了room_id来识别消息渠道
       this.socket.emit('subscribe', this.state.room_id);
+      this.socket.emit('subscribe', object.uid);
       this.socket.on('chat', this._receiveMessage.bind(this));
+
       try {
         this._GiftedMessenger.appendMessages(messages);
       } catch (e) {
@@ -95,6 +101,7 @@ class ChatPage extends React.Component {
     }
   }
   async handleSend(messageObject = {}, rowID = null) {
+    const { object } = this.props;
     const message = {
       uid: this.props.user.uid,
       name: this.props.user.name,
@@ -106,22 +113,10 @@ class ChatPage extends React.Component {
 
     let resp = await append(this.state.room_id, message.uid, message.text, message.date);
     this.socket.emit('chat', { message , room_id: this.state.room_id });
+    this.socket.emit('chat', { message , room_id: object.uid });
   }
   
   onLoadEarlierMessages(oldestMessage = {}, callback = () => {}) {
-    // let endLoaded = false;
-    // let earlierMessages = [];
-    // console.warn(this.messages.length);
-    // if(this.messages.length < 5) {
-    //   earlierMessages = this.messages.splice(this.messages.length);
-    //   endLoaded = true;
-    // } else {
-    //   earlierMessages = this.messages.splice(this.messages.length-5);
-    // }
-
-    // setTimeout( async () => {
-    //   await callback(earlierMessages, endLoaded);
-    // }, 1000);
   }
   
   handleReceive(message = {}) {
@@ -229,12 +224,11 @@ class ChatPage extends React.Component {
 }
 
 var navBarHeight = (Platform.OS === 'android' ? 56 : 64);
-// warning: height of android statusbar depends of the resolution of the device
-// http://stackoverflow.com/questions/3407256/height-of-status-bar-in-android
-// @todo check Navigator.NavigationBar.Styles.General.NavBarHeight
 var statusBarHeight = (Platform.OS === 'android' ? 25 : 0);
 
 export default connect(
   state=>({ user: state.session }),
-  dispatch=>({})
+  dispatch=>({
+    newChatSession: (friend) => dispatch(newChatSession(friend))
+  })
 )(ChatPage);

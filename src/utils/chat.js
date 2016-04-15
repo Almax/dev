@@ -106,12 +106,39 @@ export async function passInviteRequest(friend_uid) {
 
 export async function newSession(friend) {
 	try {
+		let existed = false;
 		let chats = await session.load({ key: 'chats' });
 		Object.keys(chats).map((key) => {
-			console.warn(chats[key].uid);
+			if(chats[key].uid === friend.uid) {
+				existed = true;
+			}
 		});
+		if(existed === false) {
+			chats.unshift(friend);
+			await session.save({ key: 'chats', rawData: chats });
+		}
+		return friend;
 	} catch(e) {
 		const list = [friend];
-		await session.save({ key: 'chats', rawData: list });	
+		await session.save({ key: 'chats', rawData: list });
+		return friend;
+	}
+}
+
+export async function loadSession() {
+	try {
+		return await session.load({ key: 'chats' });
+	} catch(e) {
+		await session.save({ key: 'chats', rawData: [] });
+		return [];
+	}
+}
+
+export async function cleanSession() {
+	try {
+		await session.remove({ key: 'chats' });
+		return [];
+	} catch(e) {
+		console.warn('error:', e);
 	}
 }

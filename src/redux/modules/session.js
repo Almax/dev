@@ -11,6 +11,7 @@ import { getMyMarry, resetMyMarry } from './marry';
 import { load as loadTask, reset as resetTask } from './task';
 import { load as loadMessage, reset as resetMessage } from './message';
 import { loadFriends } from './friend';
+import { loadChatSessions, cleanChatSession } from './chat';
 import { createAction, handleActions } from 'redux-actions'
 /* action type */
 export const RELOAD_USER = 'app/session/reload_user';
@@ -50,6 +51,7 @@ export function login(username, password) {
 			dispatch(loadTask());
 			dispatch(loadMessage());
 			dispatch(loadFriends());
+			dispatch(loadChatSessions());
 		}else {
 			dispatch(reloadSession());
 		}
@@ -66,6 +68,7 @@ export function loadUser() {
 			dispatch(loadTask());
 			dispatch(loadMessage());
 			dispatch(loadFriends());
+			dispatch(loadChatSessions());
 		}else {
 			dispatch(cleanSession())
 		}
@@ -79,6 +82,7 @@ export function logout() {
 		dispatch(resetMyMarry());
 		dispatch(resetTask());
 		dispatch(resetMessage());
+		dispatch(cleanChatSession());
 	}
 }
 
