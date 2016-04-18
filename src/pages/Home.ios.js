@@ -22,6 +22,7 @@ import { BackStep } from '../components/View';
 import { PureButton } from '../components/Form';
 import FindPartner from './FindPartner';
 import TodoNew from './TodoNew';
+import CameraView from './CameraView';
 import ActionButton from 'react-native-action-button';
 
 class TodoList extends React.Component {
@@ -114,6 +115,16 @@ class Home extends React.Component {
                   <Text style={styles.text}>故事</Text>
                 </TouchableOpacity>
               </View>
+
+              <View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
+                <TouchableOpacity
+                    onPress={ () => navigator.push({ component: CameraView }) }
+                    style={styles.textIcon}>
+                  <Image source={asset.storyBook} style={styles.icon} />
+                  <Text style={styles.text}>相册</Text>
+                </TouchableOpacity>              
+              </View>
+
 						</View>
 
 						{

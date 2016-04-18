@@ -21,6 +21,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		81212D001CC4BAF800169DE7 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81212CF11CC4BAEB00169DE7 /* libRCTCameraRoll.a */; };
 		8145FB951CA3C6CE00414F9D /* libRCTSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8145FB8F1CA3C6B900414F9D /* libRCTSplashScreen.a */; };
 		8145FB981CA3C7A500414F9D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8145FB961CA3C7A500414F9D /* LaunchScreen.xib */; };
 		8145FB9B1CA3C7B700414F9D /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 8145FB9A1CA3C7B700414F9D /* splash.png */; };
@@ -105,6 +106,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTLinking;
 		};
+		81212CF01CC4BAEB00169DE7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 81212CEA1CC4BAEA00169DE7 /* RCTCameraRoll.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
+			remoteInfo = RCTCameraRoll;
+		};
 		8145FB8E1CA3C6B900414F9D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8145FB811CA3C6B800414F9D /* RCTSplashScreen.xcodeproj */;
@@ -177,6 +185,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MarryGuard_v2/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		81212CEA1CC4BAEA00169DE7 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		8145FB811CA3C6B800414F9D /* RCTSplashScreen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSplashScreen.xcodeproj; path = "../node_modules/@remobile/react-native-splashscreen/ios/RCTSplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		8145FB961CA3C7A500414F9D /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = "../node_modules/@remobile/react-native-splashscreen/ios/RCTSplashScreen/SplashScreenResource/LaunchScreen.xib"; sourceTree = "<group>"; };
 		8145FB9A1CA3C7B700414F9D /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = ../splash.png; sourceTree = "<group>"; };
@@ -203,6 +212,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81212D001CC4BAF800169DE7 /* libRCTCameraRoll.a in Frameworks */,
 				81B6DD831CBB532000B44A29 /* libRCTContacts.a in Frameworks */,
 				8145FB951CA3C6CE00414F9D /* libRCTSplashScreen.a in Frameworks */,
 				816A1FF41C9116CD00622F4B /* libz.tbd in Frameworks */,
@@ -333,6 +343,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		81212CEB1CC4BAEA00169DE7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				81212CF11CC4BAEB00169DE7 /* libRCTCameraRoll.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		8145FB821CA3C6B800414F9D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -384,6 +402,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				81212CEA1CC4BAEA00169DE7 /* RCTCameraRoll.xcodeproj */,
 				81B6DD6E1CBB531800B44A29 /* RCTContacts.xcodeproj */,
 				8145FB811CA3C6B800414F9D /* RCTSplashScreen.xcodeproj */,
 				816A1FEC1C91169900622F4B /* CodePush.xcodeproj */,
@@ -512,6 +531,10 @@
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
 				{
+					ProductGroup = 81212CEB1CC4BAEA00169DE7 /* Products */;
+					ProjectRef = 81212CEA1CC4BAEA00169DE7 /* RCTCameraRoll.xcodeproj */;
+				},
+				{
 					ProductGroup = 81B6DD6F1CBB531800B44A29 /* Products */;
 					ProjectRef = 81B6DD6E1CBB531800B44A29 /* RCTContacts.xcodeproj */;
 				},
@@ -638,6 +661,13 @@
 			fileType = archive.ar;
 			path = libRCTLinking.a;
 			remoteRef = 78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		81212CF11CC4BAEB00169DE7 /* libRCTCameraRoll.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCameraRoll.a;
+			remoteRef = 81212CF01CC4BAEB00169DE7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		8145FB8F1CA3C6B900414F9D /* libRCTSplashScreen.a */ = {

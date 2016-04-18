@@ -125,19 +125,21 @@ class Todo extends React.Component {
               null 
           }
 
-          <View style={{ height: 30 }} />
+          <View style={{ flexDirection: 'row', justifyContent:'flex-end' }}>
+          <View style={{ backgroundColor: '#F4F4F4', padding: 10, borderRadius: 5 }}>
+            <Text style={{fontSize: 12, color: '#666666', fontWeight: '300'}}>
+              截止 {row.end_date ? moment(row.end_date).format("YYYY.MM.DD") : "未设置"}
+            </Text>
+          </View>
+          </View>
+
+          <Line color={"#EEEEEE"} />
 
           { row.users.length &&
             (
-            <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-              <View style={{ flexDirection: 'row' }}>
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
                 { Object.keys(row.users).map((key) => <MemberHeader key={"_"+key} headimg={{ uri: row.users[key].photo }} name={row.users[key].name} /> ) }
-              </View>
-
-              <View style={{ backgroundColor: '#F4F4F4', padding: 10, borderRadius: 5, justifyContent: 'center' }}>
-                <Text style={{fontSize: 12, color: '#666666', fontWeight: '300'}}>
-                  截止 {row.end_date ? moment(row.end_date).format("YYYY.MM.DD") : "未设置"}
-                </Text>
               </View>
             </View>
             )

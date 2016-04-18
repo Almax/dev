@@ -54,7 +54,6 @@ class TodoCatalog extends React.Component {
 		if(this.state.dataSource.getRowCount() > 0) {
 			return (
 				<View style={styles.container}>
-					<BackStep navigator={this.props.navigator} title={"类别"} />
 					<ListView
 						contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap' }}
 						initialSize={20}
@@ -66,7 +65,6 @@ class TodoCatalog extends React.Component {
 		}else {
 			return (
 				<View style={styles.container}>
-					<BackStep navigator={this.props.navigator} title={"类别"} />
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 						<Loading />
 					</View>

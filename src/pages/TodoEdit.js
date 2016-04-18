@@ -88,8 +88,6 @@ class TodoEdit extends React.Component {
 		const todo = this.state;
 		return (
 			<View style={[styles.container, { backgroundColor: '#EFEFEF' }]}>
-				<BackStep navigator={this.props.navigator} title={"任务编辑"} />
-
 				<ScrollView 
 					contentContainerStyle={{ backgroundColor: '#FFFFFF', margin: 10, padding: 10, borderRadius: 5 }}
 					ref={scrollView => this.scrollView = scrollView}>

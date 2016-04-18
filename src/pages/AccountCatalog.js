@@ -53,7 +53,6 @@ class AccountCatalog extends React.Component {
 		if(this.state.dataSource.getRowCount() > 0) {
 			return (
 				<View style={styles.container}>
-					<BackStep navigator={this.props.navigator} />
 					<ListView
 						contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap' }}
 						initialSize={20}
@@ -65,7 +64,6 @@ class AccountCatalog extends React.Component {
 		}else {
 			return (
 				<View style={styles.container}>
-					<BackStep navigator={this.props.navigator} />
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 						<Text>正在加载数据...</Text>
 					</View>

@@ -18,7 +18,6 @@ class Subscriber extends React.Component {
 		//  console.warn('You have received a new notification!', notification);
 		// });
 
-
 		this.socket = io.connect('ws://182.254.159.146:3031', { jsonp: false });
 		this.socket.emit('subscribe', this.props.user.uid)
 		this.socket.on('chat', (msg) => {
