@@ -114,11 +114,12 @@ class Memory extends React.Component {
 		  }
 		});	
 	}
-	_handleStory(story) {
+	_handleStory(story, orderId) {
 		this.props.navigator.push({
 			component: ImageView,
 			params: {
-				uri: story.photo
+				story, 
+				orderId
 			}
 		})
 	}
@@ -166,20 +167,19 @@ class Memory extends React.Component {
 
 						<View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 2, paddingLeft: 2, }}>
 							
-							{Object.keys(this.state.stories).map((key) => {
-								return (
-								<TouchableOpacity 
-									key={key} 
-									onPress={this._handleStory.bind(this, this.state.stories[key])}
-									delayLongPress={500}
-									onLongPress={this._deletePhoto.bind(this, this.state.stories[key])}>
-									<LazyloadImage 
-										host="lazyload-list" 
-										source={{ uri: this.state.stories[key].photo }} 
-										style={{ marginRight: 2, height: ((width-2)/4) - 2, width: ((width-2)/4) - 2, marginBottom: 2 }} />
-								</TouchableOpacity>
+							{Object.keys(this.state.stories).map((key) => (
+									<TouchableOpacity 
+										key={key} 
+										onPress={this._handleStory.bind(this, this.state.stories[key], key)}
+										delayLongPress={500}
+										onLongPress={this._deletePhoto.bind(this, this.state.stories[key])}>
+										<LazyloadImage 
+											host="lazyload-list" 
+											source={{ uri: this.state.stories[key].photo }} 
+											style={{ marginRight: 2, height: ((width-2)/4) - 2, width: ((width-2)/4) - 2, marginBottom: 2 }} />
+									</TouchableOpacity>
 								)
-							})}
+							)}
 
 						</View>
 
