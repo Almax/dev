@@ -20,6 +20,7 @@
     "react-native-alphabetlistview": "^0.1.2",
     "react-native-android-badge": "^0.3.1",
     "react-native-animatable": "^0.4.1",
+    "react-native-asset-library-to-base64": "^1.0.1",
     "react-native-chart": "^0.1.12",
     "react-native-code-push": "^1.8.0-beta",
     "react-native-communications": "*",
@@ -43,6 +44,7 @@
     "redux-immutable": "^3.0.6",
     "redux-logger": "^2.3.1",
     "redux-thunk": "^1.0.2",
+    "rn-camera-roll": "0.0.4",
     "socket.io-client": "^1.4.5"
   },
   "devDependencies": {

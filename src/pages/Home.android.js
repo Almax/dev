@@ -54,17 +54,17 @@ class Home extends React.Component {
 		if(typeof marry === 'object') {
 			return (
 				<View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
-						<Swiper height={200} showsPagination={true} showsButtons={false}>
+						<Swiper height={140} showsPagination={true} showsButtons={false}>
 							<View style={styles.bannerWrapper}>
 								<Image source={asset.homeBanner} style={styles.bannerImage} resizeMode={"contain"} />
 							</View>
 							<View style={styles.bannerWrapper}>
 								<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}> 
-									<Image source={asset.marryBanner} style={{ height: 100 }} resizeMode={"contain"} />
+									<Image source={asset.marryBanner} style={{ height: 120, width: 70 }} />
 									<View style={{ marginLeft: 15 }}>
-										<Text style={{ color: '#FFFFFF', fontSize: 22, fontWeight: '300' }}>{moment(marry.marry_date).format("YYYY年MM月DD日")}</Text>
+										<Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: '100' }}>{moment(marry.marry_date).format("YYYY年MM月DD日")}</Text>
 										<View style={{ height: 5 }} />
-										<Text style={{ color: '#FFFFFF', fontSize: 22, fontWeight: '300' }}>是你们俩大喜的日子哦~</Text>
+										<Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: '100' }}>是你们俩大喜的日子哦~</Text>
 									</View>
 								</View>
 							</View>
@@ -110,17 +110,20 @@ class Home extends React.Component {
 									<Image source={asset.msg} style={styles.icon} />
 									<Text style={styles.text}>聊天</Text>
 								</TouchableOpacity>
+
 								<TouchableOpacity
 										onPress={ () => navigator.push({ component: More }) }
 										style={styles.textIcon}>
 									<Image source={asset.configure} style={styles.icon} />
 									<Text style={styles.text}>设置</Text>
 								</TouchableOpacity>
+
+
 								<TouchableOpacity
 										onPress={ () => {} }
 										style={styles.emptyIcon}>
-
 								</TouchableOpacity>
+
 							</View>
 						</ScrollView>
 
@@ -155,8 +158,7 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
 	bannerWrapper: {
 		alignItems: 'center',
-		justifyContent: 'center',
-		height: 200,
+		height: 140,
 		backgroundColor: '#F06199'
 	},
 	bannerImage: {

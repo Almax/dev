@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 		height: 40,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#FFFFFF',
+		backgroundColor: 'rgba(255,255,255,0.8)',
 		paddingHorizontal: 20,
 	},
 
@@ -40,19 +40,17 @@ const styles = StyleSheet.create({
 		height: 40,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#FFFFFF',
+		backgroundColor: 'rgba(255,255,255,0.8)',
 		paddingHorizontal: 20
 	},
 
 	text: {
-		fontSize: 18,
-		fontWeight: '500',
+		fontSize: 16,
 		color: '#0C84FB'
 	},
 
 	textSmall: {
-		fontSize: 14,
-		fontWeight: '500',
+		fontSize: 12,
 		color: '#0C84FB'
 	}
 

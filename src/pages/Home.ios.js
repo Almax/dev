@@ -22,7 +22,6 @@ import { BackStep } from '../components/View';
 import { PureButton } from '../components/Form';
 import FindPartner from './FindPartner';
 import TodoNew from './TodoNew';
-import CameraView from './CameraView';
 import ActionButton from 'react-native-action-button';
 
 class TodoList extends React.Component {
@@ -66,13 +65,13 @@ class Home extends React.Component {
 			const { marry } = this.props;
 			return (
 				<View style={{ flex: 1 }}>
-						<Swiper height={140} showsPagination={true} showsButtons={false}>
+						<Swiper height={120} showsPagination={true} showsButtons={false}>
 							<View style={styles.bannerWrapper}>
 								<Image source={asset.homeBanner} style={styles.bannerImage} resizeMode={"contain"} />
 							</View>
 							<View style={styles.bannerWrapper}>
 								<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}> 
-									<Image source={asset.marryBanner} style={{ height: 100 }} resizeMode={"contain"} />
+									<Image source={asset.marryBanner} style={{ height: 100, width: 60 }} />
 									<View style={{ marginLeft: 15 }}>
 										<Text style={{ color: '#FFFFFF', fontSize: 22, fontWeight: '300' }}>{moment(marry.marry_date).format("YYYY年MM月DD日")}</Text>
 										<View style={{ height: 5 }} />
@@ -116,15 +115,6 @@ class Home extends React.Component {
                 </TouchableOpacity>
               </View>
 
-              <View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
-                <TouchableOpacity
-                    onPress={ () => navigator.push({ component: CameraView }) }
-                    style={styles.textIcon}>
-                  <Image source={asset.storyBook} style={styles.icon} />
-                  <Text style={styles.text}>相册</Text>
-                </TouchableOpacity>              
-              </View>
-
 						</View>
 
 						{
@@ -158,12 +148,11 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
 	bannerWrapper: {
 		alignItems: 'center',
-		justifyContent: 'center',
-		height: 140,
+		height: 120,
 		backgroundColor: '#F06199'
 	},
 	bannerImage: {
-		height: 100
+		height: 100,
 	},
 
 	textIcon: {

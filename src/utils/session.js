@@ -10,6 +10,7 @@ session = new Storage({
 });
 //const base_request = 'http://test.marrynovo.com/api/v1/users';
 const base_request = 'http://192.168.199.152:3000/api/v1/users';
+//const base_request = 'http://192.168.1.152:3000/api/v1/users';
 
 export async function currentUser() {
 	try {

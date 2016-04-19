@@ -2,7 +2,10 @@ var options = {
   title: '选择照片', // specify null or empty string to remove the title
   cancelButtonTitle: '取消',
   takePhotoButtonTitle: '拍照', // specify null or empty string to remove this button
-  chooseFromLibraryButtonTitle: '从相册里选择...', // specify null or empty string to remove this button
+  chooseFromLibraryButtonTitle: null,
+  customButtons: {
+    '从相册里选择': 'batchSelect', // [Button Text] : [String returned upon selection]
+  },  
   cameraType: 'back', // 'front' or 'back'
   mediaType: 'photo', // 'photo' or 'video'
   videoQuality: 'high', // 'low', 'medium', or 'high'
@@ -42,6 +45,7 @@ import { createStory, getStories } from '../utils/syncdata';
 import ImageView from './ImageView';
 import { PureButton } from '../components/Form';
 import { BackStep } from '../components/View';
+import CameraView from './CameraView';
 import {
     LazyloadScrollView,
     LazyloadImage,
@@ -83,7 +87,18 @@ class Memory extends React.Component {
 		ImagePickerManager.showImagePicker(options, async (response) => {
 		  if (response.didCancel) {}
 		  else if (response.error) {}
-		  else if (response.customButton) {}
+		  else if (response.customButton) {
+		  	this.props.navigator.push({
+		  		title: '选择照片',
+		  		component: CameraView,
+		  		params: {
+		  			popRefresh: async () => {
+		  				const stories = await getStories(this.props.marry);
+		  				this.setState({ stories });
+		  			}
+		  		}
+		  	});
+		  }
 		  else {
 		    const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
 		    const params = {
@@ -116,6 +131,9 @@ class Memory extends React.Component {
         isRefreshing: false
       })
     }, 2000);
+	}
+	_deletePhoto(photo) {
+
 	}
 	render() {
 		if(this.state.story === 'initial state' || this.state.loaded === false) {
@@ -154,7 +172,7 @@ class Memory extends React.Component {
 									key={key} 
 									onPress={this._handleStory.bind(this, this.state.stories[key])}
 									delayLongPress={500}
-									onLongPress={() => Alert.alert('delete it', 'are you sure?')}>
+									onLongPress={this._deletePhoto.bind(this, this.state.stories[key])}>
 									<LazyloadImage 
 										host="lazyload-list" 
 										source={{ uri: this.state.stories[key].photo }} 

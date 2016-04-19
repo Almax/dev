@@ -12,8 +12,8 @@ class StoryView extends React.Component {
 	render() {
 		const { uri } = this.props;
 		return (
-			<View style={{ flex: 1, backgroundColor: '#000000' }}>
-				<Image source={{ uri: uri }} resizeMode={"contain"} style={{ height, width }} />
+			<View style={{ flex: 1, justifyContent: 'flex-start', backgroundColor: '#000000' }}>
+				<Image source={{ uri: uri }} resizeMode={"contain"} style={{ width, height }} />
 			</View>
 		);
 	}

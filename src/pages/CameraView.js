@@ -1,243 +1,245 @@
-'use strict';
-
-var React = require('react-native');
-var {
-  ActivityIndicatorIOS,
-  CameraRoll,
+import React, {
+  Component,
   Image,
-  ListView,
   Platform,
-  StyleSheet,
+  PropTypes,
+  ListView,
   View,
-} = React;
+  Text,
+  TouchableOpacity,
+  NativeModules,
+  Dimensions,
+  Alert,
+} from 'react-native';
+import asset from '../assets';
+import { connect } from 'react-redux';
+import { SubmitButton, PureButton } from '../components/Form';
+import CameraRoll from 'rn-camera-roll';
+const { width, height } = Dimensions.get('window');
+import { createStory, getStories } from '../utils/syncdata';
+const PHOTOS_COUNT_BY_FETCH = 30;
+const MAX_SIZE = 20;
+class CameraView extends Component {
+  constructor(props) {
+    super(props);
+    this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.lastPhotoFetched = undefined;
+    this.images = [];
+    this.selected = 0;
+    this.state = this.getDataSourceState();
+  }
 
-var groupByEveryN = require('groupByEveryN');
-var logError = require('logError');
+  async componentWillMount() {
+    this.onPhotosFetchedSuccess(await this.fetchPhotos());
+  }
 
-var propTypes = {
-  /**
-   * The group where the photos will be fetched from. Possible
-   * values are 'Album', 'All', 'Event', 'Faces', 'Library', 'PhotoStream'
-   * and SavedPhotos.
-   */
-  groupTypes: React.PropTypes.oneOf([
-    'Album',
-    'All',
-    'Event',
-    'Faces',
-    'Library',
-    'PhotoStream',
-    'SavedPhotos',
-  ]),
-
-  /**
-   * Number of images that will be fetched in one page.
-   */
-  batchSize: React.PropTypes.number,
-
-  /**
-   * A function that takes a single image as a parameter and renders it.
-   */
-  renderImage: React.PropTypes.func,
-
-  /**
-   * imagesPerRow: Number of images to be shown in each row.
-   */
-  imagesPerRow: React.PropTypes.number,
-
-   /**
-   * The asset type, one of 'Photos', 'Videos' or 'All'
-   */
-  assetType: React.PropTypes.oneOf([
-    'Photos',
-    'Videos',
-    'All',
-  ]),
-
-};
-
-var CameraRollView = React.createClass({
-  propTypes: propTypes,
-
-  getDefaultProps: function(): Object {
+  getDataSourceState() {
     return {
-      groupTypes: 'SavedPhotos',
-      batchSize: 5,
-      imagesPerRow: 1,
-      assetType: 'Photos',
-      renderImage: function(asset) {
-        var imageSize = 150;
-        var imageStyle = [styles.image, {width: imageSize, height: imageSize}];
-        return (
-          <Image
-            source={asset.node.image}
-            style={imageStyle}
-          />
-        );
-      },
+      isUploading: false,
+      preview: null,
+      selected: this.selected,
+      dataSource: this.ds.cloneWithRows(this.images),
     };
-  },
+  }
 
-  getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: this._rowHasChanged});
+  getPhotosFromCameraRollData(data) {
+    return data.edges.map((asset) => {
+      return asset.node.image;
+    });
+  }
 
-    return {
-      assets: ([]: Array<Image>),
-      groupTypes: this.props.groupTypes,
-      lastCursor: (null : ?string),
-      assetType: this.props.assetType,
-      noMore: false,
-      loadingMore: false,
-      dataSource: ds,
-    };
-  },
+  onPhotosFetchedSuccess(data) {
+    const newPhotos = this.getPhotosFromCameraRollData(data);
+    this.images = this.images.concat(newPhotos);
+    this.setState(this.getDataSourceState());
+    if (newPhotos.length) this.lastPhotoFetched = newPhotos[newPhotos.length - 1].uri;
+  }
 
-  /**
-   * This should be called when the image renderer is changed to tell the
-   * component to re-render its assets.
-   */
-  rendererChanged: function() {
-    var ds = new ListView.DataSource({rowHasChanged: this._rowHasChanged});
-    this.state.dataSource = ds.cloneWithRows(
-      groupByEveryN(this.state.assets, this.props.imagesPerRow)
+  onPhotosFetchError(err) {
+
+  }
+
+  async fetchPhotos(count = PHOTOS_COUNT_BY_FETCH, after) {
+    return await CameraRoll.getPhotos({
+      first: count,
+      after,
+    });
+  }
+
+  async onEndReached() {
+    this.onPhotosFetchedSuccess(
+      await this.fetchPhotos(PHOTOS_COUNT_BY_FETCH, this.lastPhotoFetched)
     );
-  },
+  }
 
-  componentDidMount: function() {
-    this.fetch();
-  },
-
-  componentWillReceiveProps: function(nextProps: {groupTypes?: string}) {
-    if (this.props.groupTypes !== nextProps.groupTypes) {
-      this.fetch(true);
-    }
-  },
-
-  _fetch: function(clear?: boolean) {
-    if (clear) {
-      this.setState(this.getInitialState(), this.fetch);
-      return;
-    }
-
-    var fetchParams: Object = {
-      first: this.props.batchSize,
-      groupTypes: this.props.groupTypes,
-      assetType: this.props.assetType,
-    };
-    if (Platform.OS === "android") {
-      // not supported in android
-      delete fetchParams.groupTypes;
-    }
-    if (this.state.lastCursor) {
-      fetchParams.after = this.state.lastCursor;
-    }
-
-    CameraRoll.getPhotos(fetchParams, this._appendAssets, logError);
-  },
-
-  /**
-   * Fetches more images from the camera roll. If clear is set to true, it will
-   * set the component to its initial state and re-fetch the images.
-   */
-  fetch: function(clear?: boolean) {
-    if (!this.state.loadingMore) {
-      this.setState({loadingMore: true}, () => { this._fetch(clear); });
-    }
-  },
-
-  render: function() {
-    return (
-      <ListView
-        renderRow={this._renderRow}
-        renderFooter={this._renderFooterSpinner}
-        onEndReached={this._onEndReached}
-        style={styles.container}
-        dataSource={this.state.dataSource}
-      />
-    );
-  },
-
-  _rowHasChanged: function(r1: Array<Image>, r2: Array<Image>): boolean {
-    if (r1.length !== r2.length) {
-      return true;
-    }
-
-    for (var i = 0; i < r1.length; i++) {
-      if (r1[i] !== r2[i]) {
-        return true;
-      }
-    }
-
-    return false;
-  },
-
-  _renderFooterSpinner: function() {
-    if (!this.state.noMore) {
-      return <ActivityIndicatorIOS style={styles.spinner} />;
-    }
-    return null;
-  },
-
-  // rowData is an array of images
-  _renderRow: function(rowData: Array<Image>, sectionID: string, rowID: string)  {
-    var images = rowData.map((image) => {
-      if (image === null) {
-        return null;
-      }
-      return this.props.renderImage(image);
+  async _beginUpload() {
+    let counter = 0;
+    this.setState({
+      isUploading: true
     });
 
-    return (
-      <View style={styles.row}>
-        {images}
-      </View>
-    );
-  },
-
-  _appendAssets: function(data: Object) {
-    var assets = data.edges;
-    var newState: Object = { loadingMore: false };
-
-    if (!data.page_info.has_next_page) {
-      newState.noMore = true;
+    for(key in this.images) {
+      if(this.images[key].selected === true) {
+        await NativeModules.ReadImageData.readImage(this.images[key].uri, async (data) => {
+          const source = {uri: 'data:image/jpeg;base64,' + data, isStatic: true};
+          const params = {
+            photo: source.uri,
+          };
+          let newPhoto = await createStory(this.props.marry, params);
+          this.setState({
+            preview: newPhoto.photo
+          });
+          counter++;
+          if(counter === this.selected) {
+            Alert.alert('上传完成');
+            this._cleanSelected();
+            await this.props.popRefresh();
+          }
+        });
+      }
     }
+  }
+  _cleanSelected() {
+    Object.keys(this.images).map(key => {
+      this.images[key].selected = false;
+    });
+    this.selected = 0; 
+    return this.setState(this.getDataSourceState());
+  }
+  _stopUploading() {
+    this.setState({
+      isUploading: false,
+    });
+  }
 
-    if (assets.length > 0) {
-      newState.lastCursor = data.page_info.end_cursor;
-      newState.assets = this.state.assets.concat(assets);
-      newState.dataSource = this.state.dataSource.cloneWithRows(
-        groupByEveryN(newState.assets, this.props.imagesPerRow)
+  _pickPhoto(image) {
+    Object.keys(this.images).map(key => {
+      if(this.images[key].uri === image.uri) {
+        if(this.images[key].selected === true) {
+          this.selected = this.selected - 1;
+          this.images[key].selected = false;
+        } else {
+          if(this.selected >= MAX_SIZE) {
+            return Alert.alert(`最多只能选择${MAX_SIZE}张照片`);
+          }
+          this.selected = this.selected + 1;
+          this.images[key].selected = true;
+        }
+        return this.setState(this.getDataSourceState());
+      }
+    });
+  }
+  _renderRow(image) {
+    if(image.selected === true) {
+      return (
+        <TouchableOpacity onPress={this._pickPhoto.bind(this, image)}>
+          <Image
+            style={styles.image}
+            source={{ uri: image.uri }}>
+
+            <View style={{ backgroundColor: 'rgba(0,0,0,0.3)', position: 'absolute', top: 0, left: 0, bottom: 0, right: 0, alignItems: 'center', justifyContent: 'center' }}>
+              <Image source={asset.ok} />
+            </View>
+
+          </Image>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity onPress={this._pickPhoto.bind(this, image)}>
+          <Image
+            style={styles.image}
+            source={{ uri: image.uri }}
+          />
+        </TouchableOpacity>
       );
     }
+  }
+  _renderHeader() {
+    return (
+      <View style={styles.header}>
+        <Text>已经选择了{this.state.selected}张照片</Text>
+        <SubmitButton onPress={this._beginUpload.bind(this)} size={'small'}>上传</SubmitButton>
+      </View>
+    );
+  }
+  render() {
+    return (
+      <View style={styles.container}>
 
-    this.setState(newState);
-  },
+        {this._renderHeader()}
+        <ListView
+          initialListSize={1}
+          pageSize={PHOTOS_COUNT_BY_FETCH}
+          contentContainerStyle={styles.imageGrid}
+          dataSource={this.state.dataSource}
+          onEndReached={this.onEndReached.bind(this)}
+          onEndReachedThreshold={100}
+          showsVerticalScrollIndicator={false}
+          renderRow={this._renderRow.bind(this)}
+        />
 
-  _onEndReached: function() {
-    if (!this.state.noMore) {
-      this.fetch();
-    }
-  },
-});
+        { this.state.isUploading ? 
+          <View style={styles.fullscreenLayer}>
+            <Text style={{ fontSize: 18, color: '#FFFFFF' }}>正在同步到婚礼故事...请等待</Text>
 
-var styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    flex: 1,
-  },
-  url: {
-    fontSize: 9,
-    marginBottom: 14,
-  },
-  image: {
-    margin: 4,
-  },
-  info: {
-    flex: 1,
-  },
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10 }}>
+              <Text style={{ fontSize: 18, color: '#FFFFFF' }}>正在上传</Text>
+              <View style={{ width: 10 }} />
+              <Image source={{ uri: this.state.preview }} style={{ height: 100, width: 100, borderRadius: 10 }} />
+            </View>
+
+            <View style={{ height: 20 }}/>
+            <PureButton onPress={this._stopUploading.bind(this)}>取消</PureButton>
+          </View> 
+          : null }
+
+
+      </View>
+    );
+  }
+}
+
+const styles = {
+  fullscreenLayer: { 
+    position: 'absolute', 
+    top: 0, 
+    left: 0, 
+    right: 0, 
+    bottom: 0, 
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },  
   container: {
     flex: 1,
+    paddingLeft: 2,
+    backgroundColor: '#F5FCFF',
   },
-});
+  imageGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  header: {
+    flexDirection: 'row',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  image: {
+    marginTop: 2,
+    width: (width-10) / 4,
+    height: (width-10) / 4,
+    marginRight: 2,
+  },
+};
 
-module.exports = CameraRollView;
+export default connect(
+  state => ({
+    marry: state.marry,
+    story: state.story
+  }),
+  dispatch => ({
+
+  })
+)(CameraView)
