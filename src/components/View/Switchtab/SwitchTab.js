@@ -80,7 +80,7 @@ export default class SwitchTab extends Component {
 		const userStyles = { backgroundColor: (backgroundColor ? backgroundColor: '#FFFFFF') };
 		
 		return (
-		<View style={{ flex: 1 }}>
+		<View style={{ flex: 1, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
 			<View style={[styles.tabContainer, userStyles]}>
 				<View style={styles.tabButtonWrapper}>
 				{Object.keys(pager).map((key) => (

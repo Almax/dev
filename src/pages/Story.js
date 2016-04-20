@@ -50,7 +50,7 @@ import {
     LazyloadScrollView,
     LazyloadImage,
 } from 'react-native-lazyload';
-import { load } from '../redux/modules/story';
+import { load, deleteIt } from '../redux/modules/story';
 const { width, height } = Dimensions.get('window');
 import Loading from './Loading';
 
@@ -60,7 +60,9 @@ class Memory extends React.Component {
 		this.state = {
 			isRefreshing: false,
 			loaded: false,
-			stories: []
+			stories: [],
+			isDeleting: false,
+			preview: null,
 		}
 	}
 	async componentDidMount() {
@@ -100,7 +102,7 @@ class Memory extends React.Component {
 		  	});
 		  }
 		  else {
-		    const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+		    const source = { uri: 'data:image/jpeg;base64,' + response.data, isStatic: true };
 		    const params = {
 		    	photo: source.uri,
 		    };
@@ -121,20 +123,27 @@ class Memory extends React.Component {
 				story, 
 				orderId
 			}
-		})
+		});
 	}
 	_onRefresh() {
     this.setState({isRefreshing: true});
     setTimeout(async () => {
-			const stories = await getStories(this.props.marry);
-      this.setState({
-      	stories,
-        isRefreshing: false
-      })
+			this.props.load(this.props.marry);
+      this.setState({ isRefreshing: false });
     }, 2000);
 	}
-	_deletePhoto(photo) {
-
+	_executeDelete(photo) {
+		this.setState({
+			preview: photo,
+			isDeleting: true,
+		})
+	}
+	_deletePhoto() {
+		this.props.delete(this.props.marry, this.state.preview);
+		this.setState({ isDeleting: false });
+	}
+	_stopDeteting() {
+		this.setState({ isDeleting: false });
 	}
 	render() {
 		if(this.state.story === 'initial state' || this.state.loaded === false) {
@@ -166,13 +175,12 @@ class Memory extends React.Component {
 						}
 
 						<View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 2, paddingLeft: 2, }}>
-							
 							{Object.keys(this.state.stories).map((key) => (
 									<TouchableOpacity 
 										key={key} 
 										onPress={this._handleStory.bind(this, this.state.stories[key], key)}
 										delayLongPress={500}
-										onLongPress={this._deletePhoto.bind(this, this.state.stories[key])}>
+										onLongPress={this._executeDelete.bind(this, this.state.stories[key])}>
 										<LazyloadImage 
 											host="lazyload-list" 
 											source={{ uri: this.state.stories[key].photo }} 
@@ -200,11 +208,42 @@ class Memory extends React.Component {
 				  	onPress={this._takePhoto.bind(this)}>
 				  </ActionButton>
 
+        { this.state.isDeleting ? 
+          <View style={innerStyles.fullscreenLayer}>
+            <Text style={{ fontSize: 18, color: '#FFFFFF' }}>真的要删除吗?</Text>
+
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10 }}>
+              <Text style={{ fontSize: 18, color: '#FFFFFF' }}>正在删除</Text>
+              <View style={{ width: 10 }} />
+              <Image source={{ uri: this.state.preview.photo }} style={{ height: 100, width: 100, borderRadius: 10 }} />
+            </View>
+
+            <View style={{ height: 20 }}/>
+            <View style={{ flexDirection: 'row' }}>
+            	<PureButton onPress={this._deletePhoto.bind(this)}>确定</PureButton>
+            	<View style={{ width: 50 }}/>
+            	<PureButton onPress={this._stopDeteting.bind(this)}>取消</PureButton>
+          	</View>
+
+          </View> 
+          : null }
 				</View>
 			);
 		}
 	}
 }
+const innerStyles = {
+	fullscreenLayer: {
+    position: 'absolute', 
+    top: 0, 
+    left: 0, 
+    right: 0, 
+    bottom: 0, 
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    alignItems: 'center',
+    justifyContent: 'center',
+	},
+};
 
 export default connect(
 	state => ({
@@ -212,6 +251,7 @@ export default connect(
 		story: state.story
 	}),
 	dispatch => ({
-		load: (marry) => dispatch(load(marry))
+		load: (marry) => dispatch(load(marry)),
+		delete: (marry, story) => dispatch(deleteIt(marry, story))
 	})
 )(Memory)

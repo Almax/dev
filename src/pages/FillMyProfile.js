@@ -153,6 +153,7 @@ class FillMyProfile extends React.Component {
 	}
 	_skip() {
 		this.props.navigator.push({
+			title: '完成',
 			component: Welcome
 		});
 	}
@@ -160,15 +161,6 @@ class FillMyProfile extends React.Component {
 		const { marry } = this.props;
 		return (
 			<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-
-				{ 
-					marry && marry.id ? 
-					<BackStep navigator={this.props.navigator} title={"完善我的资料"} buttonTitle={"跳过"} buttonPress={this._skip.bind(this)} />
-					: 
-					<BackStep navigator={this.props.navigator} title={"完善我的资料"} />
-				}
-				
-
 				<ScrollView 
 					ref={scrollView => this.scrollView = scrollView}
 					bounces={true}

@@ -23,6 +23,7 @@ import { PureButton } from '../components/Form';
 import FindPartner from './FindPartner';
 import TodoNew from './TodoNew';
 import ActionButton from 'react-native-action-button';
+import FeedBack from './FeedBack';
 
 class TodoList extends React.Component {
 	render() {
@@ -45,8 +46,15 @@ class Home extends React.Component {
 			isRefreshing: false,
 		};
 	}
+	componentDidMount() {
+		this.props.navigator.push({
+			title: '产品吐槽',
+			component: FeedBack,
+		});
+	}
 	_invite() {
 		this.props.navigator.push({
+			title: '邀请另一半',
 			component: FindPartner
 		});
 	}
@@ -96,19 +104,19 @@ class Home extends React.Component {
 						<View style={{ flex: 1 }}>
               <View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
                 <TouchableOpacity
-                    onPress={ () => navigator.push({ component: AccountBook }) }
+                    onPress={ () => navigator.push({ title: '账本', component: AccountBook }) }
                     style={styles.textIcon}>
                   <Image source={asset.accountBook} style={styles.icon} />
                   <Text style={styles.text}>账本</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={ () => navigator.push({ component: TodoList }) }
+                    onPress={ () => navigator.push({ title: '待办', component: TodoList }) }
                     style={styles.textIcon}>
                   <Image source={asset.taskBook} style={styles.icon} />
                   <Text style={styles.text}>待办</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={ () => navigator.push({ component: Story }) }
+                    onPress={ () => navigator.push({ title: '故事', component: Story }) }
                     style={styles.textIcon}>
                   <Image source={asset.storyBook} style={styles.icon} />
                   <Text style={styles.text}>故事</Text>

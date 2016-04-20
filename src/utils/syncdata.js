@@ -55,6 +55,12 @@ async function request(url, options) {
   }
 }
 
+export async function postFeedback(data) {
+  const options = { method: 'post', body: JSON.stringify({ feedback: data }) };
+  const url = baseUrl.concat('syncdata/feedback');
+  return await request(url, options);
+}
+
 export async function getMarry() {
   const options = { method: 'get' };
   const url = baseUrl.concat('syncdata/');
@@ -107,6 +113,18 @@ export async function createRemark(task, uploadData) {
 export async function getStories(marry) {
   const options = { method: 'get' };
   const url = `${baseUrl}syncdata/${marry.id}/stories`;
+  return await request(url, options);
+}
+
+export async function updateStory(marry, story) {
+  const options = { method: 'put', body: JSON.stringify({ marry_story: story }) }
+  const url =  `${baseUrl}syncdata/${marry.id}/story/${story.id}`;
+  return await request(url, options);
+}
+
+export async function deleteStory(marry, story) {
+  const options = { method: 'delete', body: JSON.stringify({ marry_story: story }) }
+  const url =  `${baseUrl}syncdata/${marry.id}/story/${story.id}`;
   return await request(url, options);
 }
 

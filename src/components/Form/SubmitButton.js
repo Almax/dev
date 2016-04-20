@@ -29,7 +29,7 @@ export default class SubmitButton extends Component {
 const styles = StyleSheet.create({
 	
 	button: {
-		height: 40,
+		height: 35,
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: '#F06199',
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 	},
 
 	text: {
-		fontSize: 18,
+		fontSize: 16,
 		fontWeight: '500',
 		color: '#FFFFFF'
 	},

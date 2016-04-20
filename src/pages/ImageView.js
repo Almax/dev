@@ -21,6 +21,7 @@ class ImageView extends React.Component {
 			uri: null,
 			story: null,
 			key: null,
+			modalVisible: false,
 		};
 	}
 	componentWillMount() {
@@ -66,7 +67,12 @@ class ImageView extends React.Component {
 					});
 				}
 			}
-		})
+		});
+	}
+	toggleModal() {
+		this.setState({
+			modalVisible: false
+		});
 	}
 	render() {
 		if(this.state.uri === null && this.state.story === null && this.state.key === null ) {
@@ -91,13 +97,15 @@ class ImageView extends React.Component {
 			const { photo, story, location, user } = this.state.story;
 			return (
 				<View style={styles.container}>
-					<Image source={{ uri: this.state.story.photo }} style={styles.photo} />
 
+					<Image source={{ uri: this.state.story.photo }} style={styles.photo} />
 					<TouchableOpacity onPress={this._writeStory.bind(this, this.state.story)} style={styles.story}>
 						<Image source={{ uri: user.photo }} style={styles.avatar} />
 						<View style={styles.userInfo}>
 							<Text style={styles.name}>{user.name}</Text>
-							<Text style={styles.storyText}>{`#${this.state.key+1}`} {story ? story : '这张照片还没有故事'}</Text>
+							<Text style={styles.storyText}>
+								{`#${this.state.key+1}`} { story ? story : '这张照片还没有故事...写点什么' }
+							</Text>
 						</View>
 					</TouchableOpacity>
 
@@ -148,6 +156,8 @@ const styles = {
 		fontWeight: '500',
 	},
 	userInfo: {
+		flex: 1,
+		flexWrap: 'wrap',
 		marginLeft: 10,
 	},
 	buttonGroup: { 
@@ -155,13 +165,14 @@ const styles = {
 		bottom: 0, 
 		left: 0, 
 		right: 0, 
-		height: 40, 
+		height: 50, 
 		backgroundColor: 'rgba(0,0,0,0.3)',
 		flexDirection: 'row',
 		alignItems: 'center',
 	},
 	button: {
 		flex: 1,
+		height: 50,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},

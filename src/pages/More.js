@@ -31,7 +31,7 @@ class More extends React.Component {
 		
 		return (
 		<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-	      <Image source={asset.user} style={{ height: 160, width: width }} resizeMode={"stretch"}>
+	      <Image source={asset.user} style={{ height: 180, width: width }} resizeMode={"stretch"}>
 						<View style={innerStyles.layer}>
 
 							<Image source={{ uri: user.photo }} style={{ height: 100, width: 100, borderRadius: 50 }} />	

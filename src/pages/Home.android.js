@@ -25,6 +25,7 @@ import Schedule from './Schedule';
 import Chat from './Chat';
 import More from './More';
 import FindPartner from './FindPartner';
+import FeedBack from './FeedBack';
 
 class Home extends React.Component {
 	constructor(props) {
@@ -33,6 +34,12 @@ class Home extends React.Component {
 			mock: null,
 			isRefreshing: false
 		}
+	}
+	componentDidMount() {
+		this.props.navigator.push({
+			title: '产品吐槽',
+			component: FeedBack,
+		});
 	}
 	_invite() {
 		this.props.navigator.push({

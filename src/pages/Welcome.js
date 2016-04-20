@@ -21,7 +21,6 @@ class Welcome extends React.Component {
 	render() {
 		return (
 			<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-				<BackStep navigator={this.props.navigator} title={"进入婚格"} />
 				<View 
 					style={{ flex: 1, margin: 10, padding: 10, borderRadius: 5, backgroundColor: '#FFFFFF' }}>
 
@@ -34,7 +33,7 @@ class Welcome extends React.Component {
 					</View>
 
 
-						<SubmitButton onPress={this._enter.bind(this)}>进入</SubmitButton>
+					<SubmitButton onPress={this._enter.bind(this)}>进入</SubmitButton>
 
 				</View>	
 			</View>

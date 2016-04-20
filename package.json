@@ -9,7 +9,9 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "@remobile/react-native-cache-image": "^1.0.0",
     "@remobile/react-native-splashscreen": "^1.0.3",
+    "@remobile/react-native-sqlite": "^1.0.1",
     "immutable": "^3.7.6",
     "md5": "^2.1.0",
     "moment": "^2.11.1",
@@ -25,6 +27,7 @@
     "react-native-code-push": "^1.8.0-beta",
     "react-native-communications": "*",
     "react-native-contacts": "^0.2.4",
+    "react-native-fs": "^1.3.0",
     "react-native-gifted-messenger": "*",
     "react-native-http-cache": "^0.1.1",
     "react-native-image-picker": "^0.18.2",

@@ -44,7 +44,7 @@ class FindPartner extends React.Component {
 				`原因: ${target.error}`,
 				[
 					{text: '重试', onPress: () => true },
-					{text: '跳过', onPress: () => this.props.navigator.push({ component: FillMyProfile }) }
+					{text: '跳过', onPress: () => this.props.navigator.push({ title: '完善资料', component: FillMyProfile }) }
 				]
 			);
 		}else {
@@ -62,33 +62,17 @@ class FindPartner extends React.Component {
 		this.props.loadMessage();
 		Alert.alert('发送成功','进入一下一步继续完善资料', 
 		[
-			{text: '下一步', onPress: () => this.props.navigator.push({ component: FillMyProfile }) }
+			{	text: '下一步', 
+				onPress: () => this.props.navigator.push({
+					title: '完善我的资料',
+					component: FillMyProfile 
+				}) 
+			}
 		]);
-	}
-	_skip() {
-		this.props.navigator.push({
-			component: FillMyProfile
-		});
-	}
-	_renderNav() {
-		if(this.props.marry === null || this.props.marry === 'initial state') {
-			return (
-				<BackStep title={"邀请另一半"} buttonTitle={"跳过"} buttonPress={this._skip.bind(this)} />
-			);
-		}
-
-		if(typeof this.props.marry === 'object') {
-			return (
-				<BackStep navigator={this.props.navigator} title={"邀请另一半"} buttonTitle={"跳过"} buttonPress={this._skip.bind(this)} />
-			);
-		}
 	}
 	render() {
 		return (
-			<View style={{ flex: 1, height: height, backgroundColor: '#EFEFEF' }}>
-				
-				{this._renderNav()}
-					
+			<View style={{ flex: 1, height: height, backgroundColor: '#EFEFEF' }}>					
 				<ScrollView 
 					bounces={false}
 					style={{ flex: 1, margin: 10, padding: 10, borderRadius: 5, backgroundColor: '#FFFFFF' }}>
