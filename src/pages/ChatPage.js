@@ -31,10 +31,9 @@ class ChatPage extends React.Component {
     this.socket = io.connect('ws://182.254.159.146:3031', { jsonp: false });
   }
   componentWillReceiveProps(nextProps) {
-    console.warn(nextProps);
   }
   async _saveSession(user) {
-     this.props.newChatSession(user);
+     //this.props.newChatSession(user);
   }
   componentDidMount() {
     InteractionManager.runAfterInteractions( async () => {

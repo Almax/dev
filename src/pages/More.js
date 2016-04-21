@@ -34,7 +34,7 @@ class More extends React.Component {
 	      <Image source={asset.user} style={{ height: 180, width: width }} resizeMode={"stretch"}>
 						<View style={innerStyles.layer}>
 
-							<Image source={{ uri: user.photo }} style={{ height: 100, width: 100, borderRadius: 50 }} />	
+							<Image source={{ uri: `${user.photo}?imageView2/1/w/200/h/200` }} style={{ height: 100, width: 100, borderRadius: 50 }} />	
 							<View style={{ marginVertical: 5, backgroundColor: 'transparent' }}>
 								<Text style={innerStyles.username}> {user.name}</Text>
 							</View>

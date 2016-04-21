@@ -1,4 +1,4 @@
-var options = {
+let options = {
   title: '选择照片', // specify null or empty string to remove the title
   cancelButtonTitle: '取消',
   takePhotoButtonTitle: '拍照', // specify null or empty string to remove this button
@@ -13,7 +13,7 @@ var options = {
   maxHeight: 600, // photos only
   aspectX: 2, // aspectX:aspectY, the cropping image's ratio of width to height
   aspectY: 1, // aspectX:aspectY, the cropping image's ratio of width to height
-  quality: 0.6, // photos only
+  quality: 1, // photos only
   angle: 0, // photos only
   allowsEditing: false, // Built in functionality to resize/reposition the image
   noData: false, // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
@@ -35,6 +35,7 @@ import React, {
 	Navigator,
 	Platform,
 	Dimensions,
+	InteractionManager,
 } from 'react-native';
 const ImagePickerManager = NativeModules.ImagePickerManager;
 import asset from '../assets';
@@ -63,18 +64,21 @@ class Memory extends React.Component {
 			stories: [],
 			isDeleting: false,
 			preview: null,
+			options: options
 		}
 	}
-	async componentDidMount() {
-		const { marry } = this.props;
-		if(this.props.story === 'initial state') {
-			this.props.load(this.props.marry);
-		}else {
-			this.setState({ 
-				stories: this.props.story,
-				loaded: true,
-			});
-		}
+	componentDidMount() {
+		InteractionManager.runAfterInteractions(() => {
+			const { marry } = this.props;
+			if(this.props.story === 'initial state') {
+				this.props.load(this.props.marry);
+			}else {
+				this.setState({ 
+					stories: this.props.story,
+					loaded: true,
+				});
+			}
+		});
 	}
 	componentWillReceiveProps(nextProps) {
 		if(typeof nextProps.story === 'object' ) {
@@ -86,7 +90,7 @@ class Memory extends React.Component {
 	}
 	_takePhoto() {
 		const { marry } = this.props;
-		ImagePickerManager.showImagePicker(options, async (response) => {
+		ImagePickerManager.showImagePicker(this.state.options, async (response) => {
 		  if (response.didCancel) {}
 		  else if (response.error) {}
 		  else if (response.customButton) {
@@ -183,7 +187,7 @@ class Memory extends React.Component {
 										onLongPress={this._executeDelete.bind(this, this.state.stories[key])}>
 										<LazyloadImage 
 											host="lazyload-list" 
-											source={{ uri: this.state.stories[key].photo }} 
+											source={{ uri: `${this.state.stories[key].photo}?imageView2/1/w/120/h/120` }} 
 											style={{ marginRight: 2, height: ((width-2)/4) - 2, width: ((width-2)/4) - 2, marginBottom: 2 }} />
 									</TouchableOpacity>
 								)

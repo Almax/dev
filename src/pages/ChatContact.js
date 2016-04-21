@@ -9,8 +9,11 @@ import React, {
 	InteractionManager,
 	StyleSheet,
 } from 'react-native';
+import asset from '../assets';
 import { BackStep } from '../components/View';
 import ChatMenu from '../components/ChatMenu';
+import ChatFind from './ChatFind';
+import Loading from './Loading';
 import { load, reload } from '../utils/contact';
 import { inviteFriend } from '../utils/chat';
 
@@ -20,6 +23,7 @@ class ChatContact extends React.Component {
 		let ds = new ListView.DataSource({ rowHasChanged: (r1,r2)=>r1!==r2 });
 		this.state = {
 			ds,
+			loaded: false,
 			isRefreshing: false
 		}
 	}
@@ -27,6 +31,7 @@ class ChatContact extends React.Component {
 		InteractionManager.runAfterInteractions( async () => {
 			await load((contacts) => {
 			  this.setState({
+			  	loaded: true,
 			  	ds: this.state.ds.cloneWithRows(contacts)
 			  });
 			});
@@ -80,28 +85,78 @@ class ChatContact extends React.Component {
 		  Alert.alert('更新通讯录成功!');
     })
 	}
+	_touch() {
+		this.props.navigator.push({
+			component: ChatFind,
+			title: '搜索用户'
+		})
+	}
 	render() {
+		if(this.state.loaded) {
+			return (
+				<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
+
+					<View style={{ backgroundColor: '#FFFFFF' }}>
+						<TouchableOpacity onPress={this._touch.bind(this)} style={styles.searchBar}>
+							<Image source={asset.find} style={styles.find} />
+							<Text style={styles.searchPlaceholder}>查找手机号</Text>
+						</TouchableOpacity>
+					</View>
+
+					<ListView 
+						initialListSize={20}
+						dataSource={this.state.ds} 
+						renderRow={this._renderContact.bind(this)}
+						refreshControl={
+		          <RefreshControl
+		            refreshing={this.state.isRefreshing}
+		            onRefresh={this._onRefresh.bind(this)}
+		            tintColor="#ff0000"
+		            title="匹配通讯录..."
+		            progressBackgroundColor="#ffff00"
+		          />			
+	        	} />
+
+				</View>
+			);
+		} else {
 		return (
 			<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-				<ListView 
-					initialListSize={20}
-					dataSource={this.state.ds} 
-					renderRow={this._renderContact.bind(this)}
-					refreshControl={
-	          <RefreshControl
-	            refreshing={this.state.isRefreshing}
-	            onRefresh={this._onRefresh.bind(this)}
-	            tintColor="#ff0000"
-	            title="匹配通讯录..."
-	            progressBackgroundColor="#ffff00"
-	          />			
-        	} />
+
+				<View style={{ backgroundColor: '#FFFFFF' }}>
+					<TouchableOpacity onPress={this._touch.bind(this)} style={styles.searchBar}>
+						<Image source={asset.find} style={styles.find} />
+						<Text style={styles.searchPlaceholder}>查找手机号</Text>
+					</TouchableOpacity>
+				</View>
+
+				<Loading />
 
 			</View>
 		);
+		}
 	}
 }
 const styles = StyleSheet.create({
+	find: {
+		marginRight: 5,
+		width: 15,
+		height: 15,
+	},
+	searchBar: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: 36,
+		backgroundColor: '#EEEEEE',
+		borderRadius: 5,
+		margin: 10,
+	},
+	searchPlaceholder: {
+		fontSize: 17,
+		fontWeight: '400',
+		color: '#999999'
+	},
 	contactName: {
 		fontSize: 18,
 		color: '#666666'

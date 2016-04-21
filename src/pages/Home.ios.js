@@ -47,10 +47,10 @@ class Home extends React.Component {
 		};
 	}
 	componentDidMount() {
-		this.props.navigator.push({
-			title: '产品吐槽',
-			component: FeedBack,
-		});
+		// this.props.navigator.push({
+		// 	title: '产品吐槽',
+		// 	component: FeedBack,
+		// });
 	}
 	_invite() {
 		this.props.navigator.push({
@@ -114,6 +114,27 @@ class Home extends React.Component {
                     style={styles.textIcon}>
                   <Image source={asset.taskBook} style={styles.icon} />
                   <Text style={styles.text}>待办</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={ () => navigator.push({ title: '故事', component: Story }) }
+                    style={styles.textIcon}>
+                  <Image source={asset.storyBook} style={styles.icon} />
+                  <Text style={styles.text}>故事</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
+                <TouchableOpacity
+                    onPress={ () => navigator.push({ title: '婚礼', component: AccountBook }) }
+                    style={styles.textIcon}>
+                  <Image source={asset.accountBook} style={styles.icon} />
+                  <Text style={styles.text}>婚礼</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={ () => navigator.push({ title: '小课堂', component: TodoList }) }
+                    style={styles.textIcon}>
+                  <Image source={asset.taskBook} style={styles.icon} />
+                  <Text style={styles.text}>小课堂</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={ () => navigator.push({ title: '故事', component: Story }) }

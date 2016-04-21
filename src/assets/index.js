@@ -1,4 +1,6 @@
 var AssetList = {
+	menu: require('./ICONS/menu.png'),
+	feedback: require('./ICONS/feedback.png'),
 	ok: require('./ICONS/ok.png'),
 	etc: require('./ICONS/etc.png'),
 	find: require('./img/find.png'),

@@ -116,8 +116,6 @@ class FindPassword extends React.Component {
 		}
 		return (
 			<View style={styles.container}>
-
-				<BackStep navigator={this.props.navigator} title={title} />
 				<ScrollView
 					ref={scrollView => this.scrollView = scrollView}
 					bounces={false}

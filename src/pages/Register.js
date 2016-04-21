@@ -113,8 +113,6 @@ class Register extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
-
-				<BackStep navigator={this.props.navigator} title={"注册婚格"} />
 				<ScrollView
 					ref={scrollView => this.scrollView = scrollView}
 					bounces={false}

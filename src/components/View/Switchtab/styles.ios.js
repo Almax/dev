@@ -21,13 +21,13 @@ module.exports = StyleSheet.create({
 		width: 180,
 		flexDirection: 'row',
 		borderWidth: 1,
-		borderColor: '#FFFFFF',
+		borderColor: '#F06199',
 		borderRadius: 3,
 	},
 
 	tabText: {
 		fontSize: 14,
-		color: '#FFFFFF',
+		color: '#F06199',
 	},
 	tabButton: {
 		flex: 1,
@@ -38,23 +38,13 @@ module.exports = StyleSheet.create({
 
 	tabTextActived: {
 		fontSize: 14,
-		color: '#F06199',
+		color: '#FFFFFF',
 	},
 	tabButtonActived: {
 		flex: 1,
-		backgroundColor: '#FFFFFF',
+		backgroundColor: '#F06199',
 		height: 28,
 		alignItems: 'center',
 		justifyContent: 'center',
-	},
-	showContext: {
-		flex: 1,
-		borderWidth: 1,
-		borderColor: '#000000',
-	},
-	hideContext: {
-		height: 0,
-		borderWidth: 1,
-		borderColor: '#336699',
 	}
 })

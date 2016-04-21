@@ -36,10 +36,10 @@ class Home extends React.Component {
 		}
 	}
 	componentDidMount() {
-		this.props.navigator.push({
-			title: '产品吐槽',
-			component: FeedBack,
-		});
+		// this.props.navigator.push({
+		// 	title: '产品吐槽',
+		// 	component: FeedBack,
+		// });
 	}
 	_invite() {
 		this.props.navigator.push({
@@ -115,7 +115,7 @@ class Home extends React.Component {
 										onPress={ () => navigator.push({ component: Chat }) }
 										style={styles.textIcon}>
 									<Image source={asset.msg} style={styles.icon} />
-									<Text style={styles.text}>聊天</Text>
+									<Text style={styles.text}>联系人</Text>
 								</TouchableOpacity>
 
 								<TouchableOpacity

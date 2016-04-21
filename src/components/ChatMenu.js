@@ -6,38 +6,43 @@ import React, {
 	StyleSheet,
 } from 'react-native';
 import asset from '../assets';
-class ChatMenu extends React.Component {
-	componentDidMount() {
-		
+
+class Badge extends React.Component {
+	render() {
+		const { value } = this.props;
+		return (
+			<View style={styles.badge}>
+				<Text style={{ color: '#FFFFFF', fontSize: 11 }}>{value}</Text>
+			</View>
+		);
 	}
+}
+
+class ChatMenu extends React.Component {
 	_touch(id) {
 		const { onPress } = this.props;
 		onPress(id);
 	}
 	render() {
+		const { unread } = this.props;
 		return (
-			<View style={{ backgroundColor: '#FFFFFF', marginBottom: 1 }}>
-				<TouchableOpacity onPress={this._touch.bind(this, 0)} style={styles.searchBar}>
-					<Image source={asset.find} style={styles.find} />
-					<Text style={styles.searchPlaceholder}>查找手机号</Text>
-				</TouchableOpacity>
-
-
-				<View style={{ flexDirection: 'row', backgroundColor: '#FFFFFF', justifyContent: 'space-around'}}>
+			<View style={{ backgroundColor: '#FFFFFF' }}>
+				<View style={{ flexDirection: 'row', backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'space-around'}}>
 
 					<TouchableOpacity onPress={this._touch.bind(this, 3)} style={styles.tab}>
-						<Image style={styles.tabImage} source={asset.i_3} />
-						<Text style={styles.tabText}>通知消息</Text>
+						<View style={{ alignItems: 'center', justifyContent: 'center' }}>
+							<Image style={styles.tabImage} source={asset.i_3} />
+							<Text style={styles.tabText}>通知消息</Text>
+
+							{ unread ? <Badge value={unread} /> : null }
+						</View>
 					</TouchableOpacity>
 
-					<TouchableOpacity onPress={this._touch.bind(this, 1)} style={styles.tab}>
-						<Image style={styles.tabImage} source={asset.i_1} />
-						<Text style={styles.tabText}>联系人</Text>
-					</TouchableOpacity>
+					<View style={{ height: 30, width: 1, backgroundColor: '#EEEEEE' }} />
 					
 					<TouchableOpacity onPress={this._touch.bind(this, 2)} style={styles.tab}>
 						<Image style={styles.tabImage} source={asset.i_2} />
-						<Text style={styles.tabText}>手机通讯录</Text>
+						<Text style={styles.tabText}>添加好友</Text>
 					</TouchableOpacity>
 					
 				</View>
@@ -46,42 +51,34 @@ class ChatMenu extends React.Component {
 	}
 }
 const styles = StyleSheet.create({
-	find: {
-		marginRight: 5,
-		width: 15,
-		height: 15,
-	},
-	searchBar: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'center',
-		height: 40,
-		backgroundColor: '#EEEEEE',
-		borderRadius: 5,
-		marginHorizontal: 10,
-		marginVertical: 10,
-	},
-	searchPlaceholder: {
-		fontSize: 17,
-		fontWeight: '400',
-		color: '#999999'
-	},
 	tab: {
+		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginVertical: 5,
+		marginVertical: 10,
 	},
 	tabImage: {
 		height: 20, 
 		width: 20,
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginBottom: 10,
+		marginBottom: 5,
 		backgroundColor: '#FFFFFF',
 	},
 	tabText: {
 		color: '#666666',
 		fontWeight: '500',
+	},
+	badge: {
+		position: 'absolute',
+		right: -5,
+		top: 0, 
+		backgroundColor: 'red', 
+		height: 18, 
+		width: 18, 
+		borderRadius: 9, 
+		alignItems: 'center', 
+		justifyContent: 'center' 
 	},
 })
 

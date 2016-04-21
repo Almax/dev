@@ -31,10 +31,10 @@ export default class Schedule extends React.Component {
 			{ index: 1, component: TodoTimeline, name: '时间线' },
 		];
 		return (
-			<View style={[styles.container, { backgroundColor: '#EEEEEE' }]}>
+			<View style={styles.container}>
 				<Switchtab 
 					pager={pagers}
-					backgroundColor={"#F06199"}
+					backgroundColor={"transparent"}
 					navigator={this.props.navigator} />
 			</View>
 		)

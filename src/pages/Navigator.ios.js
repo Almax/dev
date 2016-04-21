@@ -76,7 +76,7 @@ class Navigator extends React.Component {
           </TabBarIOS.Item>
 
           <TabBarIOS.Item
-            title="聊天"
+            title="联系人"
             badge={chat.message.length > 0 ? chat.message.length : null}
             icon={ asset.chat }
             selected={this.state.selectedTab === 'chat'}

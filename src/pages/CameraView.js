@@ -10,7 +10,9 @@ import React, {
   NativeModules,
   Dimensions,
   Alert,
+  InteractionManager,
 } from 'react-native';
+import RNFS from 'react-native-fs';
 import asset from '../assets';
 import { connect } from 'react-redux';
 import { SubmitButton, PureButton } from '../components/Form';
@@ -29,8 +31,11 @@ class CameraView extends Component {
     this.state = this.getDataSourceState();
   }
 
-  async componentWillMount() {
-    this.onPhotosFetchedSuccess(await this.fetchPhotos());
+  componentDidMount() {
+    InteractionManager.runAfterInteractions(async () => {
+      let data = await this.fetchPhotos();
+      this.onPhotosFetchedSuccess(data);
+    });
   }
 
   getDataSourceState() {
@@ -72,33 +77,47 @@ class CameraView extends Component {
     );
   }
 
-  async _beginUpload() {
-    let counter = 0;
+  _beginUpload() {
+    this.counter = 0;
     this.setState({
       isUploading: true
     });
 
     for(key in this.images) {
       if(this.images[key].selected === true) {
-        await NativeModules.ReadImageData.readImage(this.images[key].uri, async (data) => {
-          const source = {uri: 'data:image/jpeg;base64,' + data, isStatic: true};
-          const params = {
-            photo: source.uri,
-          };
-          let newPhoto = await createStory(this.props.marry, params);
-          this.setState({
-            preview: newPhoto.photo
+
+        if(/file/.test(this.images[key].uri)) {
+          let path = this.images[key].uri.replace('file:', '');
+          RNFS.readFile(path, 'base64').then( async (data) => {
+            await this._upload(data);
           });
-          counter++;
-          if(counter === this.selected) {
-            Alert.alert('上传完成');
-            this._cleanSelected();
-            await this.props.popRefresh();
-          }
-        });
+
+        } else {
+          NativeModules.ReadImageData.readImage(this.images[key].uri, async (data) => {
+            await this._upload(data);
+          });
+        }
       }
     }
   }
+
+  async _upload(data) {
+    const source = { uri: 'data:image/jpeg;base64,' + data, isStatic: true };
+    const params = {
+      photo: source.uri,
+    };
+    let newPhoto = await createStory(this.props.marry, params);
+    this.setState({
+      preview: newPhoto.photo
+    });
+    this.counter++;
+    if(this.counter === this.selected) {
+      Alert.alert('上传完成');
+      this._cleanSelected();
+      await this.props.popRefresh();
+    }    
+  }
+
   _cleanSelected() {
     Object.keys(this.images).map(key => {
       this.images[key].selected = false;
@@ -106,6 +125,7 @@ class CameraView extends Component {
     this.selected = 0; 
     return this.setState(this.getDataSourceState());
   }
+
   _stopUploading() {
     this.setState({
       isUploading: false,
@@ -129,6 +149,7 @@ class CameraView extends Component {
       }
     });
   }
+
   _renderRow(image) {
     if(image.selected === true) {
       return (
@@ -155,6 +176,7 @@ class CameraView extends Component {
       );
     }
   }
+
   _renderHeader() {
     return (
       <View style={styles.header}>
@@ -163,6 +185,7 @@ class CameraView extends Component {
       </View>
     );
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -192,7 +215,8 @@ class CameraView extends Component {
             <View style={{ height: 20 }}/>
             <PureButton onPress={this._stopUploading.bind(this)}>取消</PureButton>
           </View> 
-          : null }
+          : null 
+        }
 
 
       </View>
