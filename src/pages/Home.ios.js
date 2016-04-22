@@ -24,7 +24,9 @@ import FindPartner from './FindPartner';
 import TodoNew from './TodoNew';
 import ActionButton from 'react-native-action-button';
 import FeedBack from './FeedBack';
-
+import WebPage from './WebPage';
+import MyWedding from './MyWedding';
+import SocialWedding from './SocialWedding';
 class TodoList extends React.Component {
 	render() {
 		return (
@@ -125,22 +127,22 @@ class Home extends React.Component {
 
               <View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
                 <TouchableOpacity
-                    onPress={ () => navigator.push({ title: '婚礼', component: AccountBook }) }
+                    onPress={ () => navigator.push({ title: '婚礼', component: MyWedding }) }
                     style={styles.textIcon}>
-                  <Image source={asset.accountBook} style={styles.icon} />
+                  <Image source={asset.i_22} style={styles.icon} />
                   <Text style={styles.text}>婚礼</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={ () => navigator.push({ title: '小课堂', component: TodoList }) }
+                    onPress={ () => navigator.push({ title: '小课堂', component: WebPage }) }
                     style={styles.textIcon}>
-                  <Image source={asset.taskBook} style={styles.icon} />
+                  <Image source={asset.i_50} style={styles.icon} />
                   <Text style={styles.text}>小课堂</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={ () => navigator.push({ title: '故事', component: Story }) }
+                    onPress={ () => navigator.push({ title: '参加婚礼', component: SocialWedding }) }
                     style={styles.textIcon}>
-                  <Image source={asset.storyBook} style={styles.icon} />
-                  <Text style={styles.text}>故事</Text>
+                  <Image source={asset.i_51} style={styles.icon} />
+                  <Text style={styles.text}>参加婚礼</Text>
                 </TouchableOpacity>
               </View>
 
@@ -185,9 +187,9 @@ const styles = StyleSheet.create({
 	},
 
 	textIcon: {
-		height: 70,
-		width: 70,
-		borderRadius: 35,
+		height: 80,
+		width: 80,
+		borderRadius: 40,
 		marginTop: 20,
 		backgroundColor: '#FFFCE6',
 		alignItems: 'center',

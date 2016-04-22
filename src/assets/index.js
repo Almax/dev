@@ -117,7 +117,7 @@ var AssetList = {
 	i_48: require('./catalog/48.png'),
 	i_49: require('./catalog/49.png'),
 	i_50: require('./catalog/50.png'),
-
+	i_51: require('./catalog/51.png'),
 	a_task: require('./account/task.png'),
 	a_female_family: require('./account/female_family.png'),
 	a_female: require('./account/female.png'),

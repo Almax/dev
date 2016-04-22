@@ -36,6 +36,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		A067F00F937E494D8EBE27EC /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2432A56E078D4A29A9DDB07E /* libRCTActionSheet.a */; };
 		BFD62D5C87ED443E873B7137 /* libRNChart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CE1EA21703544748D8E25A0 /* libRNChart.a */; };
+		F487BEB8B10E49B4B38DEFBE /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB4F04B63AA24EC89B0337CE /* libRCTCamera.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,6 +201,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = CodePush;
 		};
+		8171268A1CCA1301005149A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 092F94B3E28A4433A6C75419 /* RCTCamera.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
+			remoteInfo = RCTCamera;
+		};
 		81B6DD741CBB531900B44A29 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 81B6DD6E1CBB531800B44A29 /* RCTContacts.xcodeproj */;
@@ -226,6 +234,7 @@
 		00E356EE1AD99517003FC87E /* MarryGuard_v2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarryGuard_v2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* MarryGuard_v2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarryGuard_v2Tests.m; sourceTree = "<group>"; };
+		092F94B3E28A4433A6C75419 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 		0A96FA812B5448709E4BC8DC /* reacNativeLazyload.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = reacNativeLazyload.xcodeproj; path = "../node_modules/react-native-lazyload/Example/ios/reacNativeLazyload.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -255,6 +264,7 @@
 		81B6DD6E1CBB531800B44A29 /* RCTContacts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTContacts.xcodeproj; path = "../node_modules/react-native-contacts/ios/RCTContacts.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		9CE1EA21703544748D8E25A0 /* libRNChart.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNChart.a; sourceTree = "<group>"; };
+		BB4F04B63AA24EC89B0337CE /* libRCTCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTCamera.a; sourceTree = "<group>"; };
 		DCFDA605C6664DF3AF261144 /* MessengerExample.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = MessengerExample.xcodeproj; path = "../node_modules/react-native-gifted-messenger/MessengerExample/ios/MessengerExample.xcodeproj"; sourceTree = "<group>"; };
 		E21D604B03194BB2B1C5ADFE /* RNChart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNChart.xcodeproj; path = "../node_modules/react-native-chart/RNChart.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -292,6 +302,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				BFD62D5C87ED443E873B7137 /* libRNChart.a in Frameworks */,
 				A067F00F937E494D8EBE27EC /* libRCTActionSheet.a in Frameworks */,
+				F487BEB8B10E49B4B38DEFBE /* libRCTCamera.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +504,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		817126821CCA1300005149A0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8171268B1CCA1301005149A0 /* libRCTCamera.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		81B6DD6F1CBB531800B44A29 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -527,6 +546,7 @@
 				DCFDA605C6664DF3AF261144 /* MessengerExample.xcodeproj */,
 				516941F00BB04498B292E639 /* Example.xcodeproj */,
 				0A96FA812B5448709E4BC8DC /* reacNativeLazyload.xcodeproj */,
+				092F94B3E28A4433A6C75419 /* RCTCamera.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -607,7 +627,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 730;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -646,6 +666,10 @@
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
+				},
+				{
+					ProductGroup = 817126821CCA1300005149A0 /* Products */;
+					ProjectRef = 092F94B3E28A4433A6C75419 /* RCTCamera.xcodeproj */;
 				},
 				{
 					ProductGroup = 81212CEB1CC4BAEA00169DE7 /* Products */;
@@ -883,6 +907,13 @@
 			remoteRef = 816A1FF01C91169900622F4B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		8171268B1CCA1301005149A0 /* libRCTCamera.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCamera.a;
+			remoteRef = 8171268A1CCA1301005149A0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		81B6DD751CBB531900B44A29 /* libRCTContacts.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -996,6 +1027,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1016,6 +1048,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1044,6 +1077,7 @@
 					"$(SRCROOT)/../node_modules/react-native-gifted-messenger/MessengerExample/ios/MessengerExample",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-lazyload/Example/ios/reacNativeLazyload",
+					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 				);
 				INFOPLIST_FILE = MarryGuard_v2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1074,6 +1108,7 @@
 					"$(SRCROOT)/../node_modules/react-native-gifted-messenger/MessengerExample/ios/MessengerExample",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-lazyload/Example/ios/reacNativeLazyload",
+					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 				);
 				INFOPLIST_FILE = MarryGuard_v2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1129,6 +1164,7 @@
 					"$(SRCROOT)/../node_modules/react-native-gifted-messenger/MessengerExample/ios/MessengerExample",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-lazyload/Example/ios/reacNativeLazyload",
+					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1174,6 +1210,7 @@
 					"$(SRCROOT)/../node_modules/react-native-gifted-messenger/MessengerExample/ios/MessengerExample",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-lazyload/Example/ios/reacNativeLazyload",
+					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;

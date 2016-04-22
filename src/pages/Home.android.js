@@ -26,6 +26,17 @@ import Chat from './Chat';
 import More from './More';
 import FindPartner from './FindPartner';
 import FeedBack from './FeedBack';
+import WebPage from './WebPage';
+class Badge extends React.Component {
+	render() {
+		const { value } = this.props;
+		return (
+			<View style={styles.badge}>
+				<Text style={{ color: '#FFFFFF', fontSize: 14 }}>{value}</Text>
+			</View>
+		);
+	}
+}
 
 class Home extends React.Component {
 	constructor(props) {
@@ -57,7 +68,7 @@ class Home extends React.Component {
 		
 	}
  	render() {
-		const { marry, navigator } = this.props;
+		const { marry, navigator, unread } = this.props;
 		if(typeof marry === 'object') {
 			return (
 				<View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
@@ -116,7 +127,17 @@ class Home extends React.Component {
 										style={styles.textIcon}>
 									<Image source={asset.msg} style={styles.icon} />
 									<Text style={styles.text}>联系人</Text>
+									
+									<Badge unread={unread} />
+
 								</TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={ () => navigator.push({ title: '小课堂', component: WebPage }) }
+                    style={styles.textIcon}>
+                  <Image source={asset.taskBook} style={styles.icon} />
+                  <Text style={styles.text}>小课堂</Text>
+                </TouchableOpacity>
 
 								<TouchableOpacity
 										onPress={ () => navigator.push({ component: More }) }
@@ -126,10 +147,7 @@ class Home extends React.Component {
 								</TouchableOpacity>
 
 
-								<TouchableOpacity
-										onPress={ () => {} }
-										style={styles.emptyIcon}>
-								</TouchableOpacity>
+
 
 							</View>
 						</ScrollView>
@@ -219,3 +237,8 @@ export default connect(
 		loadSession: () => dispatch(loadUser()),
 	})
 )(Home)
+
+// <TouchableOpacity
+// 		onPress={ () => {} }
+// 		style={styles.emptyIcon}>
+// </TouchableOpacity>

@@ -14,7 +14,7 @@ import { BackStep } from '../components/View';
 import ChatMenu from '../components/ChatMenu';
 import ChatFind from './ChatFind';
 import Loading from './Loading';
-import { load, reload } from '../utils/contact';
+import { load, reload, push } from '../utils/contact';
 import { inviteFriend } from '../utils/chat';
 
 class ChatContact extends React.Component {
@@ -43,6 +43,9 @@ class ChatContact extends React.Component {
 			Alert.alert('添加成功,等待对方同意...');
 		}
 	}
+	async _pushFriend(user) {
+		await push(user);
+	}
 	_renderContact(contact) {
 		return (
 			<View style={{ 
@@ -66,7 +69,7 @@ class ChatContact extends React.Component {
 							<Text style={styles.textButton}>添加好友</Text>
 						</TouchableOpacity>
 					 :
-					 	<TouchableOpacity style={styles.inviteButton}>
+					 	<TouchableOpacity onPress={this._pushFriend.bind(this, contact)} style={styles.inviteButton}>
 					 		<Text style={styles.textButton}>邀请加入</Text>
 					 	</TouchableOpacity> 
 					}

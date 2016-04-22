@@ -16,7 +16,8 @@ class Navigator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: "home"
+      selectedTab: "home",
+      badge: 0,
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -24,6 +25,19 @@ class Navigator extends React.Component {
       this.props.navigator.push({
         component: FindPartner
       })
+    } else {
+      if(nextProps.message && nextProps.invitation) {
+        let { invitation, message } = nextProps;
+        if(message && message.length && message[0].pass === false) {
+          this.setState({
+            badge: invitation.length+1
+          });
+        } else {
+          this.setState({
+            badge: invitation.length
+          });
+        }
+      }
     }
   }
 	render() {
@@ -77,7 +91,7 @@ class Navigator extends React.Component {
 
           <TabBarIOS.Item
             title="联系人"
-            badge={chat.message.length > 0 ? chat.message.length : null}
+            badge={this.state.badge > 0 ? this.state.badge : null }
             icon={ asset.chat }
             selected={this.state.selectedTab === 'chat'}
             onPress={() => {
@@ -85,7 +99,7 @@ class Navigator extends React.Component {
                 selectedTab: 'chat',
               });
             }}>
-            <Chat navigator={navigator} />
+            <Chat navigator={navigator} unread={this.state.badge} />
           </TabBarIOS.Item>
 
           <TabBarIOS.Item
@@ -100,7 +114,6 @@ class Navigator extends React.Component {
             <More navigator={navigator} />
           </TabBarIOS.Item>
 
-          
         </TabBarIOS>
       )
     }
@@ -108,7 +121,11 @@ class Navigator extends React.Component {
 }
 
 export default connect(
-  state => ({ marry: state.marry, chat: state.chat }),
+  state => ({ 
+    marry: state.marry,
+    message: state.message,
+    invitation: state.invitation,
+  }),
   dispatch => ({
     
   })

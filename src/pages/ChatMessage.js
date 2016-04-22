@@ -9,7 +9,8 @@ import React, {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { pass } from '../redux/modules/message';
-import { getInvitedMessages, passInviteRequest } from '../utils/chat';
+import { loadInvitation, passInvitation } from '../redux/modules/invitation';
+import { loadFriends } from '../redux/modules/friend';
 class ChatMessage extends React.Component {
 	constructor(props) {
 		super(props);
@@ -18,17 +19,26 @@ class ChatMessage extends React.Component {
 			dataSource
 		}
 	}
-	async componentDidMount() {
-	  let friend_requests = await getInvitedMessages();
-	  let messages = this.props.message;
+	componentDidMount() {
+	  let { message, invitation} = this.props;
 	  this.setState({
-	  	dataSource: this.state.dataSource.cloneWithRows(friend_requests.concat(messages))
+	  	dataSource: this.state.dataSource.cloneWithRows(message.concat(invitation))
 	  });
 	}
+	componentWillReceiveProps(nextProps) {
+		let { message, invitation} = nextProps;
 
+		if(nextProps.invitation.length < this.props.invitation.length) {
+			Alert.alert('已经添加为好友');
+		}
+
+	  this.setState({
+	  	dataSource: this.state.dataSource.cloneWithRows(message.concat(invitation))
+	  });
+	}
 	async _passRequest(user) {
-		await passInviteRequest(user.uid);
-		Alert.alert('已经添加为好友');
+		this.props.passInvitation(user);
+		this.props.loadFriends();
 	}
 	_passPartner(id) {
 		this.props.pass(id);
@@ -39,7 +49,6 @@ class ChatMessage extends React.Component {
 			if(this.props.user.id === fromUser.id) {
 				return (
 					<View style={innerStyles.wrapper}>
-
 						<Image source={{ uri: toUser.photo }} style={innerStyles.avatar} />
 						<View style={innerStyles.user}>
 							<TouchableOpacity style={innerStyles.userBlock}>
@@ -47,13 +56,10 @@ class ChatMessage extends React.Component {
 									<Text style={innerStyles.name}>{toUser.name}</Text>
 									<Text style={innerStyles.username}>{toUser.username}</Text>
 								</View>
-
 								<View style={{ height: 5 }} />
 								<Text style={innerStyles.message}>我是{toUser.role}{toUser.name},我已经看到了你的邀请</Text>
 							</TouchableOpacity>
-
-							<View style={innerStyles.btnGroup}>
-								
+							<View style={innerStyles.btnGroup}>								
 								{ user.pass ? 
 									<TouchableOpacity style={innerStyles.doneButton} activeOpacity={1}>
 										<Text style={{ fontSize: 14, color: '#999999' }}>已通过</Text>
@@ -63,10 +69,8 @@ class ChatMessage extends React.Component {
 										<Text style={{ fontSize: 14, color: '#666666' }}>等待通过</Text>
 									</TouchableOpacity>
 								}
-
 							</View>
 						</View>
-
 					</View>
 				);
 			}else if(this.props.user.id === toUser.id) {
@@ -74,19 +78,14 @@ class ChatMessage extends React.Component {
 					<View style={innerStyles.wrapper}>
 						<Image source={{ uri: fromUser.photo }} style={innerStyles.avatar} />
 						<View style={innerStyles.user}>
-
 							<TouchableOpacity style={innerStyles.userBlock}>
 								<View style={innerStyles.userinfo}>
 									<Text style={innerStyles.name}>{fromUser.name}</Text>
 									<Text style={innerStyles.username}>{fromUser.username}</Text>
 								</View>
-
 								<View style={{ height: 5 }} />
-								
 								<Text style={innerStyles.message}>我是{fromUser.role}{fromUser.name},你快加入到婚礼里来</Text>
-							
 							</TouchableOpacity>
-
 							<View style={innerStyles.btnGroup}>
 								{ user.pass ? 
 									<TouchableOpacity style={innerStyles.doneButton} activeOpacity={1}>
@@ -97,7 +96,6 @@ class ChatMessage extends React.Component {
 										<Text style={{ color: '#FFFFFF' }}>通过</Text>
 									</TouchableOpacity>
 								}
-
 							</View>
 						</View>
 
@@ -110,16 +108,12 @@ class ChatMessage extends React.Component {
 					<Image source={{ uri: user.photo }} style={innerStyles.avatar} />
 					<View style={innerStyles.user}>
 						<TouchableOpacity style={{ flex: 1, height: 70, justifyContent: 'center' }}>
-
 							<View style={innerStyles.userinfo}>
 								<Text style={innerStyles.name}>{user.name}</Text>
 								<Text style={innerStyles.username}>{user.username}</Text>
 							</View>
-
-							<View style={{ height: 5 }} />
-							
-							<Text style={innerStyles.message}>我是{user.role}{user.name},我想加你为好友,如果你认识我,就请通过</Text>
-						
+							<View style={{ height: 5 }} />							
+							<Text style={innerStyles.message}>我是{user.name},我想加你为好友,如果你认识我,就请通过</Text>
 						</TouchableOpacity>
 						<View style={innerStyles.btnGroup}>
 							<TouchableOpacity onPress={this._passRequest.bind(this, user)} style={innerStyles.passButton}>
@@ -155,8 +149,10 @@ const innerStyles = StyleSheet.create({
 	userinfo: { flexDirection: 'row', justifyContent: 'space-between' }
 });
 export default connect(
-	state=>({ user: state.session, message: state.message }),
+	state=>({ user: state.session, message: state.message, invitation: state.invitation }),
 	dispatch=>({
 		pass: (id) => dispatch(pass(id)),
+		loadFriends: () => dispatch(loadFriends()),
+		passInvitation: (friend) => dispatch(passInvitation(friend))
 	})
 )(ChatMessage);

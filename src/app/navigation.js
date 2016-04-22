@@ -16,6 +16,7 @@ import SplashScreen from '@remobile/react-native-splashscreen';
 import NavigatorSceneConfigs from '../components/NavigatorSceneConfigs'
 import Splash from '../pages/Splash';
 import Feedback from '../pages/FeedBack';
+//import QRScan from '../pages/QRScan';
 const { height, width } = Dimensions.get('window');
 class Navigation extends React.Component {
   constructor(props) {
@@ -158,12 +159,6 @@ class Navigation extends React.Component {
 
         { this.state.showModal ? 
           <View style={styles.modal}>
-
-            <TouchableOpacity style={styles.icon}>
-              <Image source={asset.i_37} />
-              <Text style={styles.iconText}>扫二维码</Text>
-            </TouchableOpacity>
-
             <TouchableOpacity 
               onPress={
                 () =>  {

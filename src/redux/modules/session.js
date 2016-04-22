@@ -12,7 +12,8 @@ import { load as loadTask, reset as resetTask } from './task';
 import { load as loadMessage, reset as resetMessage } from './message';
 import { loadFriends } from './friend';
 import { loadChatSessions, cleanChatSession } from './chat';
-import { createAction, handleActions } from 'redux-actions'
+import { createAction, handleActions } from 'redux-actions';
+import { loadInvitation } from './invitation';
 /* action type */
 export const RELOAD_USER = 'app/session/reload_user';
 export const LOAD_USER = 'app/session/load_user'
@@ -52,6 +53,7 @@ export function login(username, password) {
 			dispatch(loadMessage());
 			dispatch(loadFriends());
 			dispatch(loadChatSessions());
+			dispatch(loadInvitation());
 		}else {
 			dispatch(reloadSession());
 		}
@@ -69,6 +71,7 @@ export function loadUser() {
 			dispatch(loadMessage());
 			dispatch(loadFriends());
 			dispatch(loadChatSessions());
+			dispatch(loadInvitation());
 		}else {
 			dispatch(cleanSession())
 		}
@@ -94,6 +97,7 @@ export function store(session) {
 			dispatch(loadTask());
 			dispatch(loadMessage());
 			dispatch(loadFriends());
+			dispatch(loadInvitation());
 	}
 }
 

@@ -19,7 +19,7 @@ import ChatContact from './ChatContact';
 import ChatMessage from './ChatMessage';
 import AlphabetListView from 'react-native-alphabetlistview';
 import { toPY } from '../utils/lib';
-
+import { loadFriends } from '../redux/modules/friend';
 class SectionHeader extends React.Component {
   render() {
     var textStyle = {
@@ -77,35 +77,42 @@ class Chat extends React.Component {
 		var dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1!==r2 });
 		var chats = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1!==r2 });
 		this.state = {
-      contacts: {
-        A: [],
-        B: [],
-        C: [],
-        D: [],
-        E: [],
-        F: [],
-        G: [],
-        H: [],
-        I: [],
-        J: [],
-        K: [],
-        L: [],
-        M: [],
-        N: [],
-        O: [],
-        P: [],
-        Q: [],
-        R: [],
-        S: [],
-        T: [],
-        U: [],
-        V: [],
-        W: [],
-        X: [],
-        Y: [],
-        Z: [],
-      }
+			badge: 0,
+      contacts: [],
+      isRefreshing: false,
 		}
+
+		this.contacts = this.getInitial();
+	}
+	getInitial() {
+		return {
+      A: [],
+      B: [],
+      C: [],
+      D: [],
+      E: [],
+      F: [],
+      G: [],
+      H: [],
+      I: [],
+      J: [],
+      K: [],
+      L: [],
+      M: [],
+      N: [],
+      O: [],
+      P: [],
+      Q: [],
+      R: [],
+      S: [],
+      T: [],
+      U: [],
+      V: [],
+      W: [],
+      X: [],
+      Y: [],
+      Z: [],			
+		};
 	}
 	async componentDidMount() {
   	try {
@@ -113,10 +120,10 @@ class Chat extends React.Component {
 	  	Object.keys(friend).map((key) => {
         let s = friend[key].name.charAt(0);
 	  		let charater = toPY(s);
-	  		this.state.contacts[charater.acronym.toUpperCase()].push(friend[key]);
+	  		this.contacts[charater.acronym.toUpperCase()].push(friend[key]);
 	  	});
 	  	this.setState({
-	  		contacts: this.state.contacts
+	  		contacts: this.contacts
 	  	});
   	} catch(e) {
   		console.warn('error:', e);
@@ -124,14 +131,15 @@ class Chat extends React.Component {
 	}
 	componentWillReceiveProps(nextProps) {
   	try {
+  		this.contacts = this.getInitial();
 	  	const { friend } = nextProps;
 	  	Object.keys(friend).map((key) => {
         let s = friend[key].name.charAt(0);
 	  		let charater = toPY(s);
-	  		this.state.contacts[charater.acronym.toUpperCase()].push(friend[key]);
+	  		this.contacts[charater.acronym.toUpperCase()].push(friend[key]);
 	  	});
 	  	this.setState({
-	  		contacts: this.state.contacts
+	  		contacts: this.contacts
 	  	});
   	} catch(e) {
   		console.warn('error:', e);
@@ -165,13 +173,20 @@ class Chat extends React.Component {
 			}
 		}
 	}
+	_onRefresh() {
+		this.setState({ isRefreshing: true });
+		setTimeout(() => {
+			this.props.loadFriends();
+			this.setState({ isRefreshing: false });
+		}, 2000);
+	}
 	render() {
-		const { marry, message } = this.props;
+		const { marry, message, unread } = this.props;
 		if(typeof message === 'object') {
 			return (
 				<View style={[styles.container, {backgroundColor: '#CCCCCC'}]}>
 					<ChatMenu 
-						unread={1}
+						unread={unread > 0 ? unread : null}
 						onPress={this._onMenuPress.bind(this)} 
 						navigator={this.props.navigator} />
 		      <AlphabetListView
@@ -183,6 +198,16 @@ class Chat extends React.Component {
 		        sectionHeaderHeight={30}
 		        sectionListStyle={{ width: 30 }}
 		        onCellSelect={() => console.warn('selected')}
+		        refreshControl={
+		          <RefreshControl
+		            refreshing={this.state.isRefreshing}
+		            onRefresh={this._onRefresh.bind(this)}
+                tintColor="#EEEEEE"
+                title="更新联系人"
+                colors={['#F06199']}
+                progressBackgroundColor="#FFFFFF"
+		          />
+		        }
 		      />
 
 				</View>
@@ -207,10 +232,11 @@ export default connect(
 		marry: state.marry, 
 		me: state.session, 
 		message: state.message,
-		chat: state.chat 
+		invitation: state.invitation 
 	}),
 	dispatch=>({
 		loadMessage: () => dispatch(load()),
 		loadSession: () => dispatch(loadUser()),
+		loadFriends: () => dispatch(loadFriends()),
 	})
 )(Chat);

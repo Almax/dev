@@ -12,7 +12,12 @@ import ActionButton from 'react-native-action-button';
 import FindPartner from './FindPartner';
 import { getMyMarry } from '../redux/modules/marry'
 class Navigator extends React.Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      badge: 0,
+    }
+  }
   componentDidMount() {
     this.props.loadMarry();
   }
@@ -21,19 +26,36 @@ class Navigator extends React.Component {
       this.props.navigator.push({
         component: FindPartner
       })
+    } else {
+      if(nextProps.message && nextProps.invitation) {
+        let { invitation, message } = nextProps;
+        if(message && message.length && message[0].pass === false) {
+          this.setState({
+            badge: invitation.length+1
+          });
+        } else {
+          this.setState({
+            badge: invitation.length
+          });
+        }
+      }
     }
   }
 
 	render() {
 		return (
-			<Home navigator={this.props.navigator} />
+			<Home navigator={this.props.navigator} unread={this.state.badge} />
 		)
 	}
 }
 
 
 export default connect(
-  state => ({ marry: state.marry }),
+  state => ({
+    marry: state.marry,
+    message: state.message,
+    invitation: state.invitation,
+  }),
   dispatch => ({
     loadMarry: () => dispatch(getMyMarry())
   })

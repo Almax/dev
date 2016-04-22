@@ -12,7 +12,7 @@ class Badge extends React.Component {
 		const { value } = this.props;
 		return (
 			<View style={styles.badge}>
-				<Text style={{ color: '#FFFFFF', fontSize: 11 }}>{value}</Text>
+				<Text style={{ color: '#FFFFFF', fontSize: 14 }}>{value}</Text>
 			</View>
 		);
 	}

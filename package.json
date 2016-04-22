@@ -23,6 +23,7 @@
     "react-native-android-badge": "^0.3.1",
     "react-native-animatable": "^0.4.1",
     "react-native-asset-library-to-base64": "^1.0.1",
+    "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-chart": "^0.1.12",
     "react-native-code-push": "^1.8.0-beta",
     "react-native-communications": "*",
