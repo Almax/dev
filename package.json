@@ -12,6 +12,7 @@
     "@remobile/react-native-cache-image": "^1.0.0",
     "@remobile/react-native-splashscreen": "^1.0.3",
     "@remobile/react-native-sqlite": "^1.0.1",
+    "events": "^1.1.0",
     "immutable": "^3.7.6",
     "md5": "^2.1.0",
     "moment": "^2.11.1",

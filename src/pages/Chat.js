@@ -51,7 +51,7 @@ class SectionItem extends React.Component {
 class Cell extends React.Component {
   _chatWith(user) {
     nav.push({
-      title: '聊天',
+      title: '联系方式',
       component: ChatPage,
       params: {
         object: user
@@ -145,10 +145,6 @@ class Chat extends React.Component {
   		console.warn('error:', e);
   	}
 	}
-	_chatWith(user) {
-
-	}
-
 	_addContacts() {
 		this.props.navigator.push({
 			component: ChatContact

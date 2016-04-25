@@ -148,7 +148,7 @@ class Navigation extends React.Component {
   }
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
         <Navigator
           ref={(nav) => { this.navigator = nav;global.nav = nav;} }
           initialRoute={this.initialRoute}

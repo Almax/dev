@@ -1,5 +1,3 @@
-import TimeAgo from 'react-native-timeago';
-
 import React,{
   ListView,
   StyleSheet,
@@ -14,6 +12,7 @@ import React,{
 } from 'react-native';
 const { height, width } = Dimensions.get('window');
 import moment from 'moment'
+import TimeAgo from 'react-native-timeago';
 import { connect } from 'react-redux'
 import { init, update } from '../redux/modules/task';
 import asset from '../assets';
@@ -47,28 +46,46 @@ class Todo extends React.Component {
       isRefreshing: false,
       loaded: false,
       dataSource: dataSource
-    }
+    };
   }
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
-      if(this.props.state === 'initial state') {
+      if(this.props.task === 'initial state') {
         this.props.init();
       }else {
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(this.props.state),
+          dataSource: this.state.dataSource.cloneWithRows(this._filter(this.props.task)),
           loaded: true,
         });
       }
     });
   }
   componentWillReceiveProps(nextProps) {
-    if(nextProps.state !== this.props.state) {
+    if(nextProps.task !== this.props.task) {
       InteractionManager.runAfterInteractions(() => {
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(nextProps.state),
+          dataSource: this.state.dataSource.cloneWithRows(this._filter(nextProps.task)),
           loaded: true,
         });
       });
+    }
+  }
+  _filter(todos) {
+    if(typeof marry === 'object') {
+      const { users } = this.props.marry;
+      if(users.length === 1) {
+        return todos.filter((todo) => {
+          return todo.master.uid === users[0].uid;
+        });
+      } else if(user.length === 2) {
+        return todos.filter((todo) => {
+          return todo.master.uid === users[0].uid || todo.master.uid === users[1].uid;
+        });
+      }
+    } else {
+      return todos.filter((todo) => {
+        return todo.master.uid === this.props.me.uid;
+      })
     }
   }
   _finishWork(row, index) {
@@ -171,8 +188,8 @@ class Todo extends React.Component {
   }
 
   _renderStarter() {
-    const { state } = this.props;
-    if(state.length===0) {
+    const { dataSource } = this.state;
+    if(dataSource.getRowCount()===0) {
       return (
         <View style={{ margin: 10, padding: 10, borderRadius: 10, backgroundColor: '#FBFFDF' }}>
 
@@ -216,8 +233,8 @@ class Todo extends React.Component {
   }
 
   render() {
-    const { state } = this.props;
-    if(state === 'initial state' || this.state.loaded === false ) {
+    const { task } = this.props;
+    if(task === 'initial state' || this.state.loaded === false ) {
       return (
         <Loading />
       )
@@ -277,7 +294,7 @@ const innerStyles = {
 }
 
 module.exports = connect(
-  state => ({ state: state.task }),
+  state => ({ task: state.task, marry: state.marry, me: state.session }),
   dispatch => ({
     init: () => dispatch(init()),
     updateTask: (data) => dispatch(update(data))

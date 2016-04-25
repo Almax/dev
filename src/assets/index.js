@@ -1,4 +1,9 @@
 var AssetList = {
+
+	card: require('./photos/card.png'),
+	cardInfo: require('./photos/cardInfo.png'),
+	wish: require('./photos/wish.png'),
+	
 	menu: require('./ICONS/menu.png'),
 	feedback: require('./ICONS/feedback.png'),
 	ok: require('./ICONS/ok.png'),

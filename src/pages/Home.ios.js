@@ -49,10 +49,20 @@ class Home extends React.Component {
 		};
 	}
 	componentDidMount() {
-		// this.props.navigator.push({
-		// 	title: '产品吐槽',
-		// 	component: FeedBack,
-		// });
+		if(this.props.marry) {
+			this.props.navigator.push({
+				title: '参加婚礼',
+				component: SocialWedding,
+			});
+		}
+	}
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.marry) {
+			this.props.navigator.push({
+				title: '参加婚礼',
+				component: SocialWedding,
+			});
+		}
 	}
 	_invite() {
 		this.props.navigator.push({
@@ -227,7 +237,7 @@ const styles = StyleSheet.create({
 })
 
 export default connect(
-	state => ({ marry: state.marry, chat: state.chat }),
+	state => ({ marry: state.marry, chat: state.chat}),
 	dispatch => ({
 		updateMarry: (data) => dispatch(setMyMarry(data)),
 		loadSession: () => dispatch(loadUser()),

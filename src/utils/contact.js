@@ -32,14 +32,10 @@ export async function load(call) {
 				new Promise(async (resolve, reject) => {
 			  	let c = contacts.filter(function(contact){
 					  return contact.phoneNumbers.length > 0;
-					});
-
-			  	console.warn(c.length, cachedContacts.length);
-					
+					});					
 					if(c.length <= cachedContacts.length) {
 						return call(cachedContacts);
 					}
-
 					for(key in Object.keys(c)) {
 			  		let name = `${c[key].familyName ? c[key].familyName : ''}${c[key].givenName ? c[key].givenName : ''}`;
 				  	let phone = c[key].phoneNumbers[0] ? c[key].phoneNumbers[0].number : null;

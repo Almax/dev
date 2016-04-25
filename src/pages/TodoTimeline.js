@@ -104,6 +104,7 @@ class TodoTimeline extends React.Component {
 		var dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1!==r2 })
 		this.state = {
 			dataSource,
+			counter: 0,
 			currentDate: moment().format('YYYY-MM'),
 			offsetY: 0,
 			offsetX: 0,
@@ -112,16 +113,16 @@ class TodoTimeline extends React.Component {
 	componentWillMount() {		
 	}
 	componentDidMount() {
-
 	}
 	componentWillReceiveProps(nextProps) {
-		const { state } = nextProps;
-		if(typeof state === 'object') {
+		let task = this._filter(nextProps.task);
+		this.setState({ counter: task.length });
+		if(typeof task === 'object') {
 			InteractionManager.runAfterInteractions(() => {
 				var data = [];
-				Object.keys(state).map((key) => {
-					if(moment(state[key].end_date).format('YYYY-MM') === this.state.currentDate) {
-						data = data.concat([state[key]])
+				Object.keys(task).map((key) => {
+					if(moment(task[key].end_date).format('YYYY-MM') === this.state.currentDate) {
+						data = data.concat([task[key]])
 					}
 				})
 				this.setState({
@@ -131,16 +132,17 @@ class TodoTimeline extends React.Component {
 		}
 	}
 	_onSelect(dateObject) {
-		const { state } = this.props;
+		let task = this._filter(this.props.task);
+		this.setState({ counter: task.length });
 		this.setState({
 			currentDate: dateObject.date
 		})
-		if(typeof state === 'object') {
+		if(typeof task === 'object') {
 			var data = [];
-			Object.keys(state).map((key) => {
+			Object.keys(task).map((key) => {
 
-				if(state[key].end_date && moment(state[key].end_date).format('YYYY-MM') === dateObject.date) {
-					data.push(state[key])
+				if(task[key].end_date && moment(task[key].end_date).format('YYYY-MM') === dateObject.date) {
+					data.push(task[key])
 				}
 			});
 			this.setState({
@@ -148,6 +150,24 @@ class TodoTimeline extends React.Component {
 			});
 		}
 	}
+  _filter(todos) {
+    if(typeof marry === 'object') {
+      const { users } = this.props.marry;
+      if(users.length === 1) {
+        return todos.filter((todo) => {
+          return todo.master.uid === users[0].uid;
+        });
+      } else if(user.length === 2) {
+        return todos.filter((todo) => {
+          return todo.master.uid === users[0].uid || todo.master.uid === users[1].uid;
+        });
+      }
+    } else {
+      return todos.filter((todo) => {
+        return todo.master.uid === this.props.me.uid;
+      })
+    }
+  }
 	_renderRow(row, sectionId, rowId) {
 		return (
 			<TodoCardRedux navigator={this.props.navigator} data={row} rowId={rowId} />
@@ -157,8 +177,8 @@ class TodoTimeline extends React.Component {
 		this.timeline.moveTo(moment().format('YYYY-MM'));
 	}
 	_renderHeader() {
-    const { state } = this.props;
-    if(state.length===0) {
+    const { dataSource } = this.state;
+    if(this.state.counter===0) {
       return (
         <View style={{ margin: 10, padding: 10, borderRadius: 10, backgroundColor: '#FBFFDF' }}>
 
@@ -240,6 +260,6 @@ class TodoTimeline extends React.Component {
 }
 
 export default connect(
-	state => ({ state: state.task }),
+	state => ({ task: state.task, marry: state.marry, me: state.session }),
 	dispatch => ({})
 )(TodoTimeline);

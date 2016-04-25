@@ -119,7 +119,8 @@ class TodoCate extends React.Component {
 	componentDidMount() {
 		var group = {};
 		InteractionManager.runAfterInteractions(() => {
-			const todos = this.props.task;
+			const todos = this._filter(this.props.task);
+
 			Object.keys(todos).map((key) => {
 				const catalog_id = todos[key].catalog_id;
 				if(group[catalog_id]) {
@@ -137,7 +138,7 @@ class TodoCate extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		var group = {};
 		if(typeof nextProps.task === 'object') {
-			const todos = nextProps.task;
+			const todos = this._filter(nextProps.task);
 			Object.keys(todos).map((key) => {
 				const catalog_id = todos[key].catalog_id;
 				if(group[catalog_id]) {
@@ -151,12 +152,30 @@ class TodoCate extends React.Component {
 			});
 		}
 	}
+  _filter(todos) {
+    if(typeof marry === 'object') {
+      const { users } = this.props.marry;
+      if(users.length === 1) {
+        return todos.filter((todo) => {
+          return todo.master.uid === users[0].uid;
+        });
+      } else if(user.length === 2) {
+        return todos.filter((todo) => {
+          return todo.master.uid === users[0].uid || todo.master.uid === users[1].uid;
+        });
+      }
+    } else {
+      return todos.filter((todo) => {
+        return todo.master.uid === this.props.me.uid;
+      })
+    }
+  }
 	_getSectionHeaderData(dataBlob, sectionID) {
 		return sectionID;
 	}
 	_renderHeader() {
-    const { task } = this.props;
-    if(task.length===0) {
+    const { dataSource } = this.state;
+    if(dataSource.getRowCount()===0) {
       return (
         <View style={{ margin: 10, padding: 10, borderRadius: 10, backgroundColor: '#FBFFDF' }}>
 
@@ -225,7 +244,7 @@ class TodoCate extends React.Component {
 }
 
 export default connect(
-	state => ({ task: state.task }),
+	state => ({ task: state.task, marry: state.marry, me: state.session }),
 	dispatch => ({
 		init: () => dispatch(init())
 	})

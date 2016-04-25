@@ -27,6 +27,7 @@ import More from './More';
 import FindPartner from './FindPartner';
 import FeedBack from './FeedBack';
 import WebPage from './WebPage';
+import SocialWedding from './SocialWedding';
 class Badge extends React.Component {
 	render() {
 		const { value } = this.props;
@@ -122,14 +123,13 @@ class Home extends React.Component {
 								</TouchableOpacity>
 							</View>
 							<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
+								
 								<TouchableOpacity
 										onPress={ () => navigator.push({ component: Chat }) }
 										style={styles.textIcon}>
 									<Image source={asset.msg} style={styles.icon} />
 									<Text style={styles.text}>联系人</Text>
-									
 									<Badge unread={unread} />
-
 								</TouchableOpacity>
 
                 <TouchableOpacity
@@ -145,11 +145,18 @@ class Home extends React.Component {
 									<Image source={asset.configure} style={styles.icon} />
 									<Text style={styles.text}>设置</Text>
 								</TouchableOpacity>
-
-
-
-
+							
 							</View>
+
+							<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
+								<TouchableOpacity
+										onPress={ () => navigator.push({ component: SocialWedding }) }
+										style={styles.textIcon}>
+									<Image source={asset.i_51} style={styles.icon} />
+									<Text style={styles.text}>参加婚礼</Text>
+								</TouchableOpacity>
+							</View>
+
 						</ScrollView>
 
 						{
@@ -191,9 +198,9 @@ const styles = StyleSheet.create({
 	},
 
 	textIcon: {
-		height: 70,
-		width: 70,
-		borderRadius: 35,
+		height: 80,
+		width: 80,
+		borderRadius: 40,
 		marginTop: 20,
 		backgroundColor: '#FFFCE6',
 		alignItems: 'center',

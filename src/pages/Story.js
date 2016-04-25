@@ -224,9 +224,17 @@ class Memory extends React.Component {
 
             <View style={{ height: 20 }}/>
             <View style={{ flexDirection: 'row' }}>
-            	<PureButton onPress={this._deletePhoto.bind(this)}>确定</PureButton>
-            	<View style={{ width: 50 }}/>
-            	<PureButton onPress={this._stopDeteting.bind(this)}>取消</PureButton>
+
+							<TouchableOpacity  onPress={this._deletePhoto.bind(this)} style={innerStyles.btnWrap}>
+								<Text style={innerStyles.btn}>确定</Text>
+							</TouchableOpacity>
+
+							<View style={{ width: 50 }}/>
+
+							<TouchableOpacity onPress={this._stopDeteting.bind(this)} style={innerStyles.btnWrap}>
+								<Text style={innerStyles.btn}>取消</Text>
+							</TouchableOpacity>
+
           	</View>
 
           </View> 
@@ -246,6 +254,17 @@ const innerStyles = {
     backgroundColor: 'rgba(0,0,0,0.7)',
     alignItems: 'center',
     justifyContent: 'center',
+	},
+	btnWrap: {
+		marginTop: 10,
+		padding: 10,
+		borderRadius: 5,
+		borderWidth: 1,
+		borderColor: '#FFFFFF',
+	},
+	btn: {
+		fontSize: 16,
+		color: '#FFFFFF',
 	},
 };
 
