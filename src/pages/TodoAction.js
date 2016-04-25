@@ -314,7 +314,7 @@ class TodoAction extends React.Component {
 		            <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
 		              <Image source={asset.taskDesc} />
 		              <View style={{ flex: 1, marginHorizontal: 5, flexWrap: 'wrap' }}>
-		                <Text style={{ fontSize: 14, color: '#666666' }}>{todo.task_detail}</Text> 
+		                <Text style={{ fontSize: 16, color: '#666666' }}>{todo.task_detail}</Text> 
 		              </View>
 		            </View>
 		            : 

@@ -31,9 +31,12 @@ class WebPage extends React.Component {
 		//const url = 'http://weixin.marrynovo.com/app/./index.php?i=2&c=entry&id=1&do=dayu_form&m=dayu_form';
 		return (
 			<View style={styles.container}>
+				{/*
 				<View>
 					<Text>{ JSON.stringify(this.state.webState) }</Text>
 				</View>
+				*/}
+
 				<WebView
 					ref={webview => this.webview = webview}
 					style={{ flex: 1, backgroundColor: '#CCCCCC' }}
