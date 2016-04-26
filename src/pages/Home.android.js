@@ -28,6 +28,7 @@ import FindPartner from './FindPartner';
 import FeedBack from './FeedBack';
 import WebPage from './WebPage';
 import SocialWedding from './SocialWedding';
+import MyWedding from './MyWedding';
 class Badge extends React.Component {
 	render() {
 		const { value } = this.props;
@@ -89,6 +90,19 @@ class Home extends React.Component {
 							</View>
 						</Swiper>
 
+						{
+							marry.users.length == 1 ? 
+							<View style={[{ flexDirection: 'row', height: 50, alignItems: 'center' }, globalStyles.yellow_box]}>
+								<Image source={asset.couple} style={{ height: 30 }} resizeMode={"contain"} />
+								<View style={{ flex: 1, paddingHorizontal: 10 }}>
+									<TouchableOpacity onPress={this._invite.bind(this)}><Text style={{ fontSize: 14, color: '#666666' }}>
+										你现在是单人模式, 邀请另一半加入婚礼, 双人模式 筹备婚礼更简单哦~ <Text style={{ fontWeight: '500' }}>点我邀请</Text></Text>
+									</TouchableOpacity>
+								</View>
+							</View>
+							: 
+							null
+						}
 
 						<ScrollView 
 							contentContainerStyle={{ flex: 1 }}
@@ -135,9 +149,27 @@ class Home extends React.Component {
                 <TouchableOpacity
                     onPress={ () => navigator.push({ title: '小课堂', component: WebPage }) }
                     style={styles.textIcon}>
-                  <Image source={asset.taskBook} style={styles.icon} />
+                  <Image source={asset.i_50} style={styles.icon} />
                   <Text style={styles.text}>小课堂</Text>
                 </TouchableOpacity>
+							
+								<TouchableOpacity
+										onPress={ () => navigator.push({ component: MyWedding }) }
+										style={styles.textIcon}>
+									<Image source={asset.i_51} style={styles.icon} />
+									<Text style={styles.text}>我的婚礼</Text>
+								</TouchableOpacity>
+								
+							</View>
+
+							<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
+												
+								<TouchableOpacity
+										onPress={ () => navigator.push({ component: SocialWedding }) }
+										style={styles.textIcon}>
+									<Image source={asset.i_51} style={styles.icon} />
+									<Text style={styles.text}>参加婚礼</Text>
+								</TouchableOpacity>
 
 								<TouchableOpacity
 										onPress={ () => navigator.push({ component: More }) }
@@ -145,37 +177,19 @@ class Home extends React.Component {
 									<Image source={asset.configure} style={styles.icon} />
 									<Text style={styles.text}>设置</Text>
 								</TouchableOpacity>
-							
-							</View>
 
-							<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
 								<TouchableOpacity
-										onPress={ () => navigator.push({ component: SocialWedding }) }
-										style={styles.textIcon}>
-									<Image source={asset.i_51} style={styles.icon} />
-									<Text style={styles.text}>参加婚礼</Text>
+										onPress={ () => {} }
+										style={styles.emptyIcon}>
 								</TouchableOpacity>
+
 							</View>
 
 						</ScrollView>
 
-						{
-							marry.users.length == 1 ? 
-							<View style={[{ flexDirection: 'row', height: 80, alignItems: 'center', marginBottom: 100 }, globalStyles.yellow_box]}>
-								<Image source={asset.couple} style={{ height: 40 }} resizeMode={"contain"} />
-								<View style={{ flex: 1, paddingHorizontal: 10 }}>
-									<TouchableOpacity onPress={this._invite.bind(this)}><Text style={{ fontSize: 14, color: '#666666' }}>
-										你现在是单人模式, 邀请另一半加入婚礼, 双人模式 筹备婚礼更简单哦~ <Text style={{ fontWeight: '500' }}>点我邀请</Text></Text>
-									</TouchableOpacity>
-								</View>
-							</View>
-							: 
-							null
-						}
-
-        	<ActionButton 
-        		onPress={() => this.props.navigator.push({ component: Add })} 
-        		buttonColor="#F06199" position={"center"} />
+	        	<ActionButton 
+	        		onPress={() => this.props.navigator.push({ component: Add })} 
+	        		buttonColor="#F06199" position={"center"} />
 
 				</View>
 			);
@@ -198,10 +212,10 @@ const styles = StyleSheet.create({
 	},
 
 	textIcon: {
-		height: 80,
-		width: 80,
-		borderRadius: 40,
-		marginTop: 20,
+		height: 70,
+		width: 70,
+		borderRadius: 35,
+		marginTop: 15,
 		backgroundColor: '#FFFCE6',
 		alignItems: 'center',
 		justifyContent: 'center',
@@ -218,10 +232,10 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	icon: {
-		width: 35,
-		height: 35,
+		width: 30,
+		height: 30,
 		resizeMode: 'contain',
-		margin: 5,
+		margin: 2,
 	},
 	text: {
 		fontSize: 14,

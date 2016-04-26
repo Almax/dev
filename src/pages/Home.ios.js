@@ -51,16 +51,16 @@ class Home extends React.Component {
 	componentDidMount() {
 		if(this.props.marry) {
 			this.props.navigator.push({
-				title: '参加婚礼',
-				component: SocialWedding,
+				title: '我的婚礼',
+				component: MyWedding,
 			});
 		}
 	}
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.marry) {
 			this.props.navigator.push({
-				title: '参加婚礼',
-				component: SocialWedding,
+				title: '我的婚礼',
+				component: MyWedding,
 			});
 		}
 	}
@@ -100,6 +100,20 @@ class Home extends React.Component {
 								</View>
 							</View>
 						</Swiper>
+						
+						{
+							marry.users.length == 1 ? 
+							<View style={[{ flexDirection: 'row', height: 50, alignItems: 'center' }, globalStyles.yellow_box]}>
+								<Image source={asset.couple} style={{ height: 30 }} resizeMode={"contain"} />
+								<View style={{ flex: 1, paddingHorizontal: 10 }}>
+									<TouchableOpacity onPress={this._invite.bind(this)}><Text style={{ fontSize: 14, color: '#666666' }}>
+										你现在是单人模式, 邀请另一半加入婚礼, 双人模式 筹备婚礼更简单哦~ <Text style={{ fontWeight: '500' }}>点我邀请</Text></Text>
+									</TouchableOpacity>
+								</View>
+							</View>
+							: 
+							null
+						}
 
 						<ScrollView 
 							contentContainerStyle={{ flex: 1 }}
@@ -157,21 +171,6 @@ class Home extends React.Component {
               </View>
 
 						</View>
-
-						{
-							marry.users.length == 1 ? 
-							<View style={[{ flexDirection: 'row', height: 80, alignItems: 'center' }, globalStyles.yellow_box]}>
-								<Image source={asset.couple} style={{ height: 40 }} resizeMode={"contain"} />
-								<View style={{ flex: 1, paddingHorizontal: 10 }}>
-									<TouchableOpacity onPress={this._invite.bind(this)}><Text style={{ fontSize: 14, color: '#666666' }}>
-										你现在是单人模式, 邀请另一半加入婚礼, 双人模式 筹备婚礼更简单哦~ <Text style={{ fontWeight: '500' }}>点我邀请</Text></Text>
-									</TouchableOpacity>
-								</View>
-							</View>
-							: 
-							null
-						}
-
 						</ScrollView>
 
 						<View style={{ height: 50 }} />

@@ -3,6 +3,8 @@ var AssetList = {
 	card: require('./photos/card.png'),
 	cardInfo: require('./photos/cardInfo.png'),
 	wish: require('./photos/wish.png'),
+	marry: require('./photos/marry.png'),
+	marryMaster: require('./photos/marryMaster.png'),
 	
 	menu: require('./ICONS/menu.png'),
 	feedback: require('./ICONS/feedback.png'),

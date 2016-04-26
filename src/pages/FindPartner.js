@@ -99,9 +99,9 @@ class FindPartner extends React.Component {
 						</View>
 					</View>
 
-					<View style={[{ flex: 1, flexDirection: 'row', height: 80, alignItems: 'center' }, styles.yellow_box]}>
-						<Image source={asset.couple} style={{ height: 40 }} resizeMode={"contain"} />
-						<View style={{ flex: 1, }}>
+					<View style={[{ flex: 1, flexDirection: 'row', height: 50, alignItems: 'center', marginBottom: 10 }, styles.yellow_box]}>
+						<Image source={asset.couple} style={{ height: 30 }} resizeMode={"contain"} />
+						<View style={{ flex: 1 }}>
 							<Text style={styles.smallText}>你现在是单人模式 , 邀请另一半加入婚礼</Text>
 							<Text style={styles.smallText}>双人模式 筹备婚礼更简单哦~</Text>
 						</View>

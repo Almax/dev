@@ -38,8 +38,11 @@ export function load() {
 
 export function pass(id) {
 	return async(dispatch) => {
-		dispatch(passMessage(await passInvitation(id)));
-		dispatch(initialMessage(await loadInvitation()));
-		dispatch(loadUser());
+		let resp = await passInvitation(id);
+		if(resp !== false) {
+			dispatch(passMessage(resp));
+			dispatch(initialMessage(await loadInvitation()));
+			dispatch(loadUser());
+		}
 	}
 }

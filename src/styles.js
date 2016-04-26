@@ -59,11 +59,9 @@ export default StyleSheet.create({
 	},
 	yellow_box: {
 		backgroundColor: '#FFF7DD', 
-		borderRadius: 5,
-		margin: 10, 
-		padding: 5, 
-		borderWidth: 1, 
-		borderColor: '#E0DBC0',
+		padding: 2, 
+		borderBottomWidth: 1, 
+		borderBottomColor: '#E0DBC0',
 	},
 	smallText: {
 		fontSize: 14,

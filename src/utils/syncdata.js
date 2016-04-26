@@ -43,8 +43,10 @@ async function request(url, options) {
       return null;
     } else if (resp.error) {
       //服务器异常 清空数据
-      Alert.alert('请求错误','网络请求异常，请关闭重试');
-      await cleanUser();
+      Alert.alert(resp.error)
+      //Alert.alert('请求错误','网络请求异常，请关闭重试');
+      //await cleanUser();
+      return false;
     } else {
       //返回正常
       return resp;
