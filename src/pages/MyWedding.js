@@ -83,6 +83,7 @@ class MyWedding extends React.Component {
 		marry_date = marry_date ? moment(marry_date).format('YYYY年MM月DD日 a hh:ss') : '还没有设置';
 		marry_style = marry_style ? JSON.parse(marry_style) : ['还没有设置'];
 		marry_find = marry_find ? JSON.parse(marry_find) : ['还没有设置'];
+
 		return (
 			<View style={{ flex: 1, backgroundColor: '#EFEFEF', flexWrap: 'wrap' }}>
 
@@ -154,7 +155,7 @@ class MyWedding extends React.Component {
 							<Text style={styles.blockText}>婚礼预算</Text>
 						</View>
 						<View style={styles.blockValue}>
-							<Text style={styles.money}> { `￥ ${marry_budget}` } </Text>
+							<Text style={styles.money}> { `￥ ${marry_budget ? marry_budget : 0}` } </Text>
 						</View>
 					</TouchableOpacity>
 
