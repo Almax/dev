@@ -1,4 +1,5 @@
 import React, {
+	Alert,
 	ScrollView,
 	ListView,
 	Platform,
@@ -14,7 +15,11 @@ import React, {
 	TimePickerAndroid,
 	TextInput,
 } from 'react-native';
+import { connect } from 'react-redux';
 import colors from '../utils/colors';
+import style from '../utils/style';
+import member from '../utils/member';
+import { setMyMarry } from '../redux/modules/marry';
 const { width, height } = Dimensions.get('window');
 import asset from '../assets';
 import moment from 'moment';
@@ -25,7 +30,7 @@ class Template extends React.Component {
 	render() {
 		const { onPress, children, style, showModal, modal } = this.props;
 		return (
-			<ScrollView contentContainerStyle={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+			<ScrollView bounces={false} contentContainerStyle={{ flex: 1, backgroundColor: '#EFEFEF' }}>
 				<Image source={asset.marry} style={[style, { flex: 1, width: width, paddingHorizontal: 10 }]}>
 					{ children }
 				</Image>
@@ -46,30 +51,151 @@ class Template extends React.Component {
 	}
 }
 
-class MyWedding extends React.Component {
-	constructor(props) {
-		super(props);
+class MyWedding extends React.Component {	
+	_edit(title, Component) {
+		this.props.navigator.push({
+			title: title,
+			component: Component,
+			params: {
+				update: this._update.bind(this)
+			}
+		});
 	}
 	_next() {
 		this.props.navigator.push({
-			title: '我的婚礼',
-			component: PickColor
+			title: '婚礼色调',
+			component: PickColor,
+			params: {
+				update: this._update.bind(this)
+			}
+		});
+	}
+	_update(params) {
+		this.props.update({
+			id: this.props.marry.id,
+			...params,
 		});
 	}
 	render() {
+		let { marry_color, marry_city, marry_date, marry_guest, marry_budget, marry_style, marry_hotel_name, marry_hotel_address, marry_find } = this.props.marry;
+		marry_color = marry_color ? JSON.parse(marry_color) : [];
+		marry_city = marry_city ? JSON.parse(marry_city) : ['还没有设置'];
+		marry_date = marry_date ? moment(marry_date).format('YYYY年MM月DD日 a hh:ss') : '还没有设置';
+		marry_style = marry_style ? JSON.parse(marry_style) : ['还没有设置'];
+		marry_find = marry_find ? JSON.parse(marry_find) : ['还没有设置'];
 		return (
-			<Template onPress={this._next.bind(this)} style={{ justifyContent: 'center' }}>
-				<View style={styles.row}>
-					<Image source={asset.marryMaster} />
+			<View style={{ flex: 1, backgroundColor: '#EFEFEF', flexWrap: 'wrap' }}>
 
-					<View style={{ flex: 1, padding: 10, }}>
-						<Text style={{ color: '#FFFFFF', backgroundColor: 'transparent', fontSize: 14, fontWeight: '500' }}>
-							格小格在这里给大家引导大家思考下面的问题，可以帮助大家理清结婚思路，
-							确认婚礼当前的状况，避免新人进入到手忙脚乱的状态...
-						</Text>
+				<Image source={asset.marry} style={{ height: 150, width: width, paddingHorizontal: 10, marginVertical: 10, borderRadius: 5 }} resizeMode={'cover'}>
+					<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
+						<Text style={styles.reverseTitle}>我的婚礼</Text>
 					</View>
+
+					<View style={styles.row}>
+						<Image source={asset.marryMaster} />
+						<View style={{ flex: 1, padding: 10, }}>
+							<Text style={{ color: '#FFFFFF', backgroundColor: 'transparent', fontSize: 14, fontWeight: '500' }}>
+								格小格在这里给大家引导大家思考下面的问题，可以帮助大家理清结婚思路，
+								确认婚礼当前的状况，避免新人进入到手忙脚乱的状态...
+							</Text>
+
+						</View>
+					</View>
+				</Image>
+
+				<ScrollView contentContainerStyle={{ backgroundColor: '#EFEFEF' }}>
+
+					<TouchableOpacity onPress={this._edit.bind(this, '婚礼颜色', PickColor)} style={styles.block}>
+						<View style={styles.blockKey}>
+							<Image source={asset.marryColor} style={styles.blockIcon} resizeMode={'contain'} />
+							<Text style={styles.blockText}>婚礼颜色</Text>
+						</View>
+						<View style={styles.blockValue}>
+							{Object.keys(marry_color).map( 
+								key => 
+								<View key={`color_${key}`} style={[styles.circle,{backgroundColor: marry_color[key]}]} /> 
+							)}
+						</View>
+					</TouchableOpacity>
+
+					<TouchableOpacity onPress={this._edit.bind(this, '结婚城市', PickCity)} style={styles.block}>
+						<View style={styles.blockKey}>
+							<Image source={asset.marryCity} style={styles.blockIcon} resizeMode={'contain'} />
+							<Text style={styles.blockText}>结婚城市</Text>
+						</View>
+						<View style={[styles.blockValue, { flexDirection: 'column', alignItems: 'flex-end' }]}>
+							{Object.keys(marry_city).map(key => <Text key={`city_${key}`} style={styles.city}>{marry_city[key]}</Text>)}
+						</View>
+					</TouchableOpacity>
+
+					<TouchableOpacity onPress={this._edit.bind(this, '结婚日期', PickDate)} style={styles.block}>
+						<View style={styles.blockKey}>
+							<Image source={asset.marryDate} style={styles.blockIcon} resizeMode={'contain'} />
+							<Text style={styles.blockText}>结婚日期</Text>
+						</View>
+						<View style={styles.blockValue}>
+							<Text style={styles.date}>{ marry_date }</Text>
+						</View>
+					</TouchableOpacity>
+
+					<TouchableOpacity onPress={this._edit.bind(this, '来宾人数', SetGuest)} style={styles.block}>
+						<View style={styles.blockKey}>
+							<Image source={asset.marryGuest} style={styles.blockIcon} resizeMode={'contain'} />
+							<Text style={styles.blockText}>来宾人数</Text>
+						</View>
+						<View style={styles.blockValue}>
+							<Text style={styles.valueText}>{ marry_guest }</Text>
+						</View>
+					</TouchableOpacity>
+
+					<TouchableOpacity onPress={this._edit.bind(this, '婚礼预算', SetBudget)} style={styles.block}>
+						<View style={styles.blockKey}>
+							<Image source={asset.marryBudget} style={styles.blockIcon} resizeMode={'contain'} />
+							<Text style={styles.blockText}>婚礼预算</Text>
+						</View>
+						<View style={styles.blockValue}>
+							<Text style={styles.money}> { `￥ ${marry_budget}` } </Text>
+						</View>
+					</TouchableOpacity>
+
+					<TouchableOpacity onPress={this._edit.bind(this, '主题风格', PickStyle)} style={styles.block}>
+						<View style={styles.blockKey}>
+							<Image source={asset.marryStyle} style={styles.blockIcon} resizeMode={'contain'} />
+							<Text style={styles.blockText}>主题风格</Text>
+						</View>
+						<View style={styles.blockValue}>
+							{ Object.keys(marry_style).map(key => <Text key={`style_${key}`} style={styles.valueText}>{marry_style[key]}</Text>)}
+						</View>
+					</TouchableOpacity>
+
+					<TouchableOpacity onPress={this._edit.bind(this, '酒店信息', SetHotel)} style={styles.block}>
+						<View style={styles.blockKey}>
+							<Image source={asset.marryHotel} style={styles.blockIcon} resizeMode={'contain'} />
+							<Text style={styles.blockText}>酒店信息</Text>
+						</View>
+						<View style={[styles.blockValue, {flexDirection: 'column', alignItems: 'flex-end'}]}>
+							<Text style={styles.valueText}>{ marry_hotel_address }</Text>
+							<Text style={styles.valueText}>{ marry_hotel_name }</Text>
+						</View>
+					</TouchableOpacity>
+
+					<TouchableOpacity onPress={this._edit.bind(this, '我正在寻找的', FindHelper)} style={styles.block}>
+						<View style={styles.blockKey}>
+							<Image source={asset.marryFind} style={styles.blockIcon} resizeMode={'contain'} />
+							<Text style={styles.blockText}>正在寻找的</Text>
+						</View>
+						<View style={styles.blockValue}>
+							{Object.keys(marry_find).map(key => <Text key={`find_${key}`} style={styles.valueText}>{marry_find[key]}</Text>)}
+						</View>
+					</TouchableOpacity>
+
+				</ScrollView>
+
+				<View style={{ padding: 10 }}>
+					<SubmitButton onPress={this._next.bind(this)}>开始</SubmitButton>
 				</View>
-			</Template>
+
+			</View>
 		);
 	}
 }
@@ -97,13 +223,20 @@ class PickColor extends React.Component {
 		});
 	}
 	_next() {
+		this.props.update({
+			marry_color: JSON.stringify(this.state.colors),
+		});
 		this.props.navigator.push({
 			title: '结婚城市',
-			component: PickCity
-		})
+			component: PickCity,
+			params: {
+				update: this.props.update
+			}
+		});
 	}
 	render() {
 		return (
+		<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
 			<View style={{ flex: 1, margin: 10, padding: 10, borderRadius: 5, backgroundColor: '#FFFFFF' }}>
 				
 				<View style={{ alignItems: 'center' }}>
@@ -154,12 +287,11 @@ class PickColor extends React.Component {
 					}
 				})}
 				</ScrollView>
-
-				<View style={{ paddingVertical: 10 }}>
-					<SubmitButton onPress={this._next.bind(this)}>下一步</SubmitButton>
-				</View>
-
 			</View>
+			<View style={{ padding: 10 }}>
+				<SubmitButton onPress={this._next.bind(this)}>下一步</SubmitButton>
+			</View>
+		</View>
 		);
 	}
 }
@@ -199,8 +331,18 @@ class PickCity extends React.Component {
 		});
 	}
 	_next() {
+		const city = [this.state.city_1, this.state.city_2];
+
+		this.props.update({
+			marry_city: JSON.stringify(city)
+		});
+
 		this.props.navigator.push({
-			component: PickDate
+			title: '婚礼日期',
+			component: PickDate,
+			params: {
+				update: this.props.update
+			}
 		});
 	}
 	render() {
@@ -298,8 +440,15 @@ class PickDate extends React.Component {
 		);
 	}
 	_next() {
+		this.props.update({
+			marry_date: this.state.date
+		});
 		this.props.navigator.push({
-			component: SetGuest
+			title: '来宾人数',
+			component: SetGuest,
+			params: {
+				update: this.props.update
+			}
 		})
 	}
 	render() {
@@ -340,7 +489,20 @@ class SetGuest extends React.Component {
 			selection: selection,
 			selected: null,
 		}
-	}	
+	}
+	_next() {
+		this.props.update({
+			marry_guest: this.state.selected
+		});
+
+		this.props.navigator.push({
+			title: '婚礼预算',
+			component: SetBudget,
+			params: {
+				update: this.props.update
+			}
+		});
+	}
 	_updateList(data) {
 		let all = [ ...this.state.selection ];
 		let index = all.indexOf(data);
@@ -367,7 +529,7 @@ class SetGuest extends React.Component {
 	}
 	render() {
 		return (
-			<Template>
+			<Template onPress={this._next.bind(this)}>
 				
 				<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
 					<Text style={styles.reverseTitle}>来宾人数</Text>
@@ -396,17 +558,39 @@ class SetBudget extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			male: null,
-			female: null,
-			mp: null,
-			fp: null,
-			o: null,
+			male: '0',
+			female: '0',
+			mp: '0',
+			fp: '0',
+			o: '0',
 		};
 	}
+	_next() {
+		let total = parseInt(this.state.male) + 
+								parseInt(this.state.female) + 
+								parseInt(this.state.mp) + 
+								parseInt(this.state.fp) + 
+								parseInt(this.state.o);
+		this.props.update({
+			marry_budget: total
+		});
+
+		this.props.navigator.push({
+			title: '主题风格',
+			component: PickStyle,
+			params: {
+				update: this.props.update
+			}
+		})
+	}
 	render() {
-		let total = parseInt(this.state.male) + parseInt(this.state.female) + parseInt(this.state.mp) + parseInt(this.state.fp) + parseInt(this.state.o);
+		let total = parseInt(this.state.male) + 
+								parseInt(this.state.female) + 
+								parseInt(this.state.mp) + 
+								parseInt(this.state.fp) + 
+								parseInt(this.state.o);
 		return (
-			<Template>
+			<Template onPress={this._next.bind(this)}>
 				
 				<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
 					<Text style={styles.reverseTitle}>婚礼预算</Text>
@@ -426,8 +610,8 @@ class SetBudget extends React.Component {
 					<Text style={styles.inputLabel}>男方出资:</Text>
 					<TextInput
 						keyboardType={'numeric'}
-						value={this.state.male}
-						onChangexText={(male) => this.setState({ male })}
+						value={parseInt(this.state.male)}
+						onChangeText={(male) => this.setState({ male })}
 						placeholder={'男方出资'}
 						placeholderTextColor={'#CCCCCC'}
 						style={styles.inputBox} 
@@ -438,8 +622,8 @@ class SetBudget extends React.Component {
 					<Text style={styles.inputLabel}>女方出资:</Text>
 					<TextInput
 						keyboardType={'numeric'}
-						value={this.state.female}
-						onChangexText={(female) => this.setState({ female })}
+						value={parseInt(this.state.female)}
+						onChangeText={(female) => this.setState({ female })}
 						placeholder={'女方出资'}
 						placeholderTextColor={'#CCCCCC'}
 						style={styles.inputBox} 
@@ -450,8 +634,8 @@ class SetBudget extends React.Component {
 					<Text style={styles.inputLabel}>男方父母:</Text>
 					<TextInput 
 						keyboardType={'numeric'}
-						value={this.state.mp}
-						onChangexText={(mp) => this.setState({ mp })}
+						value={parseInt(this.state.mp)}
+						onChangeText={(mp) => this.setState({ mp })}
 						placeholder={'男方父母'}
 						placeholderTextColor={'#CCCCCC'}
 						style={styles.inputBox} 
@@ -462,8 +646,8 @@ class SetBudget extends React.Component {
 					<Text style={styles.inputLabel}>女方父母:</Text>
 					<TextInput 
 						keyboardType={'numeric'}
-						value={this.state.fp}
-						onChangexText={(fp) => this.setState({ fp })}
+						value={parseInt(this.state.fp)}
+						onChangeText={(fp) => this.setState({ fp })}
 						placeholder={'女方父母'}
 						placeholderTextColor={'#CCCCCC'}
 						style={styles.inputBox} 
@@ -474,16 +658,24 @@ class SetBudget extends React.Component {
 					<Text style={styles.inputLabel}>其他资金:</Text>
 					<TextInput 
 						keyboardType={'numeric'}
-						value={this.state.o}
-						onChangexText={(o) => this.setState({ o })}
+						value={parseInt(this.state.o)}
+						onChangeText={(o) => this.setState({ o })}
 						placeholder={'其他资金'}
 						placeholderTextColor={'#CCCCCC'}
 						style={styles.inputBox} 
 						 />
 				</View>
 
-				<View>
-					<Text>{ total }</Text>
+				<View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 20 }}>
+				<View style={{ paddingVertical: 10, paddingHorizontal: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#FFFFFF', borderRadius: 5 }}>
+					<Text style={{ backgroundColor: 'transparent', fontSize: 22, color: '#FFFFFF' }}>
+						您目前有
+					</Text>
+
+					<Text style={{ backgroundColor: 'transparent', fontSize: 22, fontWeight: '600', color: '#FFFFFF' }}>
+						{ `￥${total}` }
+					</Text>
+				</View>
 				</View>
 
 			</Template>
@@ -492,46 +684,262 @@ class SetBudget extends React.Component {
 }
 
 class PickStyle extends React.Component {
+	constructor(props) {
+		super(props);
+		let ds = new ListView.DataSource({ rowHasChanged: (r1, r2)=>r1!==r2 });
+		let weddingStyle = [];
+		for(key in style) {
+			weddingStyle.push({
+				name: style[key],
+				selected: false,
+			});
+		}
+		this.state = {
+			weddingStyle: weddingStyle,
+			ds: ds.cloneWithRows(weddingStyle)
+		};
+	}
+	_pick(rowId) {
+		let style = { ...this.state.weddingStyle[rowId] };
+		style.selected = !style.selected;
+		let weddingStyle = [...this.state.weddingStyle];
+		weddingStyle[rowId] = style;
+		this.setState({
+			weddingStyle: weddingStyle,
+			ds: this.state.ds.cloneWithRows(weddingStyle)
+		})
+	}
+	_renderRow(data, sectionId, rowId) {
+		return (
+			<TouchableOpacity onPress={this._pick.bind(this, rowId)} style={styles.box}>
+				{ data.selected ? <Image source={asset.ok} style={{ height: 10 }} resizeMode={'contain'} /> : null }
+
+				<Text style={styles.boxText}>{data.name}</Text>
+			</TouchableOpacity>
+		);
+	}
+	_next() {
+		let selected = [];
+		for(key in this.state.weddingStyle) {
+			if(this.state.weddingStyle[key].selected === true) {
+				selected.push(this.state.weddingStyle[key].name);
+			}	
+		}
+
+		this.props.update({
+			marry_style: JSON.stringify(selected)
+		});
+
+		this.props.navigator.push({
+			title: '酒店信息',
+			component: SetHotel,
+			params: {
+				update: this.props.update
+			}
+		})
+	}
 	render() {
 		return (
-			<View>
-				<Text>Pick style</Text>
-			</View>
+			<Template onPress={this._next.bind(this)}>
+				<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
+					<Text style={styles.reverseTitle}>主题风格</Text>
+				</View>
+
+				<View style={styles.row}>
+					<Image source={asset.marryMaster} />
+
+					<View style={{ flex: 1, padding: 10, }}>
+						<Text style={{ color: '#FFFFFF', backgroundColor: 'transparent', fontSize: 14, fontWeight: '500' }}>
+							来宾的人数直接决定了你酒店需要的大小以及正常婚礼的预算和成本，记得和双方家人好好沟通下
+						</Text>
+					</View>
+				</View>
+
+				<ListView 
+					contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap' }}
+					dataSource={this.state.ds} renderRow={this._renderRow.bind(this)} />
+
+			</Template>
 		);
 	}
 }
 
 class SetHotel extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			name: '',
+			address: '',
+		}
+	}
+	_next() {
+		console.warn(this.state.name, this.state.address);
+		this.props.update({
+			marry_hotel_name: this.state.name,
+			marry_hotel_address: this.state.address,
+		});
+
+		this.props.navigator.push({
+			title: '结婚帮手',
+			component: FindHelper,
+			params: {
+				update: this.props.update
+			}
+		});
+	}
 	render() {
 		return (
-			<View>
-				<Text>Pick style</Text>
-			</View>
+			<Template onPress={this._next.bind(this)}>
+				<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
+					<Text style={styles.reverseTitle}>酒店信息</Text>
+				</View>
+
+				<View style={styles.row}>
+					<Image source={asset.marryMaster} />
+
+					<View style={{ flex: 1, padding: 10, }}>
+						<Text style={{ color: '#FFFFFF', backgroundColor: 'transparent', fontSize: 14, fontWeight: '500' }}>
+							把酒店信息写在下面进行备注，如果还没确定合适的酒店，可以稍后再填写，点击下一步跳过即可
+						</Text>
+					</View>
+				</View>
+
+				<View style={styles.inputRow}>
+					<Text style={styles.inputLabel}>酒店名称:</Text>
+					<TextInput
+						value={parseInt(this.state.name)}
+						onChangeText={(name) => this.setState({ name })}
+						placeholder={'酒店名称'}
+						placeholderTextColor={'#CCCCCC'}
+						style={styles.inputBox} 
+						 />
+				</View>
+
+				<View style={styles.inputRow}>
+					<Text style={styles.inputLabel}>酒店地址:</Text>
+					<TextInput
+						value={parseInt(this.state.address)}
+						onChangeText={(address) => this.setState({ address })}
+						placeholder={'酒店地址'}
+						placeholderTextColor={'#CCCCCC'}
+						style={styles.inputBox} 
+						 />
+				</View>
+
+			</Template>
 		);
 	}
 }
 
 class FindHelper extends React.Component {
+	constructor(props) {
+		super(props);
+		let ds = new ListView.DataSource({ rowHasChanged: (r1, r2)=>r1!==r2 });
+		let weddingMember = [];
+		for(key in member) {
+			weddingMember.push({
+				name: member[key],
+				selected: false,
+			});
+		}
+		this.state = {
+			weddingMember: weddingMember,
+			ds: ds.cloneWithRows(weddingMember)
+		};
+	}
+	_pick(rowId) {
+		let style = { ...this.state.weddingMember[rowId] };
+		style.selected = !style.selected;
+		let weddingMember = [...this.state.weddingMember];
+		weddingMember[rowId] = style;
+		this.setState({
+			weddingMember: weddingMember,
+			ds: this.state.ds.cloneWithRows(weddingMember)
+		})
+	}
+	_renderRow(data, sectionId, rowId) {
+		return (
+			<TouchableOpacity onPress={this._pick.bind(this, rowId)} style={styles.box}>
+				{ data.selected ? <Image source={asset.ok} style={{ height: 10 }} resizeMode={'contain'} /> : null }
+
+				<Text style={styles.boxText}>{data.name}</Text>
+			</TouchableOpacity>
+		);
+	}
+	_next() {
+		let selected = [];
+		for(key in this.state.weddingMember) {
+			if(this.state.weddingMember[key].selected === true) {
+				selected.push(this.state.weddingMember[key].name);
+			}
+		}	
+		this.props.update({
+			marry_find: JSON.stringify(selected)
+		});
+
+		this.props.navigator.push({
+			title: '婚礼想法',
+			component: FinalStep,
+			params: {
+				update: this.props.update
+			}
+		});
+	}
 	render() {
 		return (
-			<View>
-				<Text>Find helper</Text>
-			</View>
+			<Template onPress={this._next.bind(this)}>
+				<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
+					<Text style={styles.reverseTitle}>正在寻找的..</Text>
+				</View>
+
+				<View style={styles.row}>
+					<Image source={asset.marryMaster} />
+
+					<View style={{ flex: 1, padding: 10, }}>
+						<Text style={{ color: '#FFFFFF', backgroundColor: 'transparent', fontSize: 14, fontWeight: '500' }}>
+							点击选择你还没确定的事情，可以多选哦...						
+						</Text>
+					</View>
+				</View>
+
+				<ListView 
+					contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap' }}
+					dataSource={this.state.ds} renderRow={this._renderRow.bind(this)} />
+
+			</Template>
 		);
 	}
 }
 
 class FinalStep extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			text: null
+		}
+	}
+	_next() {
+		this.props.update({
+			marry_wish: this.state.text
+		})
+		Alert.alert('婚礼信息更细完成');
+		this.props.navigator.popToTop();
+	}
 	render() {
 		return (
-			<View>
-				<Text>Find helper</Text>
-			</View>
+			<Template onPress={this._next.bind(this)}>
+				<TextInput 
+					style={styles.editor}
+					value={this.state.text}
+					onChangeText={(text) => this.setState({ text })}
+					multiline={true}
+					placeholder={'在这里说说你关于婚礼的其他想法...'} />
+			</Template>
 		);
 	}
 }
 const styles = StyleSheet.create({
-	title: { 
+	title: {
 		fontSize: 16, 
 		fontWeight: '500', 
 		color: '#666666' 
@@ -554,7 +962,8 @@ const styles = StyleSheet.create({
 	row: {
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		alignItems: 'center'
+		alignItems: 'center',
+		marginBottom: 10,
 	},
 	selectButton: {
 		alignItems: 'center',
@@ -610,7 +1019,7 @@ const styles = StyleSheet.create({
 		fontSize: 14, 
 		padding: 10, 
 		height: 35, 
-		width: 150, 
+		width: 180, 
 		backgroundColor: '#FFFFFF', 
 		borderRadius: 5 
 	},
@@ -620,5 +1029,101 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		marginBottom: 5,
 	},
+	box: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		width: ( width - 60 ) / 2, 
+		backgroundColor: 'transparent', 
+		borderWidth: 1, 
+		borderColor: '#FFFFFF', 
+		paddingVertical: 15, 
+		marginHorizontal: 10,
+		marginBottom: 10, 
+		borderRadius: 5,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	boxText: { 
+		color: '#FFFFFF', 
+		fontSize: 16 
+	},
+	editor: {
+		flex: 1,
+		textAlignVertical: 'top',
+		justifyContent: 'flex-start',
+		marginVertical: 50,
+		marginHorizontal: 10,
+		padding: 10,
+		borderRadius: 10,
+		backgroundColor: '#FFFFFF',
+		fontSize: 14,
+	},
+	block: {
+		flexDirection: 'row',
+		height: 60,
+		backgroundColor: '#FFFFFF',
+		paddingVertical: 5,
+		marginHorizontal: 5,
+		borderRadius: 5,
+		marginBottom: 10,
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		paddingHorizontal: 5,
+	},
+	blockIcon: {
+		height: 30,
+		width: 30,
+		marginRight: 5,
+	},
+	blockText: {
+		fontSize: 16,
+		color: '#999999',
+	},
+	blockKey: {
+		width: 110,
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'flex-start',
+	},
+	blockValue: {
+		flexDirection: 'row',
+		flexWrap: 'wrap',
+		justifyContent: 'flex-end',
+		width: width - 130,
+	},
+	circle: {
+		height: 30,
+		width: 30,
+		borderRadius: 15,
+		marginLeft: 5,
+	},
+	city: {
+		fontSize: 14,
+		fontWeight: '500',
+		color: '#666666',
+	},
+	date: {
+		fontSize: 14,
+		fontWeight: '500',
+		color: '#666666',
+	},
+	money: {
+		fontSize: 14,
+		fontWeight: '500',
+		color: '#F06199',
+	},
+	valueText: {
+		marginLeft: 5,
+		marginBottom: 5,
+		fontSize: 14,
+		fontWeight: '500',
+		color: '#666666',
+	},
+
 });
-export default MyWedding;
+export default connect(
+	state=>({ marry: state.marry }),
+	dispatch=>({
+		update: (params) => dispatch(setMyMarry(params))
+	})
+)(MyWedding);

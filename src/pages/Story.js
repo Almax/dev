@@ -67,7 +67,7 @@ class Memory extends React.Component {
 			options: options
 		}
 	}
-	componentDidMount() {
+	componentWillMount() {
 		InteractionManager.runAfterInteractions(() => {
 			const { marry } = this.props;
 			if(this.props.story === 'initial state') {

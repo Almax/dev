@@ -5,7 +5,15 @@ var AssetList = {
 	wish: require('./photos/wish.png'),
 	marry: require('./photos/marry.png'),
 	marryMaster: require('./photos/marryMaster.png'),
-	
+	marryBudget: require('./photos/marryBudget.png'),
+	marryCity: require('./photos/marryCity.png'),
+	marryColor: require('./photos/marryColor.png'),
+	marryDate: require('./photos/marryDate.png'),
+	marryFind: require('./photos/marryFind.png'),
+	marryGuest: require('./photos/marryGuest.png'),
+	marryHotel: require('./photos/marryHotel.png'),
+	marryStyle: require('./photos/marryStyle.png'),
+
 	menu: require('./ICONS/menu.png'),
 	feedback: require('./ICONS/feedback.png'),
 	ok: require('./ICONS/ok.png'),

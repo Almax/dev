@@ -11,6 +11,7 @@ import React, {
   Dimensions,
   Alert,
   InteractionManager,
+  PixelRatio,
 } from 'react-native';
 import RNFS from 'react-native-fs';
 import asset from '../assets';
@@ -212,8 +213,10 @@ class CameraView extends Component {
               <Image source={{ uri: this.state.preview }} style={{ height: 100, width: 100, borderRadius: 10 }} />
             </View>
 
-            <View style={{ height: 20 }}/>
-            <PureButton onPress={this._stopUploading.bind(this)}>取消</PureButton>
+            <View style={{ height: 20 }} />
+            <TouchableOpacity onPress={this._stopUploading.bind(this)} style={styles.btnWrap}>
+              <Text style={styles.btn}>取消</Text>
+            </TouchableOpacity>
           </View> 
           : null 
         }
@@ -255,6 +258,17 @@ const styles = {
     width: (width-10) / 4,
     height: (width-10) / 4,
     marginRight: 2,
+  },
+  btnWrap: {
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1/PixelRatio.get(),
+    borderColor: '#FFFFFF',
+  },
+  btn: {
+    fontSize: 16,
+    color: '#FFFFFF',
   },
 };
 

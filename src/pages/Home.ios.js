@@ -49,20 +49,20 @@ class Home extends React.Component {
 		};
 	}
 	componentDidMount() {
-		if(this.props.marry) {
-			this.props.navigator.push({
-				title: '我的婚礼',
-				component: MyWedding,
-			});
-		}
+		// if(this.props.marry) {
+		// 	this.props.navigator.push({
+		// 		title: '我的婚礼',
+		// 		component: MyWedding,
+		// 	});
+		// }
 	}
 	componentWillReceiveProps(nextProps) {
-		if(nextProps.marry) {
-			this.props.navigator.push({
-				title: '我的婚礼',
-				component: MyWedding,
-			});
-		}
+		// if(nextProps.marry) {
+		// 	this.props.navigator.push({
+		// 		title: '我的婚礼',
+		// 		component: MyWedding,
+		// 	});
+		// }
 	}
 	_invite() {
 		this.props.navigator.push({
