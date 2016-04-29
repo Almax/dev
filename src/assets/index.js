@@ -1,4 +1,7 @@
 var AssetList = {
+	weddingA: require('./photos/weddingA.png'),
+	weddingB: require('./photos/weddingB.png'),
+	weddingTips: require('./photos/weddingTips.png'),
 
 	step_1: require('./splash/step_1.png'),
 	step_2: require('./splash/step_2.png'),
@@ -6,8 +9,12 @@ var AssetList = {
 	step_4: require('./splash/step_4.png'),
 	step_5: require('./splash/step_5.png'),
 
+	house: require('./ICONS/house.png'),
+	talk: require('./ICONS/talk.png'),
+
 	menuButton: require('./photos/menuButton.png'),
 	backButton: require('./photos/backButton.png'),
+	configButton: require('./photos/configButton.png'),
 	card: require('./photos/card.png'),
 	cardInfo: require('./photos/cardInfo.png'),
 	wish: require('./photos/wish.png'),
@@ -36,7 +43,7 @@ var AssetList = {
 	safe: require('./ICONS/safe.png'),
 	exit: require('./ICONS/exit.png'),
 	couple: require('./ICONS/couple.png'),
-	avatar: require('./img/avatar.png'),
+	avatar: require('./photos/avatar.png'),
 	placeholder: require('./img/placeholder.png'),
 	girl: require('./img/girl.png'),
 	takePhoto: require('./img/takePhoto.png'),
@@ -77,6 +84,7 @@ var AssetList = {
 	createBanner: require('./img/createBanner.png'),
 	homeBanner: require('./img/homeBanner.png'),
 	marryBanner: require('./img/marryBanner.png'),
+	bookBanner: require('./img/bookBanner.png'),
 	user: require('./img/user.png'),
 	message: require('./ICONS/message.png'),
 	search: require('./ICONS/search.png'),
@@ -141,6 +149,8 @@ var AssetList = {
 	i_49: require('./catalog/49.png'),
 	i_50: require('./catalog/50.png'),
 	i_51: require('./catalog/51.png'),
+	i_52: require('./catalog/52.png'),
+	i_53: require('./catalog/53.png'),
 	a_task: require('./account/task.png'),
 	a_female_family: require('./account/female_family.png'),
 	a_female: require('./account/female.png'),

@@ -4,6 +4,7 @@ import React, {
 	View,
 	Text,
 	Image,
+	Linking,
 	StyleSheet,
 	TouchableOpacity,
 } from 'react-native';
@@ -77,21 +78,21 @@ class Home extends React.Component {
 		if(typeof marry === 'object') {
 			return (
 				<View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
-						<Swiper height={140} showsPagination={true} showsButtons={false}>
-							<View style={styles.bannerWrapper}>
-								<Image source={asset.homeBanner} style={styles.bannerImage} resizeMode={"contain"} />
+
+					<View style={{ height: 150, backgroundColor: '#F06199', alignItems: 'center', justifyContent: 'center' }}>
+						<TouchableOpacity 
+							onPress={() => Linking.openURL(url).catch(err => console.error('An error occurred', err)) } 
+							style={{ padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}> 
+							
+							<Image source={asset.bookBanner} style={{ width: 100 }} resizeMode={'contain'} />
+							<View style={{ alignItems: 'center', justifyContent: 'center' }}>
+								<Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: '300' }}>《婚格物语》官方婚礼绘本</Text>
+								<View style={{ height: 5 }} />
+								<Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: '300' }}>开始预售，5月发货~</Text>
 							</View>
-							<View style={styles.bannerWrapper}>
-								<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}> 
-									<Image source={asset.marryBanner} style={{ height: 120, width: 70 }} />
-									<View style={{ marginLeft: 15 }}>
-										<Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: '100' }}>{moment(marry.marry_date).format("YYYY年MM月DD日")}</Text>
-										<View style={{ height: 5 }} />
-										<Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: '100' }}>是你们俩大喜的日子哦~</Text>
-									</View>
-								</View>
-							</View>
-						</Swiper>
+
+						</TouchableOpacity>
+					</View>
 
 						{
 							marry.users.length == 1 ? 
@@ -141,14 +142,6 @@ class Home extends React.Component {
 							</View>
 							<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
 								
-								<TouchableOpacity
-										onPress={ () => navigator.push({ component: Chat }) }
-										style={styles.textIcon}>
-									<Image source={asset.msg} style={styles.icon} />
-									<Text style={styles.text}>联系人</Text>
-									<Badge unread={unread} />
-								</TouchableOpacity>
-
                 <TouchableOpacity
                     onPress={ () => navigator.push({ title: '小课堂', component: WebPage }) }
                     style={styles.textIcon}>
@@ -159,14 +152,10 @@ class Home extends React.Component {
 								<TouchableOpacity
 										onPress={ () => navigator.push({ component: MyWedding }) }
 										style={styles.textIcon}>
-									<Image source={asset.i_51} style={styles.icon} />
+									<Image source={asset.i_22} style={styles.icon} />
 									<Text style={styles.text}>我的婚礼</Text>
 								</TouchableOpacity>
 								
-							</View>
-
-							<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
-												
 								<TouchableOpacity
 										onPress={ () => navigator.push({ component: SocialWedding }) }
 										style={styles.textIcon}>
@@ -174,25 +163,31 @@ class Home extends React.Component {
 									<Text style={styles.text}>参加婚礼</Text>
 								</TouchableOpacity>
 
-								<TouchableOpacity
-										onPress={ () => navigator.push({ component: More }) }
-										style={styles.textIcon}>
-									<Image source={asset.configure} style={styles.icon} />
-									<Text style={styles.text}>设置</Text>
-								</TouchableOpacity>
-
-								<TouchableOpacity
-										onPress={ () => {} }
-										style={styles.emptyIcon}>
-								</TouchableOpacity>
-
 							</View>
 
 						</ScrollView>
 
-	        	<ActionButton 
-	        		onPress={() => this.props.navigator.push({ component: Add })} 
-	        		buttonColor="#F06199" position={"center"} />
+						<View 
+							style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: '#FFFFFF', padding: 20, alignItems: 'center', justifyContent: 'center' }}>
+							
+							<View style={{ width: 220, paddingHorizontal: 10, borderRadius: 40, paddingVertical: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', backgroundColor: '#FEFDE5', borderWidth: 1, borderColor: '#E6E4C0' }}>
+								
+								<TouchableOpacity style={{ width: 40, alignItems: 'center', justifyContent: 'center' }}>
+									<Image source={asset.house} />
+									<Text style={{ color: '#9A804A' }}>首页</Text>
+								</TouchableOpacity>
+								
+								<TouchableOpacity onPress={() => this.props.navigator.push({ component: Add })}  style={{ alignItems: 'center', justifyContent: 'center' }}>
+									<Image source={asset.write} />
+								</TouchableOpacity>
+								
+								<TouchableOpacity onPress={() => navigator.push({ title: '联系人', component: Chat })} style={{ width: 40, alignItems: 'center', justifyContent: 'center' }}>
+									<Image source={asset.talk} />
+									<Text style={{ color: '#9A804A' }}>联系人</Text>
+								</TouchableOpacity>
+							</View>
+
+						</View>
 
 				</View>
 			);
@@ -203,6 +198,11 @@ class Home extends React.Component {
 		}
 	}
 }
+
+
+// <ActionButton 
+// 	onPress={() => this.props.navigator.push({ component: Add })} 
+// 	buttonColor="#F06199" position={"center"} />
 
 const styles = StyleSheet.create({
 	bannerWrapper: {
@@ -260,9 +260,4 @@ export default connect(
 		updateMarry: (data) => dispatch(setMyMarry(data)),
 		loadSession: () => dispatch(loadUser()),
 	})
-)(Home)
-
-// <TouchableOpacity
-// 		onPress={ () => {} }
-// 		style={styles.emptyIcon}>
-// </TouchableOpacity>
+)(Home);

@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import Storage from 'react-native-storage';
 import Contacts from 'react-native-contacts';
 import { findUser, currentUser, cleanUser } from './session';
@@ -125,7 +126,12 @@ export async function push(user) {
 		  body: JSON.stringify({ user: user })
 		});
 		let resp = await response.json();
-		console.warn(JSON.stringify(resp));
+		
+		if(resp.success) {
+			Alert.alert(resp.success);
+		} else if(resp.error) {
+			Alert.alert(resp.error);
+		}
 	} catch(e) {
 		console.warn(JSON.stringify(e));
 	}

@@ -4,6 +4,7 @@ import React, {
 	Text,
 	Image,
 	RefreshControl,
+	Linking,
 	StyleSheet,
 	TouchableOpacity,
 } from 'react-native';
@@ -81,34 +82,37 @@ class Home extends React.Component {
 		}, 2000);
 	}
  	render() {
+ 		const url = 'http://weixin.marrynovo.com/app/index.php?i=2&c=home&a=page&id=6';
 		const { state, navigator } = this.props;
 		if(this.props.marry) {
 			const { marry } = this.props;
 			return (
 				<View style={{ flex: 1 }}>
-						<Swiper height={120} showsPagination={true} showsButtons={false}>
-							<View style={styles.bannerWrapper}>
-								<Image source={asset.homeBanner} style={styles.bannerImage} resizeMode={"contain"} />
+					<View style={{ height: 150, backgroundColor: '#F06199', alignItems: 'center', justifyContent: 'center' }}>
+						<TouchableOpacity 
+							onPress={() => Linking.openURL(url).catch(err => console.error('An error occurred', err)) } 
+							style={{ padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}> 
+							
+							<Image source={asset.bookBanner} style={{ width: 100 }} resizeMode={'contain'} />
+							<View style={{ alignItems: 'center', justifyContent: 'center' }}>
+								<Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: '300' }}>《婚格物语》官方婚礼绘本</Text>
+								<View style={{ height: 5 }} />
+								<Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: '300' }}>  开始预售，5月发货~</Text>
 							</View>
-							<View style={styles.bannerWrapper}>
-								<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}> 
-									<Image source={asset.marryBanner} style={{ height: 100, width: 60 }} />
-									<View style={{ marginLeft: 15 }}>
-										<Text style={{ color: '#FFFFFF', fontSize: 22, fontWeight: '300' }}>{moment(marry.marry_date).format("YYYY年MM月DD日")}</Text>
-										<View style={{ height: 5 }} />
-										<Text style={{ color: '#FFFFFF', fontSize: 22, fontWeight: '300' }}>是你们俩大喜的日子哦~</Text>
-									</View>
-								</View>
-							</View>
-						</Swiper>
-						
+
+						</TouchableOpacity>
+					</View>
+
 						{
 							marry.users.length == 1 ? 
 							<View style={[{ flexDirection: 'row', height: 50, alignItems: 'center' }, globalStyles.yellow_box]}>
 								<Image source={asset.couple} style={{ height: 30 }} resizeMode={"contain"} />
 								<View style={{ flex: 1, paddingHorizontal: 10 }}>
-									<TouchableOpacity onPress={this._invite.bind(this)}><Text style={{ fontSize: 14, color: '#666666' }}>
-										你现在是单人模式, 邀请另一半加入婚礼, 双人模式 筹备婚礼更简单哦~ <Text style={{ fontWeight: '500' }}>点我邀请</Text></Text>
+									<TouchableOpacity onPress={this._invite.bind(this)}>
+										<Text style={{ fontSize: 14, color: '#666666' }}>
+											小主,你现在是单人模式，
+											邀请另一半加入双人模式，点我邀请...
+										</Text>
 									</TouchableOpacity>
 								</View>
 							</View>

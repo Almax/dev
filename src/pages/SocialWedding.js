@@ -30,24 +30,65 @@ class SocialWedding extends React.Component {
 			dataSource: dataSource,
 			friends: []
 		};
+		this.renderCounter = 0;
 	}
 	componentDidMount() {
 		if(this.props.friend.length) {
 			let friends = this.props.friend;
+			let renders = [];
+			for(key in friends) {
+				if(friends[key].marry == null) {
+					break;
+				}
+				const { marry_date, marry_name, users } = friends[key].marry;
+				if(users.length < 2) {
+					break;
+				}
+
+				if(users[0].uid === this.props.me.uid|| users[1].uid === this.props.me.uid) {
+					break;
+				}
+				renders.push(friends[key]);
+			}
+
 			this.setState({
 				friends,
-				dataSource: this.state.dataSource.cloneWithRows(friends)
+				dataSource: this.state.dataSource.cloneWithRows(renders)
 			});
 		}
 	}
 	componentWillReceiveProps(nextProps) {
+
 		if(nextProps.friend.length) {
 			let friends = nextProps.friend;
+			let renders = [];
+			for(key in friends) {
+				if(friends[key].marry == null) {
+					break;
+				}
+				const { marry_date, marry_name, users } = friends[key].marry;
+				if(users.length < 2) {
+					break;
+				}
+
+				if(users[0].uid === this.props.me.uid|| users[1].uid === this.props.me.uid) {
+					break;
+				}
+				renders.push(friends[key]);
+			}
+
 			this.setState({
 				friends,
-				dataSource: this.state.dataSource.cloneWithRows(friends)
+				dataSource: this.state.dataSource.cloneWithRows(renders)
 			});
 		}
+
+		// if(nextProps.friend.length) {
+		// 	let friends = nextProps.friend;
+		// 	this.setState({
+		// 		friends,
+		// 		dataSource: this.state.dataSource.cloneWithRows(friends)
+		// 	});
 	}
 	_goto(marry) {
 		this.props.navigator.push({
@@ -72,6 +113,8 @@ class SocialWedding extends React.Component {
 			return null;
 		}
 		
+		this.renderCounter++;
+
 		return (
 			<Image source={asset.card} style={styles.marry}>
 				<TouchableOpacity onPress={this._goto.bind(this, marry)} style={styles.rowGroup}>
@@ -104,14 +147,14 @@ class SocialWedding extends React.Component {
 		} else {
 			return (
 				<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-					
-					<View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 10 }}>
-						<Image source={asset.marryMaster} />
-						<View style={{ flex: 1, flexWrap: 'wrap', paddingLeft: 10 }}>
-							<Text style={{ fontSize: 14, color: '#666666' }}>
-								当你收到朋友发来的邀请，你可以加入到他们的婚礼中去…目前还没加入的婚礼。下面这些有点眼熟？假装在现场...
-							</Text>
-						</View>
+						
+					<View style={{ backgroundColor: '#FFFFFF', alignItems: 'center' }}>
+						<Image source={asset.weddingTips} style={{ width: width-20, height: 80 }} resizeMode={'contain'} />
+					</View>
+
+					<View style={{ flex: 1, marginTop: 10, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-around' }}>
+						<Image source={asset.weddingA} style={{ height: 200, width: (width-40)/2 }} resizeMode={'contain'} />
+						<Image source={asset.weddingB} style={{ height: 200, width: (width-40)/2 }} resizeMode={'contain'} />
 					</View>
 
 				</View>

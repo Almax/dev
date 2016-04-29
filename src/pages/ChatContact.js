@@ -25,7 +25,7 @@ class ChatContact extends React.Component {
 			ds,
 			loaded: false,
 			isRefreshing: false
-		}
+		};
 	}
 	componentDidMount() {
 		InteractionManager.runAfterInteractions( async () => {

@@ -9,6 +9,7 @@ import React, {
   ProgressViewIOS,
   TouchableOpacity,
   Alert,
+  Linking,
   Dimensions,
 } from 'react-native';
 import asset from '../assets';
@@ -17,6 +18,7 @@ import SplashScreen from '@remobile/react-native-splashscreen';
 import NavigatorSceneConfigs from '../components/NavigatorSceneConfigs'
 import Splash from '../pages/Splash';
 import Feedback from '../pages/FeedBack';
+import More from '../pages/More';
 //import QRScan from '../pages/QRScan';
 const { height, width } = Dimensions.get('window');
 import Swiper from 'react-native-swiper2';
@@ -230,8 +232,16 @@ class Navigation extends React.Component {
               <Text style={styles.buttonText}></Text>
             </TouchableOpacity>
           );
+        } else if(index === 0 && Platform.OS === 'android') {
+          return (
+            <TouchableOpacity 
+              onPress={() => _this.navigator.push({ title: '设置', component: More })}
+              style={styles.button}>
+              <Image source={asset.configButton} style={{ height:20 }} resizeMode={'contain'} />
+            </TouchableOpacity>
+          );
         } else {
-          return null
+          return null;
         }
 
       },
@@ -261,6 +271,7 @@ class Navigation extends React.Component {
     );
   }
   render() {
+    const url = 'https://itunes.apple.com/cn/app/hun-ge-rang-jie-hun-geng-jian/id1062457289?mt=8';
     if(this.state.showSwiper) {
       return <Step onPress={() => this.setState({ showSwiper: false })} />;
     } else {
@@ -276,6 +287,7 @@ class Navigation extends React.Component {
 
           { this.state.showModal ? 
             <View style={styles.modal}>
+
               <TouchableOpacity 
                 onPress={
                   () =>  {
@@ -284,9 +296,25 @@ class Navigation extends React.Component {
                   } 
                 } 
                 style={styles.icon}>
-                <Image source={asset.i_46} />
+                <Image source={asset.i_52} />
                 <Text style={styles.iconText}>吐槽产品</Text>
               </TouchableOpacity>
+
+              {
+                Platform.OS === 'ios' ?
+              <TouchableOpacity 
+                onPress={
+                  () =>  {
+                    Linking.openURL(url).catch(err => console.error('An error occurred', err));
+                  } 
+                } 
+                style={styles.icon}>
+                <Image source={asset.i_53} />
+                <Text style={styles.iconText}>AppStore</Text>
+                <Text style={styles.iconText}>评分</Text>
+              </TouchableOpacity>
+                : null
+              }
 
               <TouchableOpacity onPress={() => this.setState({ showModal: false })} style={styles.icon}>
                 <Text style={styles.pureText}>关闭</Text>

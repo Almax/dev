@@ -28,40 +28,33 @@ class ChatUser extends React.Component {
 				<Text style={{ fontSize: 16, color: '#999999' }}>查找结果 (1个用户)</Text>
 			</View>
 
-			<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 10, borderWidth: 1, borderColor: '#EFEFEF' }}>
-				
-				<View style={{ alignItems: 'center' }}>
-					<Image source={{ uri: user.photo }} style={{ height: 80, width: 80, borderRadius: 40 }} />
-					<View style={{ marginVertical: 10 }}>
-						<Text style={{ color: '#666666', fontSize: 16 }}>
-							<Text style={{ color: '#999999', fontSize: 16 }}>账号</Text> 
-							{ user.username }
-						</Text>
-						
-						<Text style={{ color: '#666666', fontSize: 16 }}>
-							<Text style={{ color: '#999999', fontSize: 16 }}>昵称</Text>
-							{ user.nickname ? user.nickname : '匿名用户' }
-						</Text>
-						
-						<Text style={{ color: '#666666', fontSize: 16 }}>
-							<Text style={{ color: '#999999', fontSize: 16 }}>签名</Text>
-							{ user.signature ? user.signature : '没有留下任何签名' }
-						</Text>
-					</View>
+
+			<View style={{ flex: 1, borderTopWidth: 1, borderTopColor: '#EFEFEF', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 10 }}>
+				<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+					
+
+					{  
+						user.photo ? 
+						<Image source={{ uri: user.photo }} style={{ height: 60, width: 60 }} /> 
+						:
+						<Image source={asset.avatar} style={{ height: 60, width: 60 }} /> 
+					}
+					
+					<Text style={{ marginLeft: 10, fontSize: 16, color: '#333333' }}>
+							
+						{ user.username }
+						{ user.nickname ? `(${user.nickname})` : null }
+					
+					</Text>
 				</View>
 
-				<View>
-					<FormBlock>
-						<SubmitButton size={'small'}>留言</SubmitButton>
-					</FormBlock>
-					<FormBlock>
-						<SubmitButton 
-							onPress={this._invite.bind(this)}
-							size={'small'}>添加好友</SubmitButton>
-					</FormBlock>
-				</View>
-
+				<SubmitButton 
+					onPress={this._invite.bind(this)}
+					size={'small'}>
+					添加好友
+				</SubmitButton>
 			</View>
+
 		</View>
 		);
 	};
@@ -71,7 +64,7 @@ class ChatFind extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: '15601923212',
+			username: '',
 			user: null,
 		}
 	}

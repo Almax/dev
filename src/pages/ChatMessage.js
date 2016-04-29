@@ -126,13 +126,23 @@ class ChatMessage extends React.Component {
 		}
 	}
 	render() {
-		return (
-			<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-				<ListView
-					dataSource={this.state.dataSource}
-					renderRow={this._renderRow.bind(this)} />
+		if(this.state.dataSource.getRowCount() > 0) {
+			return (
+				<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
+					<ListView
+						dataSource={this.state.dataSource}
+						renderRow={this._renderRow.bind(this)} />
+				</View>
+			);
+		} else {
+			return (
+			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' }}>
+				<View style={{ backgroundColor: '#F4F4F4', padding: 10, borderRadius: 5 }}>
+					<Text style={{ color: '#C0C0C0' }}>你还没有收到新消息~</Text>
+				</View>
 			</View>
-		);
+			);
+		}
 	}
 }
 const innerStyles = StyleSheet.create({

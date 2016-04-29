@@ -205,14 +205,10 @@ class CameraView extends Component {
 
         { this.state.isUploading ? 
           <View style={styles.fullscreenLayer}>
-            <Text style={{ fontSize: 18, color: '#FFFFFF' }}>正在同步到婚礼故事...请等待</Text>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10 }}>
-              <Text style={{ fontSize: 18, color: '#FFFFFF' }}>正在上传</Text>
-              <View style={{ width: 10 }} />
-              <Image source={{ uri: this.state.preview }} style={{ height: 100, width: 100, borderRadius: 10 }} />
-            </View>
-
+            <Image source={{ uri: this.state.preview }} style={{ height: 100, width: 100, borderRadius: 10 }} />
+            <Text style={{ marginTop: 10, fontSize: 18, color: '#FFFFFF' }}>每一张照片都是一段回忆</Text>
+            <Text style={{ marginTop: 10, fontSize: 18, color: '#FFFFFF' }}>婚格正在帮你记录你们的回忆...</Text>
             <View style={{ height: 20 }} />
             <TouchableOpacity onPress={this._stopUploading.bind(this)} style={styles.btnWrap}>
               <Text style={styles.btn}>取消</Text>
@@ -260,10 +256,13 @@ const styles = {
     marginRight: 2,
   },
   btnWrap: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 100,
     marginTop: 10,
     padding: 10,
     borderRadius: 5,
-    borderWidth: 1/PixelRatio.get(),
+    borderWidth: 1,
     borderColor: '#FFFFFF',
   },
   btn: {

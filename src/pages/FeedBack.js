@@ -96,15 +96,12 @@ class FeedBack extends React.Component {
 				<View style={innerStyles.modal}>
 					<View style={{ width: width-20, padding: 10, backgroundColor: '#FFFFFF', borderRadius: 5, }}>
 						<View style={{ alignItems: 'center', marginBottom: 5 }}><Image source={asset.i_2} /></View>
-						<Text>想到要做一个和你们互动的功能时候，第一个想到的就是给你们</Text>
-						<Text>机会吊打产品君~ 想到这个反而有点兴奋…</Text>
-						<Text>婚格的产品君有点自虐倾向</Text>
-						<Text>婚格的初衷是帮助新人更简单的筹备婚礼, 大家把任何觉得用的</Text>
-						<Text>不舒服的功能和感受写下来...也可以和我们说说你想要的功能...</Text>
-						<Text>婚格团队成员会替你吊打产品经理的</Text>
-						<Text>当然在这之后，我们会改进持续改进产品的功能和体验</Text>
-						<Text>也希望你能继续使用我们的App继续帮助你筹备婚礼~~</Text>
-						<Text>婚格团队在这里，先祝大家新婚快乐了</Text>
+
+
+						<Text>写下你的反馈，谈谈你的感受.</Text>
+						<Text>团队成员替你吊打产品经理，改进产品.</Text>
+						<Text>真心希望我们的产品和服务能帮助大家更简单的筹备婚礼...</Text>
+						<Text>在这里先祝大家新婚快乐！</Text>
 					</View>
 					<TouchableOpacity onPress={() => this.setState({ showModal: false })} style={innerStyles.btnWrap}>
 						<Text style={innerStyles.btn}>知道了</Text>

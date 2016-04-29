@@ -5,6 +5,7 @@ import React, {
 	TouchableOpacity,
 	StyleSheet,
 } from 'react-native';
+import { SubmitButton } from './Form';
 import cityInfo from '../utils/city';
 class CityPicker extends React.Component {
 	constructor(props) {
@@ -102,10 +103,7 @@ class CityPicker extends React.Component {
 
 				<View style={styles.selection}>
 					<Text>{ this.state.p } { this.state.c } { this.state.d }</Text>
-
-					<TouchableOpacity style={{ padding: 10 }} onPress={this._pickData.bind(this)}>
-						<Text style={{ color: 'blue' }}>选择</Text>
-					</TouchableOpacity>
+					<SubmitButton size={'small'} onPress={this._pickData.bind(this)}>选择</SubmitButton>
 				</View>
 				<View style={{ flex: 1, flexDirection: 'row' }}>
 					<ListView

@@ -214,14 +214,9 @@ class Memory extends React.Component {
 
         { this.state.isDeleting ? 
           <View style={innerStyles.fullscreenLayer}>
-            <Text style={{ fontSize: 18, color: '#FFFFFF' }}>真的要删除吗?</Text>
-
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10 }}>
-              <Text style={{ fontSize: 18, color: '#FFFFFF' }}>正在删除</Text>
-              <View style={{ width: 10 }} />
-              <Image source={{ uri: this.state.preview.photo }} style={{ height: 100, width: 100, borderRadius: 10 }} />
-            </View>
-
+          	<Image source={{ uri: this.state.preview.photo }} style={{ height: 100, width: 100, borderRadius: 10 }} />
+            <Text style={{ marginTop: 10, fontSize: 18, color: '#FFFFFF' }}>小主，这个时期的照片都是很珍贵的</Text>
+            <Text style={{ marginTop: 10, fontSize: 18, color: '#FFFFFF' }}>真的要删除吗?</Text>
             <View style={{ height: 20 }}/>
             <View style={{ flexDirection: 'row' }}>
 
@@ -229,7 +224,7 @@ class Memory extends React.Component {
 								<Text style={innerStyles.btn}>确定</Text>
 							</TouchableOpacity>
 
-							<View style={{ width: 50 }}/>
+							<View style={{ width: 20 }}/>
 
 							<TouchableOpacity onPress={this._stopDeteting.bind(this)} style={innerStyles.btnWrap}>
 								<Text style={innerStyles.btn}>取消</Text>
@@ -256,6 +251,9 @@ const innerStyles = {
     justifyContent: 'center',
 	},
 	btnWrap: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		width: 100,
 		marginTop: 10,
 		padding: 10,
 		borderRadius: 5,

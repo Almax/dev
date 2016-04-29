@@ -461,9 +461,9 @@ class PickDate extends React.Component {
 				<View style={{ backgroundColor: '#FFFFFF' }}>
 					<DatePickerIOS
 						style={{ margin: 10, }}
-					  date={this.state.date ? this.state.date : new Date()}
+					  date={this.state.date ? new Date(this.state.date) : new Date()}
 					  minuteInterval={10}
-					  mode={'datetime'}
+					  mode={'date'}
 					  onDateChange={(date) => this.setState({ date })} />
 				</View>
 				<View style={{ flexDirection: 'row', width: width, alignItems: 'center', justifyContent: 'space-around' }}>

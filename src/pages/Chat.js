@@ -24,14 +24,15 @@ class SectionHeader extends React.Component {
   render() {
     var textStyle = {
       textAlign:'center',
-      color:'#fff',
+      color:'#666666',
       fontWeight:'700',
       fontSize: 16
     };
     var viewStyle = {
-      backgroundColor: '#CCCCCC',
+      backgroundColor: '#EFEFEF',
       height: 30,
-      alignItems: 'center',
+      paddingHorizontal: 20,
+      alignItems: 'flex-start',
       justifyContent: 'center'
     };
     return (
@@ -44,7 +45,7 @@ class SectionHeader extends React.Component {
 class SectionItem extends React.Component {
   render() {
     return (
-      <Text style={{color:'#F06199', fontSize: 15 }}>{this.props.title}</Text>
+      <Text style={{color:'#111111', fontSize: 15 }}>{this.props.title}</Text>
     );
   }
 }
@@ -180,7 +181,7 @@ class Chat extends React.Component {
 		const { marry, message, unread } = this.props;
 		if(typeof message === 'object') {
 			return (
-				<View style={[styles.container, {backgroundColor: '#CCCCCC'}]}>
+				<View style={[styles.container, {backgroundColor: '#EFEFEF'}]}>
 					<ChatMenu 
 						unread={unread > 0 ? unread : null}
 						onPress={this._onMenuPress.bind(this)} 
