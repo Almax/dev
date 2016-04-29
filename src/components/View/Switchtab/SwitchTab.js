@@ -80,7 +80,14 @@ export default class SwitchTab extends Component {
 		const userStyles = { backgroundColor: (backgroundColor ? backgroundColor: '#FFFFFF') };
 		
 		return (
-			<View style={{ flex: 1, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+			<View style={{ flex: 1 }}>
+				<Navigator
+					ref={(navigator) => this.navigator = navigator}
+					initialRoute={this.routeStack[0]}
+					initialRouteStack={this.routeStack}
+					configureScene={this._configureScene.bind(this)}
+					renderScene={this._renderScene.bind(this)} />
+
 				<View style={[styles.tabContainer, userStyles]}>
 					<View style={styles.tabButtonWrapper}>
 					{Object.keys(pager).map((key) => (
@@ -98,12 +105,6 @@ export default class SwitchTab extends Component {
 					</View>
 				</View>
 
-				<Navigator
-					ref={(navigator) => this.navigator = navigator}
-					initialRoute={this.routeStack[0]}
-					initialRouteStack={this.routeStack}
-					configureScene={this._configureScene.bind(this)}
-					renderScene={this._renderScene.bind(this)} />
 			</View>
 		);
 	}

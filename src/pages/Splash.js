@@ -5,8 +5,9 @@ import React, {
 	Image,
 	Platform,
 	NetInfo,
-	Alert
+	Alert,
 } from 'react-native';
+
 import Store from 'react-native-store';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -28,11 +29,10 @@ class Splash extends React.Component {
 		this.state = {
 			network: null,
 			selected_date: null,
-
 		}
 	}
 	componentDidMount() {
-		this.props.loadSession();
+		//this.props.loadSession();
 	}
 	componentWillReceiveProps(nextProps) {
 		const { user } = nextProps

@@ -59,7 +59,7 @@ export default StyleSheet.create({
 	},
 	yellow_box: {
 		backgroundColor: '#FFF7DD', 
-		padding: 2, 
+		padding: 5, 
 		borderBottomWidth: 1, 
 		borderBottomColor: '#E0DBC0',
 	},

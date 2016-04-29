@@ -49,23 +49,22 @@ class TodoCard extends React.Component {
   render() {
     const { master, task_name, status, created_at } = this.props.data;
     return (
-      <View style={styles.card}>        
-      		{ status ?
-      			<TouchableOpacity onPress={this._cancelWork.bind(this, this.props.data, this.props.rowId)}>
-      				<Image source={asset.work_done} style={{ height: 28, width: 28, marginRight: 10 }} /> 
-      			</TouchableOpacity>
-      			:
-      			<TouchableOpacity onPress={this._finishWork.bind(this, this.props.data, this.props.rowId)}>
-      				<Image source={asset.work_in_progress} style={{ height: 28, width: 28, marginRight: 10 }} />
-      			</TouchableOpacity>
-      		}
-        	
-    			<View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
-	    			<TouchableOpacity style={{ justifyContent: 'center' }} onPress={this._open.bind(this, this.props.data)}>
-	    				<Text style={styles.task}>{task_name}</Text>
-	    			</TouchableOpacity>
-    			</View>
-        
+      <View style={styles.card}>
+    		{ status ?
+    			<TouchableOpacity onPress={this._cancelWork.bind(this, this.props.data, this.props.rowId)}>
+    				<Image source={asset.work_done} style={{ height: 28, width: 28, marginRight: 10 }} /> 
+    			</TouchableOpacity>
+    			:
+    			<TouchableOpacity onPress={this._finishWork.bind(this, this.props.data, this.props.rowId)}>
+    				<Image source={asset.work_in_progress} style={{ height: 28, width: 28, marginRight: 10 }} />
+    			</TouchableOpacity>
+    		}
+      	
+  			<View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+    			<TouchableOpacity style={{ justifyContent: 'center' }} onPress={this._open.bind(this, this.props.data)}>
+    				<Text style={styles.task}>{task_name}</Text>
+    			</TouchableOpacity>
+  			</View>
       </View>
     )
   }
@@ -229,6 +228,9 @@ class TodoTimeline extends React.Component {
 		}else {
 			return (
 				<View style={{ flex: 1, backgroundColor: '#EFEFEF', height }}>
+
+					<View style={{ height: 50 }} />
+
 					<Time
 						ref={(timeline) => this.timeline = timeline}
 						onSelect={this._onSelect.bind(this)}

@@ -1,5 +1,13 @@
 var AssetList = {
 
+	step_1: require('./splash/step_1.png'),
+	step_2: require('./splash/step_2.png'),
+	step_3: require('./splash/step_3.png'),
+	step_4: require('./splash/step_4.png'),
+	step_5: require('./splash/step_5.png'),
+
+	menuButton: require('./photos/menuButton.png'),
+	backButton: require('./photos/backButton.png'),
 	card: require('./photos/card.png'),
 	cardInfo: require('./photos/cardInfo.png'),
 	wish: require('./photos/wish.png'),

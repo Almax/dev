@@ -69,7 +69,7 @@ class AccountItem extends React.Component {
 					contentContainerStyle={innerStyles.card}>
 						
 					<View style={innerStyles.userCard}>
-						<Image source={{ uri: user.photo }} style={innerStyles.avatar} />
+						<Image source={{ uri: `${user.photo}?imageView2/1/w/100/h/100` }} style={innerStyles.avatar} />
 						<View>
 							<Text style={innerStyles.name}>{user.name}</Text>
 		            
@@ -82,12 +82,18 @@ class AccountItem extends React.Component {
 						</View>
 					</View>
 
+					<View style={innerStyles.row}>
+						<Text style={innerStyles.text}>{ description }</Text>
+					</View>
+
 					<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
 
 					<View style={innerStyles.row}>
-						<CatalogSection id={catalog_id} />
-						<View style={{ flex: 1, justifyContent: 'flex-end' }}>
-							<Text style={innerStyles.text}>{ description }</Text>
+						<View style={{ backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center' }}>
+							<Text style={innerStyles.key}>分类</Text>
+						</View>
+						<View>
+							<CatalogSection id={catalog_id} />
 						</View>
 					</View>
 

@@ -133,30 +133,7 @@ class BasicMarry extends React.Component {
 								placeholder={"我们的婚礼名称"} />
 						</FormRow>
 
-						<FormRow>
-							<Label>婚礼城市</Label>
-							<SoftInput
-								scroll={this.viewScroll.bind(this)}
-								value={this.state.marry_city}
-								onChangeText={(marry_city) => this.setState({ marry_city })}
-								placeholder={"婚礼举办的城市"} />
-						</FormRow>
-
-						<View style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingVertical: 10 }}>
-							<Label>婚礼日期</Label>
-							<Selectable
-								style={{ marginHorizontal: 10 }}
-								onPress={this._showPicker.bind(this)}>
-								{ this.state.marry_date ?
-										moment(this.state.marry_date).format('YYYY-MM-DD')
-										: 
-										"选择"
-								}
-							</Selectable>
-						</View>
-
-						<FormRow />
-						
+					
 						<View style={{ backgroundColor: '#FFF7DD', marginVertical: 20, padding: 10, borderWidth: 1, borderColor: '#E0DBC0' }}>
 							
 							<Text style={{ lineHeight: 20, marginBottom: 10, fontSize: 14, color: '#666666' }}>

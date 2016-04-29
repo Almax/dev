@@ -31,11 +31,11 @@ class Template extends React.Component {
 		const { onPress, children, style, showModal, modal } = this.props;
 		return (
 			<ScrollView bounces={false} contentContainerStyle={{ flex: 1, backgroundColor: '#EFEFEF' }}>
-				<Image source={asset.marry} style={[style, { flex: 1, width: width, paddingHorizontal: 10 }]}>
+				<View source={asset.marry} style={[style, { flex: 1, backgroundColor: '#36C89F', width: width-20, marginTop: 10, marginHorizontal: 10, paddingHorizontal: 10, borderRadius: 5 }]}>
 					{ children }
-				</Image>
+				</View>
 				<View style={{ padding: 10 }}>
-					<SubmitButton onPress={onPress}>下一步</SubmitButton>
+					<SubmitButton onPress={onPress}>{ this.props.isEditMode ? '保存' : '下一步' }</SubmitButton>
 				</View>
 
 				{ 
@@ -57,6 +57,8 @@ class MyWedding extends React.Component {
 			title: title,
 			component: Component,
 			params: {
+				isEditMode: true,
+				marry: this.props.marry,
 				update: this._update.bind(this)
 			}
 		});
@@ -87,7 +89,7 @@ class MyWedding extends React.Component {
 		return (
 			<View style={{ flex: 1, backgroundColor: '#EFEFEF', flexWrap: 'wrap' }}>
 
-				<Image source={asset.marry} style={{ height: 150, width: width, paddingHorizontal: 10, marginVertical: 10, borderRadius: 5 }} resizeMode={'cover'}>
+				<View source={asset.marry} style={{ backgroundColor: '#36C89F', height: 150, width: width-20, paddingHorizontal: 10, margin: 10, borderRadius: 5 }} resizeMode={'cover'}>
 					<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
 						<Text style={styles.reverseTitle}>我的婚礼</Text>
 					</View>
@@ -102,7 +104,7 @@ class MyWedding extends React.Component {
 
 						</View>
 					</View>
-				</Image>
+				</View>
 
 				<ScrollView contentContainerStyle={{ backgroundColor: '#EFEFEF' }}>
 
@@ -114,7 +116,7 @@ class MyWedding extends React.Component {
 						<View style={styles.blockValue}>
 							{Object.keys(marry_color).map( 
 								key => 
-								<View key={`color_${key}`} style={[styles.circle,{backgroundColor: marry_color[key]}]} /> 
+								<View key={`color_${key}`} style={[styles.circle, { backgroundColor: marry_color[key]}]} /> 
 							)}
 						</View>
 					</TouchableOpacity>
@@ -208,6 +210,14 @@ class PickColor extends React.Component {
 			colors: ['#FFFFFF', '#FFFFFF', '#FFFFFF']
 		}
 	}
+	componentDidMount() {
+		if(this.props.marry) {
+			const { marry_color } = this.props.marry;
+			this.setState({
+				colors: JSON.parse(marry_color)
+			});
+		}
+	}
 	_select(color) {
 		let colors = [...this.state.colors];
 		let index = this.state.colors.indexOf(color);
@@ -227,13 +237,17 @@ class PickColor extends React.Component {
 		this.props.update({
 			marry_color: JSON.stringify(this.state.colors),
 		});
-		this.props.navigator.push({
-			title: '结婚城市',
-			component: PickCity,
-			params: {
-				update: this.props.update
-			}
-		});
+		if(this.props.isEditMode) {
+			this.props.navigator.pop();
+		} else {
+			this.props.navigator.push({
+				title: '结婚城市',
+				component: PickCity,
+				params: {
+					update: this.props.update
+				}
+			});
+		}
 	}
 	render() {
 		return (
@@ -290,7 +304,7 @@ class PickColor extends React.Component {
 				</ScrollView>
 			</View>
 			<View style={{ padding: 10 }}>
-				<SubmitButton onPress={this._next.bind(this)}>下一步</SubmitButton>
+				<SubmitButton onPress={this._next.bind(this)}>{ this.props.isEditMode ? '保存' : '下一步' }</SubmitButton>
 			</View>
 		</View>
 		);
@@ -303,6 +317,19 @@ class PickCity extends React.Component {
 		this.state = {
 			city_1: '',
 			city_2: '',
+		}
+	}
+	componentDidMount() {
+		if(this.props.marry) {
+			const { marry_city } = this.props.marry;
+			let city = JSON.parse(marry_city);
+			if(!city)
+				return;
+
+			this.setState({
+				city_1: city[0],
+				city_2: city[1],
+			});
 		}
 	}
 	_selectCity() {	
@@ -333,22 +360,25 @@ class PickCity extends React.Component {
 	}
 	_next() {
 		const city = [this.state.city_1, this.state.city_2];
-
 		this.props.update({
 			marry_city: JSON.stringify(city)
 		});
 
-		this.props.navigator.push({
-			title: '婚礼日期',
-			component: PickDate,
-			params: {
-				update: this.props.update
-			}
-		});
+		if(this.props.isEditMode) {
+			this.props.navigator.pop();
+		} else {
+			this.props.navigator.push({
+				title: '婚礼日期',
+				component: PickDate,
+				params: {
+					update: this.props.update
+				}
+			});
+		}
 	}
 	render() {
 		return (
-			<Template onPress={this._next.bind(this)}>
+			<Template onPress={this._next.bind(this)} isEditMode={this.props.isEditMode}>
 
 				<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
 					<Text style={styles.reverseTitle}>结婚城市</Text>
@@ -383,6 +413,14 @@ class PickDate extends React.Component {
 		this.state = {
 			date: null,
 			showModal: false,
+		}
+	}
+	componentDidMount() {
+		if(this.props.marry) {
+			const { marry_date } = this.props.marry;
+			this.setState({
+				date: marry_date,
+			});
 		}
 	}
 	async _pickDate() {
@@ -444,17 +482,22 @@ class PickDate extends React.Component {
 		this.props.update({
 			marry_date: this.state.date
 		});
-		this.props.navigator.push({
-			title: '来宾人数',
-			component: SetGuest,
-			params: {
-				update: this.props.update
-			}
-		})
+
+		if(this.props.isEditMode) {
+			this.props.navigator.pop();
+		} else {
+			this.props.navigator.push({
+				title: '来宾人数',
+				component: SetGuest,
+				params: {
+					update: this.props.update
+				}
+			});
+		}
 	}
 	render() {
 		return (
-			<Template onPress={this._next.bind(this)} showModal={this.state.showModal} modal={this._renderModal()}>
+			<Template onPress={this._next.bind(this)} showModal={this.state.showModal} modal={this._renderModal()} isEditMode={this.props.isEditMode}>
 				<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
 					<Text style={styles.reverseTitle}>婚礼日期</Text>
 				</View>
@@ -491,18 +534,35 @@ class SetGuest extends React.Component {
 			selected: null,
 		}
 	}
+	componentDidMount() {
+		if(this.props.marry) {
+			const { marry_guest } = this.props.marry;
+			for(key in this.state.selection) {
+				if(this.state.selection[key].name === marry_guest) {
+					this.state.selection[key].selected = true;
+				}
+			}
+			this.setState({
+				selected: marry_guest,
+			});
+		}
+	}
 	_next() {
 		this.props.update({
 			marry_guest: this.state.selected
 		});
 
-		this.props.navigator.push({
-			title: '婚礼预算',
-			component: SetBudget,
-			params: {
-				update: this.props.update
-			}
-		});
+		if(this.props.isEditMode) {
+			this.props.navigator.pop();
+		} else {
+			this.props.navigator.push({
+				title: '婚礼预算',
+				component: SetBudget,
+				params: {
+					update: this.props.update
+				}
+			});
+		}
 	}
 	_updateList(data) {
 		let all = [ ...this.state.selection ];
@@ -530,7 +590,7 @@ class SetGuest extends React.Component {
 	}
 	render() {
 		return (
-			<Template onPress={this._next.bind(this)}>
+			<Template onPress={this._next.bind(this)} isEditMode={this.props.isEditMode}>
 				
 				<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
 					<Text style={styles.reverseTitle}>来宾人数</Text>
@@ -566,6 +626,14 @@ class SetBudget extends React.Component {
 			o: '0',
 		};
 	}
+	componentDidMount() {
+		if(this.props.marry) {
+			const { marry_budget } = this.props.marry;
+			this.setState({
+				marry_budget: marry_budget,
+			});
+		}
+	}
 	_next() {
 		let total = parseInt(this.state.male) + 
 								parseInt(this.state.female) + 
@@ -576,13 +644,17 @@ class SetBudget extends React.Component {
 			marry_budget: total
 		});
 
-		this.props.navigator.push({
-			title: '主题风格',
-			component: PickStyle,
-			params: {
-				update: this.props.update
-			}
-		})
+		if(this.props.isEditMode) {
+			this.props.navigator.pop();
+		} else {
+			this.props.navigator.push({
+				title: '主题风格',
+				component: PickStyle,
+				params: {
+					update: this.props.update
+				}
+			});
+		}
 	}
 	render() {
 		let total = parseInt(this.state.male) + 
@@ -591,7 +663,7 @@ class SetBudget extends React.Component {
 								parseInt(this.state.fp) + 
 								parseInt(this.state.o);
 		return (
-			<Template onPress={this._next.bind(this)}>
+			<Template onPress={this._next.bind(this)} isEditMode={this.props.isEditMode}>
 				
 				<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
 					<Text style={styles.reverseTitle}>婚礼预算</Text>
@@ -674,7 +746,7 @@ class SetBudget extends React.Component {
 					</Text>
 
 					<Text style={{ backgroundColor: 'transparent', fontSize: 22, fontWeight: '600', color: '#FFFFFF' }}>
-						{ `￥${total}` }
+						{ `￥${this.state.marry_budget ? this.state.marry_budget : 0}` }
 					</Text>
 				</View>
 				</View>
@@ -699,6 +771,8 @@ class PickStyle extends React.Component {
 			weddingStyle: weddingStyle,
 			ds: ds.cloneWithRows(weddingStyle)
 		};
+	}
+	componentDidMount() {
 	}
 	_pick(rowId) {
 		let style = { ...this.state.weddingStyle[rowId] };
@@ -731,17 +805,21 @@ class PickStyle extends React.Component {
 			marry_style: JSON.stringify(selected)
 		});
 
-		this.props.navigator.push({
-			title: '酒店信息',
-			component: SetHotel,
-			params: {
-				update: this.props.update
-			}
-		})
+		if(this.props.isEditMode) {
+			this.props.navigator.pop();
+		} else {
+			this.props.navigator.push({
+				title: '酒店信息',
+				component: SetHotel,
+				params: {
+					update: this.props.update
+				}
+			});
+		}
 	}
 	render() {
 		return (
-			<Template onPress={this._next.bind(this)}>
+			<Template onPress={this._next.bind(this)} isEditMode={this.props.isEditMode}>
 				<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
 					<Text style={styles.reverseTitle}>主题风格</Text>
 				</View>
@@ -773,24 +851,36 @@ class SetHotel extends React.Component {
 			address: '',
 		}
 	}
+	componentDidMount() {
+		if(this.props.marry) {
+			const { marry_hotel_name, marry_hotel_address } = this.props.marry;
+			this.setState({
+				name: marry_hotel_name,
+				address: marry_hotel_address,
+			});
+		}
+	}
 	_next() {
-		console.warn(this.state.name, this.state.address);
 		this.props.update({
 			marry_hotel_name: this.state.name,
 			marry_hotel_address: this.state.address,
 		});
 
-		this.props.navigator.push({
-			title: '结婚帮手',
-			component: FindHelper,
-			params: {
-				update: this.props.update
-			}
-		});
+		if(this.props.isEditMode) {
+			this.props.navigator.pop();
+		} else {
+			this.props.navigator.push({
+				title: '结婚帮手',
+				component: FindHelper,
+				params: {
+					update: this.props.update
+				}
+			});
+		}
 	}
 	render() {
 		return (
-			<Template onPress={this._next.bind(this)}>
+			<Template onPress={this._next.bind(this)} isEditMode={this.props.isEditMode}>
 				<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
 					<Text style={styles.reverseTitle}>酒店信息</Text>
 				</View>
@@ -808,7 +898,7 @@ class SetHotel extends React.Component {
 				<View style={styles.inputRow}>
 					<Text style={styles.inputLabel}>酒店名称:</Text>
 					<TextInput
-						value={parseInt(this.state.name)}
+						value={this.state.name}
 						onChangeText={(name) => this.setState({ name })}
 						placeholder={'酒店名称'}
 						placeholderTextColor={'#CCCCCC'}
@@ -819,7 +909,7 @@ class SetHotel extends React.Component {
 				<View style={styles.inputRow}>
 					<Text style={styles.inputLabel}>酒店地址:</Text>
 					<TextInput
-						value={parseInt(this.state.address)}
+						value={this.state.address}
 						onChangeText={(address) => this.setState({ address })}
 						placeholder={'酒店地址'}
 						placeholderTextColor={'#CCCCCC'}
@@ -878,17 +968,21 @@ class FindHelper extends React.Component {
 			marry_find: JSON.stringify(selected)
 		});
 
-		this.props.navigator.push({
-			title: '婚礼想法',
-			component: FinalStep,
-			params: {
-				update: this.props.update
-			}
-		});
+		if(this.props.isEditMode) {
+			this.props.navigator.pop();
+		} else {
+			this.props.navigator.push({
+				title: '婚礼想法',
+				component: FinalStep,
+				params: {
+					update: this.props.update
+				}
+			});
+		}
 	}
 	render() {
 		return (
-			<Template onPress={this._next.bind(this)}>
+			<Template onPress={this._next.bind(this)} isEditMode={this.props.isEditMode}>
 				<View style={{ backgroundColor: 'transparent', alignItems: 'center', marginVertical: 20 }}>
 					<Text style={styles.reverseTitle}>正在寻找的..</Text>
 				</View>
@@ -922,13 +1016,19 @@ class FinalStep extends React.Component {
 	_next() {
 		this.props.update({
 			marry_wish: this.state.text
-		})
-		Alert.alert('婚礼信息更细完成');
-		this.props.navigator.popToTop();
+		});
+
+		let routes = this.props.navigator.getCurrentRoutes();
+		for(key in routes) {
+			if(routes[key].title === '婚礼') {
+				this.props.navigator.popToRoute(routes[key]);
+				break;
+			}
+		}
 	}
 	render() {
 		return (
-			<Template onPress={this._next.bind(this)}>
+			<Template onPress={this._next.bind(this)} isEditMode={this.props.isEditMode}>
 				<TextInput 
 					style={styles.editor}
 					value={this.state.text}
@@ -1033,7 +1133,7 @@ const styles = StyleSheet.create({
 	box: {
 		flexDirection: 'row',
 		justifyContent: 'center',
-		width: ( width - 60 ) / 2, 
+		width: ( width - 80 ) / 2, 
 		backgroundColor: 'transparent', 
 		borderWidth: 1, 
 		borderColor: '#FFFFFF', 

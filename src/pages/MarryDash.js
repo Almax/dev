@@ -144,7 +144,7 @@ class MarryDash extends React.Component {
   }
 	render() {
 		const { marry } = this.props;
-		const { marry_date, marry_name, users } = marry;
+		const { marry_date, marry_name, marry_hotel_address, marry_hotel_name, users } = marry;
 		if(users.length < 2) {
 			return null;
 		}
@@ -163,23 +163,12 @@ class MarryDash extends React.Component {
                 <View style={{ flexDirection: 'row', height: 60, alignItems: 'center', justifyContent: 'space-around' }}>
                   <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <Image source={asset.wish} />
-                    <Text style={{ marginTop: 5, color: '#9A804A' }}>婚礼故事</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Image source={asset.wish} />
-                    <Text style={{ marginTop: 5, color: '#9A804A' }}>送祝福</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Image source={asset.wish} />
-                    <Text style={{ marginTop: 5, color: '#9A804A' }}>联系方式</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={{ height: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                   <View style={{ flex: 1, flexWrap: 'wrap' }}>
-                    <Text style={{ color: '#9A804A', fontSize: 14, }}>婚礼{moment(marry_date).format('YYYY年MM月DD日 h:m')}开始</Text>
-                    <Text style={{ color: '#9A804A', fontSize: 14, }}>上海市浦东新区红枫万豪酒店流水厅3桌6号</Text>
+                    <Text style={{ color: '#9A804A', fontSize: 14, }}>婚礼{moment(marry_date).format('YYYY年MM月DD日 h:mm')}开始</Text>
+                    <Text style={{ color: '#9A804A', fontSize: 14, }}>{marry_hotel_address} {marry_hotel_name}</Text>
                   </View>
                   <View style={{ width: 60, alignItems: 'center' }}>
                     <Text style={{ fontSize: 36, fontWeight: '600', color: '#E6E4C0' }}>80</Text>

@@ -49,10 +49,13 @@ class Home extends React.Component {
 		}
 	}
 	componentDidMount() {
-		// this.props.navigator.push({
-		// 	title: '产品吐槽',
-		// 	component: FeedBack,
-		// });
+		if(this.props.marry) {
+		} else {
+			this.props.navigator.push({
+				title: '邀请另一半',
+				component: FindPartner
+			});
+		}
 	}
 	_invite() {
 		this.props.navigator.push({

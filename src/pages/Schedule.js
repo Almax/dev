@@ -18,6 +18,7 @@ class TodoPage extends React.Component {
 		return (
 			<View style={{ flex: 1 }}>
         <Todo navigator={this.props.navigator} />
+      	<View style={{ width: 1, height: 20, backgroundColor: 'transparent' }} />
       </View>
 		)
 	}

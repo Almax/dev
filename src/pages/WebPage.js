@@ -16,15 +16,8 @@ class WebPage extends React.Component {
 	renderLoading() {
 		return <Loading />;
 	}
-	onNavigationStateChange(e) {
-		this.setState({
-			webState: e
-		});
-	}
-	componentDidMount() {
-		if(this.state.webState.canGoBack) {
-			this.webview.goBack();
-		}
+	onNavigationStateChange(webViewState) {
+		global.webViewState = webViewState;
 	}
 	render() {
 		const url = 'http://weixin.marrynovo.com/app/index.php?i=2&c=home&a=page&id=8';
@@ -32,7 +25,7 @@ class WebPage extends React.Component {
 		return (
 			<View style={styles.container}>
 				<WebView
-					ref={webview => this.webview = webview}
+					ref={webview => global.webview = webview}
 					style={{ flex: 1, backgroundColor: '#CCCCCC' }}
 					startInLoadingState={false}
 					decelerationRate="normal"
@@ -42,7 +35,7 @@ class WebPage extends React.Component {
           onNavigationStateChange={this.onNavigationStateChange.bind(this)}
 					source={{ uri: url }} />
 				
-				{ 
+				{
 					this.state.webState.loading ? 
 						<View style={styles.modal}><Text style={styles.text}>载入页面中...</Text></View> 
 						: 

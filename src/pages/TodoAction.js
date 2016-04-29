@@ -31,6 +31,7 @@ import React, {
 	NativeModules,
 	Alert,
 	ListView,
+	PixelRatio,
 	InteractionManager,
 	StyleSheet
 } from 'react-native'
@@ -62,6 +63,7 @@ import { update } from '../redux/modules/task';
 import Catalog from '../components/View/Catalog';
 import ImageView from './ImageView';
 import PickContacts from './PickContacts';
+import TodoMember from './TodoMember';
 class TodoAction extends React.Component {
 	constructor(props) {
 		super(props)
@@ -212,53 +214,52 @@ class TodoAction extends React.Component {
 	}
 	renderRow(row, sid, rid) {
 		let floor = this.state.remarks.getRowCount() - rid;
-
 		return (
-		<View style={{ backgroundColor: '#EFEFEF', marginBottom: 10, padding: 10 }}>
-			
-			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+			<View style={{ backgroundColor: '#EFEFEF', marginBottom: 10, padding: 10 }}>
+				
+				<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
-				<View style={{ flexDirection: 'row', alignItems: 'center'}}>
-					<Image source={{ uri: row.user.photo }} style={{ marginRight: 10, height: 50, width: 50, borderRadius: 25 }} />
-					<View>
-						<Text style={{ fontSize: 16, color: '#666666', fontWeight: '500' }}>{row.user.name}</Text>
-	            
-	          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
-	            <Text style={{ fontSize: 12, color: '#999999' }}></Text> 
-	            <PureText color={"#769AE4"}>
-	            	<TimeAgo time={row.created_at} style={{ fontSize: 12, color: '#769AE4' }} />
-	            </PureText>
-	          </View>
+					<View style={{ flexDirection: 'row', alignItems: 'center'}}>
+						<Image source={{ uri: `${row.user.photo}?imageView2/1/w/100/h/100` }} style={{ marginRight: 10, height: 50, width: 50, borderRadius: 25 }} />
+						<View>
+							<Text style={{ fontSize: 16, color: '#666666', fontWeight: '500' }}>{row.user.name}</Text>
+		            
+		          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+		            <Text style={{ fontSize: 12, color: '#999999' }}></Text> 
+		            <PureText color={"#769AE4"}>
+		            	<TimeAgo time={row.created_at} style={{ fontSize: 12, color: '#769AE4' }} />
+		            </PureText>
+		          </View>
+						</View>
 					</View>
-				</View>
 
-				<View>
-					{ floor === 1 ? 
-						<Text style={{ color: 'red', fontSize: 16 }}>#{floor}</Text>
-						: 
-						<Text style={{ color: '#999999', fontSize: 16 }}>#{floor}</Text>
-					}
+					<View>
+						{ floor === 1 ? 
+							<Text style={{ color: 'red', fontSize: 16 }}>#{floor}</Text>
+							: 
+							<Text style={{ color: '#999999', fontSize: 16 }}>#{floor}</Text>
+						}
+					</View>
+
 				</View>
+					
+				{ 
+					row.description ? 
+		      <View style={{ paddingVertical: 10 }}>
+						<Text style={{ fontSize: 16, color: '#666666' }}>{row.description}</Text>
+					</View>
+					: null 
+				}
+	      
+				{ 
+					row.photo ?
+					<TouchableOpacity style={{ marginTop: 10 }} onPress={() => this.props.navigator.push({ component: ImageView, params: { uri: row.photo } })}>
+	          <Image source={{ uri: `${row.photo}?imageView2/1/w/200/h/200` }} style={{ width: width / 2, height:  width / 2, borderRadius: 5 }} resizeMode={"cover"} />
+					</TouchableOpacity>
+					 : null 
+				}
 
 			</View>
-				
-			{ 
-				row.description ? 
-	      <View style={{ paddingVertical: 10 }}>
-					<Text style={{ fontSize: 16, color: '#666666' }}>{row.description}</Text>
-				</View>
-				: null 
-			}
-      
-			{ 
-				row.photo ?
-				<TouchableOpacity style={{ marginTop: 10 }} onPress={() => this.props.navigator.push({ component: ImageView, params: { uri: row.photo } })}>
-          <Image source={{ uri: row.photo }} style={{ width: width / 2, height:  width / 2, borderRadius: 5 }} resizeMode={"cover"} />
-				</TouchableOpacity>
-				 : null 
-			}
-
-		</View>
 		)
 	}
 
@@ -283,7 +284,13 @@ class TodoAction extends React.Component {
   
 	render() {
 		let { todo } = this.state;
-		const users = [...todo.users, ...this.state.users].splice(0, 5);
+		const users = [...todo.users, ...this.state.users];
+    let justifyContent = '';
+    if(users.length > 5) {
+      justifyContent = 'space-around';
+    } else {
+      justifyContent = 'flex-start'
+    }
 		return (
 			<View style={{ flex:1, height, backgroundColor: '#EEEEEE'}}>
 			<ScrollView
@@ -295,7 +302,7 @@ class TodoAction extends React.Component {
 		  			
 		  			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 			        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-			          <Image source={{ uri: todo.master.photo }} style={{ height: 50, width: 50, borderRadius: 25 }} />
+			          <Image source={{ uri: `${todo.master.photo}?imageView2/1/w/100/h/100` }} style={{ height: 50, width: 50, borderRadius: 25 }} />
 
 			          <View style={{ marginLeft: 10, justifyContent: 'center' }}>
 			            <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>{todo.master.name}</Text>
@@ -333,23 +340,32 @@ class TodoAction extends React.Component {
 		          (
 		          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 		            
-		            <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+		            <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
 
-		              { 
-		              	Object.keys(users).map((key) => 
-		              	<MemberHeader key={"_"+key} headimg={{ uri: users[key].photo }} name={users[key].name} /> ) 
-		           		}
+		              <TouchableOpacity 
+		                onPress={() => this.props.navigator.push({ component: TodoMember, params: { users: users } })}
+		                style={{ width: 100, flexDirection: 'row', justifyContent: justifyContent, marginVertical: 10 }}>
+			              {Object.keys(users).map(key => {
+			                return (
+			                  <View key={`selected_${key}`}  style={{ alignItems: 'center', justifyContent: 'center', padding: 2, height: 34, width: 34, borderWidth: 1/PixelRatio.get(), borderRadius: 17, borderColor: '#CCCCCC', backgroundColor: '#FFFFFF' }}>
+			                    
+			                    <Image source={{ uri: `${users[key].photo}?imageView2/1/w/60/h/60` }} style={{ height: 30, width: 30, borderRadius: 15 }} />
 
-									<TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', marginRight: 10 }}>
-										<Image source={asset.etc} style={{ margin: 6 }} />
-										<Text style={{ fontSize: 12, fontWeight: '500', color: '#999999' }}>{'所有人'}</Text>
-									</TouchableOpacity>
+			                  </View>
+			                );
+			              })}
+		              </TouchableOpacity>
+
+		              <View style={{ flex: 1, alignItems: 'flex-end' }}>
+		                <Text style={{ color: '#999999' }}>{`有${users.length}个人参与这个任务`}</Text>
+		              </View>
 
 		            </View>
 		          </View>
 		          )
 		        }
 		        
+
 		        <Line color={"#EEEEEE"} />
 
 		        <ButtonGroup>

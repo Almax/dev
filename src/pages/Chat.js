@@ -64,7 +64,7 @@ class Cell extends React.Component {
       <TouchableOpacity 
         onPress={this._chatWith.bind(this, user)}
         style={{ backgroundColor: '#FFFFFF', marginTop: 1, flexDirection: 'row', height:50, alignItems: 'center'}}>
-      	<Image source={{ uri: user.photo }} style={{ margin: 5, height: 40, width: 40 }} />
+      	<Image source={{ uri: `${user.photo}?imageView2/1/w/80/h/80` }} style={{ margin: 5, height: 40, width: 40 }} />
         <Text style={{ fontSize: 18, fontWeight: '500', color: '#666666' }}>{user.name}</Text>
       </TouchableOpacity>
     );

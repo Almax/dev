@@ -13,10 +13,13 @@ module.exports = StyleSheet.create({
 	tabContainer: {
 		alignItems: 'center',
 		justifyContent: 'flex-end',
-		height: 40,
-		paddingBottom: 5,
+		height: 50,
+		paddingBottom: 10,
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
 	},
-
 	tabButtonWrapper: {
 		width: 180,
 		flexDirection: 'row',

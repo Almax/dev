@@ -177,10 +177,10 @@ class TodoCate extends React.Component {
     const { dataSource } = this.state;
     if(dataSource.getRowCount()===0) {
       return (
+      	<View>
+      	<View style={{ height: 50, width: 1 }} />
         <View style={{ margin: 10, padding: 10, borderRadius: 10, backgroundColor: '#FBFFDF' }}>
-
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Image source={asset.girl} style={{ height: 40, width: 40, borderRadius: 20 }} />
               <View>
@@ -211,7 +211,12 @@ class TodoCate extends React.Component {
           </TouchableOpacity>
 
         </View>
+        </View>
       );
+    } else {
+    	return (
+    		<View style={{ height: 40 }} />
+    	);
     }
 	}
 	_renderRow(row, sectionId, rowId) {

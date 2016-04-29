@@ -12,10 +12,14 @@ module.exports = StyleSheet.create({
 	},
 	tabContainer: {
 		alignItems: 'center',
-		justifyContent: 'center',
+		justifyContent: 'flex-end',
 		height: 50,
+		paddingBottom: 10,
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
 	},
-
 	tabButtonWrapper: {
 		width: 150,
 		flexDirection: 'row',
@@ -23,7 +27,6 @@ module.exports = StyleSheet.create({
 		borderColor: '#F06199',
 		borderRadius: 3,
 	},
-
 	tabText: {
 		fontSize: 14,
 		color: '#F06199',
@@ -34,7 +37,6 @@ module.exports = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-
 	tabTextActived: {
 		fontSize: 14,
 		color: '#FFFFFF',

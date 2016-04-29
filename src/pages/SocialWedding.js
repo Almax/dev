@@ -17,7 +17,7 @@ class User extends React.Component {
 		const { user } = this.props;
 		return (
 			<View style={{ alignItems: 'center' }}>
-				<Image source={{ uri: user.photo }} style={{ borderWidth: 2, borderColor: '#FFFFFF', height: 50, width: 50, borderRadius: 25 }} />
+				<Image source={{ uri: `${user.photo}?imageView2/1/w/100/h/100` }} style={{ borderWidth: 2, borderColor: '#FFFFFF', height: 50, width: 50, borderRadius: 25 }} />
 			</View>
 		);
 	}
@@ -31,7 +31,7 @@ class SocialWedding extends React.Component {
 			friends: []
 		};
 	}
-	componentWillMount() {
+	componentDidMount() {
 		if(this.props.friend.length) {
 			let friends = this.props.friend;
 			this.setState({
@@ -91,18 +91,37 @@ class SocialWedding extends React.Component {
 	}
 	render() {
 		const { friends } = this.state;
-		return (
-			<ListView
-				initialListSize={6}
-				contentContainerStyle={styles.row}
-				dataSource={this.state.dataSource}
-				renderRow={this._renderMarry.bind(this)} />
-		);
+		if(this.state.dataSource.getRowCount() > 0) {
+			return (
+				<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
+					<ListView
+						initialListSize={6}
+						contentContainerStyle={styles.row}
+						dataSource={this.state.dataSource}
+						renderRow={this._renderMarry.bind(this)} />
+				</View>
+			);
+		} else {
+			return (
+				<View style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
+					
+					<View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 10 }}>
+						<Image source={asset.marryMaster} />
+						<View style={{ flex: 1, flexWrap: 'wrap', paddingLeft: 10 }}>
+							<Text style={{ fontSize: 14, color: '#666666' }}>
+								当你收到朋友发来的邀请，你可以加入到他们的婚礼中去…目前还没加入的婚礼。下面这些有点眼熟？假装在现场...
+							</Text>
+						</View>
+					</View>
+
+				</View>
+			);
+		}
 	}
 }
 const styles = StyleSheet.create({
 	row: {
-		backgroundColor: '#EFEFEF',
+
 		flexWrap: 'wrap',
 		flexDirection: 'row',
 		paddingLeft: 10,
@@ -139,18 +158,3 @@ export default connect(
 		friend: state.friend
 	})
 )(SocialWedding);
-
-// <Text>{users[0].name} & {users[1].name} 的婚礼</Text>
-// <View style={styles.couple}>
-	
-// 	<View style={styles.user}>
-// 		<Image source={{ uri: users[0].photo }} style={styles.avatar} />
-// 		<Text>{users[0].name}</Text>
-// 	</View>
-
-// 	<View style={styles.user}>
-// 		<Image source={{ uri: users[1].photo }} style={styles.avatar} />
-// 		<Text>{users[1].name}</Text>
-// 	</View>
-
-// </View>

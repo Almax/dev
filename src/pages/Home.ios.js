@@ -49,12 +49,13 @@ class Home extends React.Component {
 		};
 	}
 	componentDidMount() {
-		// if(this.props.marry) {
-		// 	this.props.navigator.push({
-		// 		title: '我的婚礼',
-		// 		component: MyWedding,
-		// 	});
-		// }
+		if(this.props.marry) {
+		} else {
+			this.props.navigator.push({
+				title: '邀请另一半',
+				component: FindPartner
+			});
+		}
 	}
 	componentWillReceiveProps(nextProps) {
 		// if(nextProps.marry) {
@@ -127,6 +128,7 @@ class Home extends React.Component {
 			            progressBackgroundColor="#FFFFFF"
 			          />
 			        }>
+			        
 						<View style={{ flex: 1 }}>
               <View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
                 <TouchableOpacity

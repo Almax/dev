@@ -168,12 +168,16 @@ class Cost extends React.Component {
 						ref={scrollView => this.scrollView = scrollView }
 						contentContainerStyle={innerStyles.container}>
 						
-						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
-							<Subtitle>支出类别</Subtitle>
-							<CatalogSection id={this.state.catalog_id} onPress={this._selectCatalog.bind(this)} />
+						<View style={{ padding: 10 }}>
+							<Subtitle>用途说明</Subtitle>
+							<SoftInput 
+								scroll={this._onScroll.bind(this)}
+								value={this.state.description}
+								onChangeText={(description) => this.setState({ description })}
+								placeholder={"花费说明"} />
 						</View>
+						<FormRow />
 
-						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
 
 						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
 							<Subtitle>金额</Subtitle>
@@ -188,15 +192,12 @@ class Cost extends React.Component {
 
 						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
 
-						<View style={{ padding: 10 }}>
-							<Subtitle>用途说明</Subtitle>
-							<SoftInput 
-								scroll={this._onScroll.bind(this)}
-								value={this.state.description}
-								onChangeText={(description) => this.setState({ description })}
-								placeholder={"花费说明"} />
+						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
+							<Subtitle>支出类别</Subtitle>
+							<CatalogSection id={this.state.catalog_id} onPress={this._selectCatalog.bind(this)} />
 						</View>
-						<FormRow />
+
+						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
 
 						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
 							<Subtitle>已经支付?</Subtitle>

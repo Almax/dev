@@ -8,6 +8,7 @@ import React,{
   View,
   Image,
   Dimensions,
+  PixelRatio,
   InteractionManager,
 } from 'react-native';
 const { height, width } = Dimensions.get('window');
@@ -18,7 +19,7 @@ import { init, update } from '../redux/modules/task';
 import asset from '../assets';
 import styles from '../styles';
 import Catalog from '../components/View/Catalog';
-import { 
+import {
   Line, 
   Caption, 
   Subtitle, 
@@ -34,6 +35,7 @@ import {
 import { PureButton, HideButton } from '../components/Form';
 import TodoAction from './TodoAction';
 import TodoImport from './TodoImport';
+import TodoMember from './TodoMember';
 import Loading from './Loading';
 
 class Todo extends React.Component {
@@ -95,14 +97,20 @@ class Todo extends React.Component {
     this.props.updateTask({ id: row.id, status: false, index })
   }
   renderRow(row, sectionId, rowId) {
+    let justifyContent = '';
+    if(row.users.length > 5) {
+      justifyContent = 'space-around';
+    } else {
+      justifyContent = 'flex-start'
+    }
   	return (
   		<View style={innerStyles.row}>
 
-        <View style={{ backgroundColor: '#FFFFFF', paddingVertical: 20, paddingHorizontal: 10, borderRadius: 5 }}>
+        <View style={{ backgroundColor: '#FFFFFF', paddingTop: 20, paddingBottom: 10, paddingHorizontal: 10, borderRadius: 5 }}>
 
           <View style={{ flexDirection: 'row', marginTop: -10, alignItems: 'center', justifyContent: 'space-between' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Image source={{ uri: row.master.photo }} style={{ height: 40, width: 40, borderRadius: 20 }} />
+              <Image source={{ uri: `${row.master.photo}?imageView2/1/w/80/h/80` }} style={{ height: 40, width: 40, borderRadius: 20 }} />
               <View style={{ marginLeft: 10, justifyContent: 'center' }}>
                 <Text style={{ fontSize: 16, color: '#666666' }}>{row.master.name}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
@@ -155,9 +163,23 @@ class Todo extends React.Component {
           { row.users.length &&
             (
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-              <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-                { Object.keys(row.users).map((key) => <MemberHeader key={"_"+key} headimg={{ uri: row.users[key].photo }} name={row.users[key].name} /> ) }
+
+              <TouchableOpacity 
+                onPress={() => this.props.navigator.push({ component: TodoMember, params: { users: row.users } })}
+                style={{ width: 100, flexDirection: 'row', justifyContent: justifyContent, marginVertical: 10 }}>
+                {Object.keys(row.users).map(key => {
+                  return (
+                    <View key={`selected_${key}`} style={{ alignItems: 'center', justifyContent: 'center', padding: 2, height: 34, width: 34, borderWidth: 1/PixelRatio.get(), borderRadius: 17, borderColor: '#CCCCCC', backgroundColor: '#FFFFFF' }}>
+                      <Image source={{ uri: `${row.users[key].photo}?imageView2/1/w/60/h/60` }} style={{ height: 30, width: 30, borderRadius: 15 }} />
+                    </View>
+                  );
+                })}
+              </TouchableOpacity>
+
+              <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                <Text style={{ color: '#999999' }}>{`有${row.users.length}个人参与这个任务`}</Text>
               </View>
+
             </View>
             )
           }
@@ -191,10 +213,10 @@ class Todo extends React.Component {
     const { dataSource } = this.state;
     if(dataSource.getRowCount()===0) {
       return (
+        <View>
+        <View style={{ height: 50, width: 1 }} />
         <View style={{ margin: 10, padding: 10, borderRadius: 10, backgroundColor: '#FBFFDF' }}>
-
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Image source={asset.girl} style={{ height: 40, width: 40, borderRadius: 20 }} />
               <View>
@@ -204,20 +226,17 @@ class Todo extends React.Component {
                 </View>
               </View>
             </View>
-
             <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Image source={asset.i_41} style={{ width: 30, height: 30 }} />
               <Text style={{ fontSize: 12, fontWeight: '400', color: '#666666' }}>新手任务</Text>
             </TouchableOpacity>
           </View>
-
           <Title onPress={() => 
               this.props.navigator.push({ 
                 component: TodoImport, 
               })}>
             格小格的简单婚礼筹备流程攻略
           </Title>
-
           <TouchableOpacity onPress={() =>  this.props.navigator.push({ component: TodoImport, title: '设置婚礼任务' })} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
             <Image source={asset.taskDesc} />
             <View style={{ flex: 1, marginHorizontal: 5, flexWrap: 'wrap' }}>
@@ -227,6 +246,7 @@ class Todo extends React.Component {
             </View>
           </TouchableOpacity>
 
+        </View>
         </View>
       );
     } 
@@ -246,6 +266,7 @@ class Todo extends React.Component {
             automaticallyAdjustContentInsets={false}
             dataSource={this.state.dataSource}
             renderRow={this.renderRow.bind(this)}
+            renderHeader={() => <View style={{ height: 50, width: 1 }} />}
             renderFooter={this.renderFooter}
             
             initialListSize={5}

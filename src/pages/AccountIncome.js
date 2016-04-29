@@ -109,11 +109,16 @@ class Income extends React.Component {
 						contentContainerStyle={innerStyles.container}>
 
 						
-						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
-							<Subtitle>收入类别</Subtitle>
-							<AccountCatalog id={this.state.catalog_id} onPress={this._selectCatalog.bind(this)} />
+						<View style={{ padding: 10 }}>
+							<Subtitle>收入来源说明</Subtitle>
+							<SoftInput 
+								scroll={this._onScroll.bind(this)}
+								value={this.state.description}
+								onChangeText={(description) => this.setState({ description })}
+								placeholder={"收入来源说明/备注"} />
 						</View>
-						
+
+
 						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
 
 						<View style={{ flexDirection: 'row', height: 50, paddingHorizontal: 10, alignItems: 'center', justifyContent: 'space-between' }}>
@@ -126,18 +131,15 @@ class Income extends React.Component {
 							</TouchableOpacity>
 						</View>
 
-						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
-						
-						<View style={{ padding: 10 }}>
-							<Subtitle>收入来源说明</Subtitle>
-							<SoftInput 
-								scroll={this._onScroll.bind(this)}
-								value={this.state.description}
-								onChangeText={(description) => this.setState({ description })}
-								placeholder={"收入来源说明/备注"} />
-						</View>
 						<FormRow />
+
+						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
+							<Subtitle>收入类别</Subtitle>
+							<AccountCatalog id={this.state.catalog_id} onPress={this._selectCatalog.bind(this)} />
+						</View>
 						
+						<View style={{ height: 1, backgroundColor: '#EFEFEF' }} />
+												
 						<View style={{ height: 20 }} />
 							{ 
 								this.props.data ? 
