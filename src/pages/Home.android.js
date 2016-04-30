@@ -50,7 +50,9 @@ class Home extends React.Component {
 		}
 	}
 	componentDidMount() {
-		if(this.props.marry) {
+		const { marry } = this.props;
+		if(marry.id) {
+			
 		} else {
 			this.props.navigator.push({
 				title: '邀请另一半',
@@ -75,6 +77,7 @@ class Home extends React.Component {
 	}
  	render() {
 		const { marry, navigator, unread } = this.props;
+ 		const url = 'http://weixin.marrynovo.com/app/index.php?i=2&c=home&a=page&id=6';
 		if(typeof marry === 'object') {
 			return (
 				<View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>

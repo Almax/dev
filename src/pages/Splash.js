@@ -74,17 +74,8 @@ class Splash extends React.Component {
 export default connect(
 	state => ({ 
 		user: state.session, 
-		money: state.money, 
-		marry: state.marry,
-		task: state.task,
-		story: state.story,
-		message: state.message
 	}), 
 	dispatch => ({
-		loadSession: () => dispatch(loadUser()),
-		loadMessage: () => dispatch(loadMessage()),
-		loadTodos: () => dispatch(loadTodos()),
-		loadMarry: () => dispatch(loadMarry()),
-		loadStories: (marry) => dispatch(loadStories(marry))
+		
 	})
 )(Splash);

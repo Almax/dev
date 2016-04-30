@@ -50,7 +50,9 @@ class Home extends React.Component {
 		};
 	}
 	componentDidMount() {
-		if(this.props.marry) {
+		const { marry } = this.props;
+		if(marry.id) {
+			
 		} else {
 			this.props.navigator.push({
 				title: '邀请另一半',

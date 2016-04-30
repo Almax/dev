@@ -43,9 +43,11 @@ export function resetMyMarry() {
 export function getMyMarry() {
 	return async (dispatch) => {
 		var marry = await getMarry();
-		dispatch(loadMarry(marry));
-		dispatch(loadMoney(marry));
-		dispatch(loadStory(marry));
+		if(marry) {
+ 		  dispatch(loadMarry(marry));
+		  dispatch(loadMoney(marry));
+		  dispatch(loadStory(marry));
+		}
 	}
 }
 

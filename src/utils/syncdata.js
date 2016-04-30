@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { currentUser, cleanUser } from './session';
-//const baseUrl = 'http://test.marrynovo.com/api/v1/';
-const baseUrl = 'http://192.168.199.152:3000/api/v1/';
+const baseUrl = 'http://apiv2.marrynovo.com/api/v1/';
+//const baseUrl = 'http://192.168.199.152:3000/api/v1/';
 //const baseUrl = 'http://192.168.1.152:3000/api/v1/';
 
 async function request(url, options) {

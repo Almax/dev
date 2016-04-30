@@ -32,7 +32,6 @@ class ChatUser extends React.Component {
 			<View style={{ flex: 1, borderTopWidth: 1, borderTopColor: '#EFEFEF', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 10 }}>
 				<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
 					
-
 					{  
 						user.photo ? 
 						<Image source={{ uri: user.photo }} style={{ height: 60, width: 60 }} /> 

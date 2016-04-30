@@ -213,9 +213,10 @@ class PickColor extends React.Component {
 	componentDidMount() {
 		if(this.props.marry) {
 			const { marry_color } = this.props.marry;
-			this.setState({
-				colors: JSON.parse(marry_color)
-			});
+			if(marry_color)
+				this.setState({
+					colors: JSON.parse(marry_color)
+				});
 		}
 	}
 	_select(color) {

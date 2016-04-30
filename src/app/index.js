@@ -26,7 +26,7 @@ class App extends React.Component {
     }
   }
   async componentDidMount() {
-    if(Platform.OS === 'ios' && __DEV__ === false) {
+    if(Platform.OS === 'ios' && false) {
       let result = await codePush.checkForUpdate();
       if(result) {
         codePush.sync({ 
