@@ -51,22 +51,12 @@ class Home extends React.Component {
 	}
 	componentDidMount() {
 		const { marry } = this.props;
-		if(marry.id) {
-			
-		} else {
+		if(marry === null) {
 			this.props.navigator.push({
 				title: '邀请另一半',
 				component: FindPartner
 			});
 		}
-	}
-	componentWillReceiveProps(nextProps) {
-		// if(nextProps.marry) {
-		// 	this.props.navigator.push({
-		// 		title: '我的婚礼',
-		// 		component: MyWedding,
-		// 	});
-		// }
 	}
 	_invite() {
 		this.props.navigator.push({

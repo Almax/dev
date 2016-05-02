@@ -1,8 +1,8 @@
 import { Alert } from 'react-native';
 import { currentUser, cleanUser } from './session';
-const baseUrl = 'http://apiv2.marrynovo.com/api/v1/';
+//const baseUrl = 'http://apiv2.marrynovo.com/api/v1/';
 //const baseUrl = 'http://192.168.199.152:3000/api/v1/';
-//const baseUrl = 'http://192.168.1.152:3000/api/v1/';
+const baseUrl = 'http://192.168.1.152:3000/api/v1/';
 
 async function request(url, options) {
   const me = await currentUser();
@@ -45,7 +45,7 @@ async function request(url, options) {
       //服务器异常 清空数据
       Alert.alert(resp.error)
       //Alert.alert('请求错误','网络请求异常，请关闭重试');
-      //await cleanUser();
+      await cleanUser();
       return false;
     } else {
       //返回正常

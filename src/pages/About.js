@@ -27,7 +27,7 @@ class About extends React.Component {
         <View style={{ marginTop: 20 }}/>
         <Text  style={{ fontSize: 18, color: '#999999' }}>软件版本</Text>
         <View style={{ marginTop: 10 }}/>
-        <Text style={{ fontSize: 16, color: '#666666' }}>v1.0.0</Text>
+        <Text style={{ fontSize: 16, color: '#666666' }}>v1.1.0</Text>
 
         </View>
       </View>

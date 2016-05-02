@@ -32,7 +32,7 @@ class Splash extends React.Component {
 		}
 	}
 	componentDidMount() {
-		//this.props.loadSession();
+		
 	}
 	componentWillReceiveProps(nextProps) {
 		const { user } = nextProps

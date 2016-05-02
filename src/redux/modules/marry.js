@@ -47,6 +47,8 @@ export function getMyMarry() {
  		  dispatch(loadMarry(marry));
 		  dispatch(loadMoney(marry));
 		  dispatch(loadStory(marry));
+		} else {
+			dispatch(loadMarry(null));
 		}
 	}
 }

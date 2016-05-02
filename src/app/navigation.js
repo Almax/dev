@@ -134,7 +134,7 @@ class Navigation extends React.Component {
     this.state = {
       progress: null,
       showModal: false,
-      showSwiper: true,
+      showSwiper: false,
     }
   }
   componentWillMount() {

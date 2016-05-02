@@ -11,9 +11,9 @@ const session = new Storage({
     }
 });
 
-const baseUrl = 'http://apiv2.marrynovo.com/api/v1/';
+//const baseUrl = 'http://apiv2.marrynovo.com/api/v1/';
 //const baseUrl = 'http://192.168.199.152:3000/api/v1/';
-//const baseUrl = 'http://192.168.1.152:3000/api/v1/';
+const baseUrl = 'http://192.168.1.152:3000/api/v1/';
 
 export async function init() {
 	await session.save({

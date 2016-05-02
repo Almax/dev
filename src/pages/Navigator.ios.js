@@ -20,12 +20,10 @@ class Navigator extends React.Component {
       badge: 0,
     }
   }
+  componentDidMount() {
+  }
   componentWillReceiveProps(nextProps) {
     if(nextProps.marry === null) {
-      this.props.navigator.push({
-        component: FindPartner
-      })
-    } else {
       if(nextProps.message && nextProps.invitation) {
         let { invitation, message } = nextProps;
         if(message && message.length && message[0].pass === false) {

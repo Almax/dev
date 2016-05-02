@@ -34,7 +34,17 @@ class Badge extends React.Component {
 	render() {
 		const { value } = this.props;
 		return (
-			<View style={styles.badge}>
+			<View style={{ 
+				position: 'absolute',
+				right: 0,
+				top: 0, 
+				backgroundColor: 'red', 
+				height: 18, 
+				width: 18, 
+				borderRadius: 9, 
+				alignItems: 'center', 
+				justifyContent: 'center'
+			 }}>
 				<Text style={{ color: '#FFFFFF', fontSize: 14 }}>{value}</Text>
 			</View>
 		);
@@ -51,9 +61,7 @@ class Home extends React.Component {
 	}
 	componentDidMount() {
 		const { marry } = this.props;
-		if(marry.id) {
-			
-		} else {
+		if(marry === null) {
 			this.props.navigator.push({
 				title: '邀请另一半',
 				component: FindPartner
@@ -77,6 +85,7 @@ class Home extends React.Component {
 	}
  	render() {
 		const { marry, navigator, unread } = this.props;
+
  		const url = 'http://weixin.marrynovo.com/app/index.php?i=2&c=home&a=page&id=6';
 		if(typeof marry === 'object') {
 			return (
@@ -171,11 +180,11 @@ class Home extends React.Component {
 						</ScrollView>
 
 						<View 
-							style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: '#FFFFFF', padding: 20, alignItems: 'center', justifyContent: 'center' }}>
+							style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: '#FFFFFF', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
 							
 							<View style={{ width: 220, paddingHorizontal: 10, borderRadius: 40, paddingVertical: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', backgroundColor: '#FEFDE5', borderWidth: 1, borderColor: '#E6E4C0' }}>
 								
-								<TouchableOpacity style={{ width: 40, alignItems: 'center', justifyContent: 'center' }}>
+								<TouchableOpacity style={{ width: 60, alignItems: 'center', justifyContent: 'center' }}>
 									<Image source={asset.house} />
 									<Text style={{ color: '#9A804A' }}>首页</Text>
 								</TouchableOpacity>
@@ -184,9 +193,10 @@ class Home extends React.Component {
 									<Image source={asset.write} />
 								</TouchableOpacity>
 								
-								<TouchableOpacity onPress={() => navigator.push({ title: '联系人', component: Chat })} style={{ width: 40, alignItems: 'center', justifyContent: 'center' }}>
+								<TouchableOpacity onPress={() => navigator.push({ title: '联系人', component: Chat, params: { unread } })} style={{ width: 60, alignItems: 'center', justifyContent: 'center' }}>
 									<Image source={asset.talk} />
 									<Text style={{ color: '#9A804A' }}>联系人</Text>
+									<Badge value={unread} />
 								</TouchableOpacity>
 							</View>
 
@@ -254,7 +264,7 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 14,
 		color: '#FFFFFF'
-	}
+	},
 })
 
 export default connect(

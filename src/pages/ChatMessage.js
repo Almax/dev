@@ -49,15 +49,24 @@ class ChatMessage extends React.Component {
 			if(this.props.user.id === fromUser.id) {
 				return (
 					<View style={innerStyles.wrapper}>
-						<Image source={{ uri: toUser.photo }} style={innerStyles.avatar} />
+						
+						{ 
+							toUser.photo ? 
+							<Image source={{ uri: toUser.photo }} style={innerStyles.avatar} />
+							: 
+							<View style={innerStyles.avatarPlaceholder}>
+								<Text style={innerStyles.avatarName}>{ toUser.name ? toUser.name.substr(0,1) : '匿' }</Text>
+							</View>
+						}
+						
 						<View style={innerStyles.user}>
 							<TouchableOpacity style={innerStyles.userBlock}>
 								<View style={innerStyles.userinfo}>
-									<Text style={innerStyles.name}>{toUser.name}</Text>
+									<Text style={innerStyles.name}>{toUser.name ? toUser.name : '匿名用户'}</Text>
 									<Text style={innerStyles.username}>{toUser.username}</Text>
 								</View>
 								<View style={{ height: 5 }} />
-								<Text style={innerStyles.message}>我是{toUser.role}{toUser.name},我已经看到了你的邀请</Text>
+								<Text style={innerStyles.message}>我是{toUser.role}{toUser.name ? toUser.username : '匿名用户'},我已经看到了你的邀请</Text>
 							</TouchableOpacity>
 							<View style={innerStyles.btnGroup}>								
 								{ user.pass ? 
@@ -76,15 +85,23 @@ class ChatMessage extends React.Component {
 			}else if(this.props.user.id === toUser.id) {
 				return (
 					<View style={innerStyles.wrapper}>
-						<Image source={{ uri: fromUser.photo }} style={innerStyles.avatar} />
+						{ 
+							fromUser.photo ? 
+							<Image source={{ uri: fromUser.photo }} style={innerStyles.avatar} />
+							:
+							<View style={innerStyles.avatarPlaceholder}>
+								<Text style={innerStyles.avatarName}>{ fromUser.name ? fromUser.name.substr(0,1) : '匿' }</Text>
+							</View> 
+						}
+
 						<View style={innerStyles.user}>
 							<TouchableOpacity style={innerStyles.userBlock}>
 								<View style={innerStyles.userinfo}>
-									<Text style={innerStyles.name}>{fromUser.name}</Text>
+									<Text style={innerStyles.name}>{fromUser.name ? fromUser.name : fromUser.username}</Text>
 									<Text style={innerStyles.username}>{fromUser.username}</Text>
 								</View>
 								<View style={{ height: 5 }} />
-								<Text style={innerStyles.message}>我是{fromUser.role}{fromUser.name},你快加入到婚礼里来</Text>
+								<Text style={innerStyles.message}>我是{fromUser.role}{fromUser.name ? fromUser.name : '匿名用户'},你快加入到婚礼里来</Text>
 							</TouchableOpacity>
 							<View style={innerStyles.btnGroup}>
 								{ user.pass ? 
@@ -105,15 +122,24 @@ class ChatMessage extends React.Component {
 		} else if(user.uid) {
 			return (
 				<View style={innerStyles.wrapper}>
-					<Image source={{ uri: user.photo }} style={innerStyles.avatar} />
+					
+					{ 
+						user.photo ?
+						<Image source={{ uri: user.photo }} style={innerStyles.avatar} />	
+						:
+						<View style={innerStyles.avatarPlaceholder}>
+							<Text style={innerStyles.avatarName}>{ user.name ? user.name.substr(0,1) : '匿' }</Text>
+						</View>
+					}
+					
 					<View style={innerStyles.user}>
 						<TouchableOpacity style={{ flex: 1, height: 70, justifyContent: 'center' }}>
 							<View style={innerStyles.userinfo}>
-								<Text style={innerStyles.name}>{user.name}</Text>
+								<Text style={innerStyles.name}>{user.name ? user.name : '匿名用户'}</Text>
 								<Text style={innerStyles.username}>{user.username}</Text>
 							</View>
 							<View style={{ height: 5 }} />							
-							<Text style={innerStyles.message}>我是{user.name},我想加你为好友,如果你认识我,就请通过</Text>
+							<Text style={innerStyles.message}>我是{user.name ? user.name : '匿名用户'},我想加你为好友,如果你认识我,就请通过</Text>
 						</TouchableOpacity>
 						<View style={innerStyles.btnGroup}>
 							<TouchableOpacity onPress={this._passRequest.bind(this, user)} style={innerStyles.passButton}>
@@ -149,6 +175,8 @@ const innerStyles = StyleSheet.create({
 	wrapper: { paddingVertical: 10, backgroundColor: '#FFFFFF', marginBottom: 1, alignItems: 'center', flexDirection: 'row' },
 	user: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 	userBlock: { flex: 1, height: 70, justifyContent: 'center' },
+	avatarPlaceholder: { alignItems: 'center', justifyContent: 'center', height: 40, width: 40, borderRadius: 20, marginHorizontal: 10, backgroundColor: '#F06199' },
+	avatarName: { color: '#FFFFFF', fontSize: 18, fontWeight: '500' },
 	avatar: { height: 40, width: 40, borderRadius: 20, marginHorizontal: 10 },
 	doneButton: { backgroundColor: '#FFFFFF', padding: 10, borderRadius: 5 },
 	passButton: { backgroundColor: '#5DC01D', padding: 10, borderRadius: 5 },

@@ -73,7 +73,7 @@ export function loadUser() {
 			dispatch(loadChatSessions());
 			dispatch(loadInvitation());
 		}else {
-			dispatch(cleanSession())
+			dispatch(cleanSession(await cleanUser()))
 		}
 	}
 }

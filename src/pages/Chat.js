@@ -65,7 +65,16 @@ class Cell extends React.Component {
       <TouchableOpacity 
         onPress={this._chatWith.bind(this, user)}
         style={{ backgroundColor: '#FFFFFF', marginTop: 1, flexDirection: 'row', height:50, alignItems: 'center'}}>
-      	<Image source={{ uri: `${user.photo}?imageView2/1/w/80/h/80` }} style={{ margin: 5, height: 40, width: 40 }} />
+      		
+      	{ 
+      		user.photo ? 
+      		<Image source={{ uri: `${user.photo}?imageView2/1/w/80/h/80` }} style={{ margin: 5, height: 40, width: 40 }} />
+      		:  
+      		<View style={{ alignItems: 'center', justifyContent: 'center', margin: 5, height: 40, width: 40, backgroundColor: '#F06199' }}>
+      			<Text style={{ fontSize: 18, color: '#FFFFFF', fontWeight: '500' }}>{ user.name ? user.name.substr(0, 1) : '匿' }</Text>
+      		</View>
+      	}
+        
         <Text style={{ fontSize: 18, fontWeight: '500', color: '#666666' }}>{user.name}</Text>
       </TouchableOpacity>
     );
@@ -87,6 +96,7 @@ class Chat extends React.Component {
 	}
 	getInitial() {
 		return {
+			'*': [],
       A: [],
       B: [],
       C: [],
@@ -119,9 +129,25 @@ class Chat extends React.Component {
   	try {
 	  	const { friend } = this.props;
 	  	Object.keys(friend).map((key) => {
+	  		let charater = '';
+
+	  		if(friend[key].name === null || friend[key].name === '') {
+	  			this.contacts['*'].push(friend[key]);
+	  			return ;
+	  		}
+
         let s = friend[key].name.charAt(0);
-	  		let charater = toPY(s);
-	  		this.contacts[charater.acronym.toUpperCase()].push(friend[key]);
+        if(/[a-zA-Z0-9]+/.test(s)) {
+        	charater = s.substr(0);
+        	if(typeof this.contacts[charater] === 'undefined') {
+        		this.contacts['*'].push(friend[key]);
+        	} else {
+        		this.contacts[charater].push(friend[key]);
+        	}
+        } else {
+        	charater = toPY(s);
+        	this.contacts[charater.acronym.toUpperCase()].push(friend[key]);
+        }
 	  	});
 	  	this.setState({
 	  		contacts: this.contacts
@@ -135,13 +161,20 @@ class Chat extends React.Component {
   		this.contacts = this.getInitial();
 	  	const { friend } = nextProps;
 	  	Object.keys(friend).map((key) => {
+	  		let charater = '';
         let s = friend[key].name.charAt(0);
-	  		let charater = toPY(s);
-	  		this.contacts[charater.acronym.toUpperCase()].push(friend[key]);
-	  	});
-	  	this.setState({
-	  		contacts: this.contacts
-	  	});
+        if(/[a-zA-Z0-9]+/.test(s)) {
+        	charater = s.substr(0);
+        	if(typeof this.contacts[charater] === 'undefined') {
+        		this.contacts['*'].push(friend[key]);
+        	} else {
+        		this.contacts[charater].push(friend[key]);
+        	}
+        } else {
+        	charater = toPY(s);
+        	this.contacts[charater.acronym.toUpperCase()].push(friend[key]);
+        }
+      });
   	} catch(e) {
   		console.warn('error:', e);
   	}
