@@ -220,7 +220,13 @@ class TodoAction extends React.Component {
 				<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
 					<View style={{ flexDirection: 'row', alignItems: 'center'}}>
-						<Image source={{ uri: `${row.user.photo}?imageView2/1/w/100/h/100` }} style={{ marginRight: 10, height: 50, width: 50, borderRadius: 25 }} />
+						{ 
+							row.user.photo ? 
+							<Image source={{ uri: `${row.user.photo}?imageView2/1/w/100/h/100` }} style={{ marginRight: 10, height: 50, width: 50, borderRadius: 25 }} />
+							:
+							<View style={{ marginRight: 10, height: 50, width: 50, borderRadius: 25, backgroundColor: '#B6DFDF' }} /> 
+						}
+
 						<View>
 							<Text style={{ fontSize: 16, color: '#666666', fontWeight: '500' }}>{row.user.name}</Text>
 		            
@@ -302,7 +308,13 @@ class TodoAction extends React.Component {
 		  			
 		  			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 			        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-			          <Image source={{ uri: `${todo.master.photo}?imageView2/1/w/100/h/100` }} style={{ height: 50, width: 50, borderRadius: 25 }} />
+			          
+			          {
+			          	todo.master.photo ?
+			          	<Image source={{ uri: `${todo.master.photo}?imageView2/1/w/100/h/100` }} style={{ height: 50, width: 50, borderRadius: 25 }} />
+			          	:
+			          	<View style={{ height: 40, width: 40, borderRadius: 20, backgroundColor: '#B6DFDF' }} />
+			         	}
 
 			          <View style={{ marginLeft: 10, justifyContent: 'center' }}>
 			            <Text style={{ fontSize: 16, fontWeight: '500', color: '#666666' }}>{todo.master.name}</Text>
@@ -349,7 +361,13 @@ class TodoAction extends React.Component {
 			                return (
 			                  <View key={`selected_${key}`}  style={{ alignItems: 'center', justifyContent: 'center', padding: 2, height: 34, width: 34, borderWidth: 1/PixelRatio.get(), borderRadius: 17, borderColor: '#CCCCCC', backgroundColor: '#FFFFFF' }}>
 			                    
-			                    <Image source={{ uri: `${users[key].photo}?imageView2/1/w/60/h/60` }} style={{ height: 30, width: 30, borderRadius: 15 }} />
+			                    { 
+			                    	users[key].photo ?
+			                    		<Image source={{ uri: `${users[key].photo}?imageView2/1/w/60/h/60` }} style={{ height: 30, width: 30, borderRadius: 15 }} />
+			                    	 :
+			                    	 	<View style={{ backgroundColor: '#B6DFDF', height: 30, width: 30, borderRadius: 15 }} />
+			                    }
+			                    
 
 			                  </View>
 			                );

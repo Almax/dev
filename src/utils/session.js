@@ -1,5 +1,6 @@
 import { Alert } from 'react-native';
 import Storage from 'react-native-storage';
+import configs from './configs'; 
 session = new Storage({
     size: 1000,    
     defaultExpires: 1000 * 3600 * 24 * 365,
@@ -8,9 +9,7 @@ session = new Storage({
     	
     }
 });
-//const base_request = 'http://apiv2.marrynovo.com/api/v1/users';
-//const base_request = 'http://192.168.199.152:3000/api/v1/users';
-const base_request = 'http://192.168.1.152:3000/api/v1/users';
+baseUrl = `${configs.baseUrl}users`;
 
 export async function currentUser() {
 	try {
@@ -37,7 +36,7 @@ export async function storeUserSession(user) {
 
 export async function userLogin(username, password) {
 	try {
-		var response = await fetch(base_request+'/', {
+		var response = await fetch(baseUrl+'/', {
 			headers: {
 		    'Accept': 'application/json',
 		    'Content-Type': 'application/json'
@@ -65,7 +64,7 @@ export async function userLogin(username, password) {
 
 export async function updateBasicProfile(profile) {
 	var session = await currentUser()
-	var response = await fetch(base_request+'/', {
+	var response = await fetch(baseUrl+'/', {
 		headers: {
 	    'Accept': 'application/json',
 	    'Content-Type': 'application/json',
@@ -80,7 +79,7 @@ export async function updateBasicProfile(profile) {
 }
 
 export async function updateName(my_name, partner_name, session) {
-	var response = await fetch(base_request+'/update_our_name', {
+	var response = await fetch(baseUrl+'/update_our_name', {
 		headers: {
 	    'Accept': 'application/json',
 	    'Content-Type': 'application/json',
@@ -99,7 +98,7 @@ export async function updateName(my_name, partner_name, session) {
 }
 
 export async function sendActivation(username) {
-	var response = await fetch(base_request+'/bind', {
+	var response = await fetch(baseUrl+'/bind', {
 		headers: {
 	    'Accept': 'application/json',
 	    'Content-Type': 'application/json'
@@ -113,7 +112,7 @@ export async function sendActivation(username) {
 }
 
 export async function doActivation(data) {
-	var response = await fetch(base_request+'/bind', {
+	var response = await fetch(baseUrl+'/bind', {
 		headers: {
 	    'Accept': 'application/json',
 	    'Content-Type': 'application/json'
@@ -127,7 +126,7 @@ export async function doActivation(data) {
 }
 
 export async function findPassword(data) {
-	var response = await fetch(base_request+'/find_password', {
+	var response = await fetch(baseUrl+'/find_password', {
 		headers: {
 	    'Accept': 'application/json',
 	    'Content-Type': 'application/json'
@@ -142,7 +141,7 @@ export async function findPassword(data) {
 }
 
 export async function findPasswordConfirm(data) {
-	var response = await fetch(base_request+'/find_password', {
+	var response = await fetch(baseUrl+'/find_password', {
 		headers: {
 	    'Accept': 'application/json',
 	    'Content-Type': 'application/json'
@@ -157,7 +156,7 @@ export async function findPasswordConfirm(data) {
 
 export async function findUser(username) {
 	try {
-		var response = await fetch(base_request+'/search', {
+		var response = await fetch(baseUrl+'/search', {
 			headers: {
 		    'Accept': 'application/json',
 		    'Content-Type': 'application/json'

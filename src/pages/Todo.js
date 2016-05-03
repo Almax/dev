@@ -73,6 +73,10 @@ class Todo extends React.Component {
     }
   }
   _filter(todos) {
+    if(typeof todos !== 'object') {
+      return [];
+    }
+
     if(typeof marry === 'object') {
       const { users } = this.props.marry;
       if(users.length === 1) {
@@ -110,7 +114,14 @@ class Todo extends React.Component {
 
           <View style={{ flexDirection: 'row', marginTop: -10, alignItems: 'center', justifyContent: 'space-between' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Image source={{ uri: `${row.master.photo}?imageView2/1/w/80/h/80` }} style={{ height: 40, width: 40, borderRadius: 20 }} />
+              
+              { 
+                row.master.photo ? 
+                <Image source={{ uri: `${row.master.photo}?imageView2/1/w/80/h/80` }} style={{ height: 40, width: 40, borderRadius: 20 }} />
+                :
+                <View style={{ height: 40, width: 40, borderRadius: 20, backgroundColor: '#B6DFDF' }} />
+              }
+              
               <View style={{ marginLeft: 10, justifyContent: 'center' }}>
                 <Text style={{ fontSize: 16, color: '#666666' }}>{row.master.name}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
@@ -170,7 +181,11 @@ class Todo extends React.Component {
                 {Object.keys(row.users).map(key => {
                   return (
                     <View key={`selected_${key}`} style={{ alignItems: 'center', justifyContent: 'center', padding: 2, height: 34, width: 34, borderWidth: 1/PixelRatio.get(), borderRadius: 17, borderColor: '#CCCCCC', backgroundColor: '#FFFFFF' }}>
-                      <Image source={{ uri: `${row.users[key].photo}?imageView2/1/w/60/h/60` }} style={{ height: 30, width: 30, borderRadius: 15 }} />
+                      { row.users[key].photo ? 
+                          <Image source={{ uri: `${row.users[key].photo}?imageView2/1/w/60/h/60` }} style={{ height: 30, width: 30, borderRadius: 15 }} />
+                        :
+                          <View style={{ height: 30, width: 30, borderRadius: 15, backgroundColor: '#B6DFDF' }} />
+                      }
                     </View>
                   );
                 })}

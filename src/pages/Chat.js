@@ -130,23 +130,21 @@ class Chat extends React.Component {
 	  	const { friend } = this.props;
 	  	Object.keys(friend).map((key) => {
 	  		let charater = '';
-
 	  		if(friend[key].name === null || friend[key].name === '') {
 	  			this.contacts['*'].push(friend[key]);
 	  			return ;
 	  		}
-
-        let s = friend[key].name.charAt(0);
-        if(/[a-zA-Z0-9]+/.test(s)) {
-        	charater = s.substr(0);
-        	if(typeof this.contacts[charater] === 'undefined') {
-        		this.contacts['*'].push(friend[key]);
-        	} else {
-        		this.contacts[charater].push(friend[key]);
-        	}
+        let s = friend[key].name.charAt(0);      
+        if(/[\u4E00-\u9FA5\uF900-\uFA2D]/.test(s)) {
+          charater = toPY(s);
+          this.contacts[charater.acronym.toUpperCase()].push(friend[key]);
         } else {
-        	charater = toPY(s);
-        	this.contacts[charater.acronym.toUpperCase()].push(friend[key]);
+          charater = s.substr(0);
+          if(/^[a-zA-Z]/.test(charater)) {
+            this.contacts[charater.toLocaleUpperCase()].push(friend[key]);
+          } else {
+            this.contacts['*'].push(friend[key]);
+          }
         }
 	  	});
 	  	this.setState({
@@ -157,27 +155,35 @@ class Chat extends React.Component {
   	}
 	}
 	componentWillReceiveProps(nextProps) {
-  	try {
-  		this.contacts = this.getInitial();
-	  	const { friend } = nextProps;
-	  	Object.keys(friend).map((key) => {
-	  		let charater = '';
-        let s = friend[key].name.charAt(0);
-        if(/[a-zA-Z0-9]+/.test(s)) {
-        	charater = s.substr(0);
-        	if(typeof this.contacts[charater] === 'undefined') {
-        		this.contacts['*'].push(friend[key]);
-        	} else {
-        		this.contacts[charater].push(friend[key]);
-        	}
-        } else {
-        	charater = toPY(s);
-        	this.contacts[charater.acronym.toUpperCase()].push(friend[key]);
-        }
-      });
-  	} catch(e) {
-  		console.warn('error:', e);
-  	}
+    if(this.props.friend !== nextProps.friend) {
+      try {
+        this.contacts = this.getInitial();
+        const { friend } = nextProps;
+        Object.keys(friend).map((key) => {
+          let charater = '';
+          
+          let s = friend[key].name.charAt(0);      
+          if(/[\u4E00-\u9FA5\uF900-\uFA2D]/.test(s)) {
+            charater = toPY(s);
+            this.contacts[charater.acronym.toUpperCase()].push(friend[key]);
+          } else {
+            charater = s.substr(0);
+            if(/^[a-zA-Z]/.test(charater)) {
+              this.contacts[charater.toLocaleUpperCase()].push(friend[key]);
+            } else {
+              this.contacts['*'].push(friend[key]);
+            }
+          }
+        });
+        this.setState({
+          contacts: this.contacts
+        });
+      } catch(e) {
+        console.warn('error:', e);
+      }
+    } else {
+      return ;
+    }
 	}
 	_addContacts() {
 		this.props.navigator.push({
@@ -206,7 +212,7 @@ class Chat extends React.Component {
 	_onRefresh() {
 		this.setState({ isRefreshing: true });
 		setTimeout(() => {
-			this.props.loadFriends();
+      this.props.loadSession();
 			this.setState({ isRefreshing: false });
 		}, 2000);
 	}

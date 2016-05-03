@@ -5,6 +5,7 @@ import React, {
 	Image,
 	Text,
 	Dimensions,
+  PixelRatio,
 	StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -119,7 +120,19 @@ class MarryDash extends React.Component {
             (
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
               <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-                { Object.keys(row.users).map((key) => <MemberHeader key={"_"+key} headimg={{ uri: row.users[key].photo }} name={row.users[key].name} /> ) }
+                { 
+                  Object.keys(row.users).map((key) => {
+                    return (
+                      <View key={`selected_${key}`} style={{ alignItems: 'center', justifyContent: 'center', padding: 2, height: 34, width: 34, borderWidth: 1/PixelRatio.get(), borderRadius: 17, borderColor: '#CCCCCC', backgroundColor: '#FFFFFF' }}>
+                        { row.users[key].photo ? 
+                            <Image source={{ uri: `${row.users[key].photo}?imageView2/1/w/60/h/60` }} style={{ height: 30, width: 30, borderRadius: 15 }} />
+                          :
+                            <View style={{ height: 30, width: 30, borderRadius: 15, backgroundColor: '#B6DFDF' }} />
+                        }
+                      </View>
+                    );
+                  })
+                }
               </View>
             </View>
             )
@@ -170,8 +183,8 @@ class MarryDash extends React.Component {
                     <Text style={{ color: '#9A804A', fontSize: 14, }}>婚礼{moment(marry_date).format('YYYY年MM月DD日 h:mm')}开始</Text>
                     <Text style={{ color: '#9A804A', fontSize: 14, }}>{marry_hotel_address} {marry_hotel_name}</Text>
                   </View>
-                  <View style={{ width: 60, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 36, fontWeight: '600', color: '#E6E4C0' }}>80</Text>
+                  <View style={{ width: 100, alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, fontWeight: '600', color: '#E6E4C0' }}>{marry.marry_guest}</Text>
                     <Text style={{ fontSize: 14, color: '#E6E4C0' }}>来宾人数</Text>
                   </View>
                 </View>

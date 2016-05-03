@@ -16,9 +16,8 @@ import { SubmitButton, FormBlock } from '../components/Form';
 class ChatUser extends React.Component {
 	async _invite() {
 		let resp = await inviteFriend(this.props.user.uid);
-		if(resp === false) {
-			Alert.alert('添加成功,等待对方同意...');
-		}
+		console.warn(resp);
+		Alert.alert('添加成功,等待对方同意...');
 	}
 	render() {
 		const { user } = this.props;

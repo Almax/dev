@@ -109,9 +109,10 @@ class Income extends React.Component {
 						contentContainerStyle={innerStyles.container}>
 
 						
-						<View style={{ padding: 10 }}>
-							<Subtitle>收入来源说明</Subtitle>
+						<View style={{ flexDirection: 'row', padding: 10 }}>
+							<Subtitle>预算说明</Subtitle>
 							<SoftInput 
+								style={{ backgroundColor: '#FFFFFF', height: 40, textAlignVertical: 'center', textAlign: 'right' }}
 								scroll={this._onScroll.bind(this)}
 								value={this.state.description}
 								onChangeText={(description) => this.setState({ description })}

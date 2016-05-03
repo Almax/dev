@@ -28,6 +28,7 @@ var AssetList = {
 	marryGuest: require('./photos/marryGuest.png'),
 	marryHotel: require('./photos/marryHotel.png'),
 	marryStyle: require('./photos/marryStyle.png'),
+	marryWish: require('./photos/marryWish.png'),
 
 	menu: require('./ICONS/menu.png'),
 	feedback: require('./ICONS/feedback.png'),

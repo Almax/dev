@@ -196,7 +196,9 @@ class Home extends React.Component {
 								<TouchableOpacity onPress={() => navigator.push({ title: '联系人', component: Chat, params: { unread } })} style={{ width: 60, alignItems: 'center', justifyContent: 'center' }}>
 									<Image source={asset.talk} />
 									<Text style={{ color: '#9A804A' }}>联系人</Text>
-									<Badge value={unread} />
+									
+									{ unread ? <Badge value={unread} /> : null }
+
 								</TouchableOpacity>
 							</View>
 
@@ -206,7 +208,13 @@ class Home extends React.Component {
 			);
 		}else {
 			return (
-				<View />
+				<View style={{ flex: 1, backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center' }}>
+						
+					<TouchableOpacity style={{ paddingVertical: 10, paddingHorizontal: 20, borderRadius: 5, backgroundColor: '#CCCCCC' }} onPress={this._invite.bind(this)}>
+						<Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '500' }}>生成我的婚礼</Text>
+					</TouchableOpacity>
+
+				</View>
 			)
 		}
 	}

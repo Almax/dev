@@ -8,6 +8,7 @@ import React, {
 	DatePickerAndroid,
 	TimePickerAndroid,
 	Platform,
+	PushNotificationIOS,
 	StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -21,6 +22,7 @@ import TodoCatalog from './TodoCatalog';
 import { load } from '../redux/modules/money';
 import { createMoney, updateMoney } from '../utils/syncdata';
 import DateTimePicker from '../components/Widget/DateTimePicker'
+import Notification from 'react-native-system-notification';
 
 class Cost extends React.Component {
 	constructor(props) {
@@ -85,13 +87,31 @@ class Cost extends React.Component {
 			pay_status: this.state.pay_status,
 			expired_at: this.state.expired_at,
 		};
-		await createMoney(this.props.marry, cost);
-		
-		this.props.load(this.props.marry);
+		if(cost.description) {
+			await createMoney(this.props.marry, cost);
 
-		this.setState({
-			success: true
-		});
+	    if(Platform.OS === 'ios') {
+	      PushNotificationIOS.requestPermissions();
+	      PushNotificationIOS.scheduleLocalNotification({
+	        fireDate: this.state.expired_at ? moment(this.state.expired_at).toISOString() : moment().toISOString(),
+	        alertBody: `婚格支出提醒: ${cost.description} | 金额 ￥${cost.value}`,
+	        soundName: 'default'
+	      })
+	    }else if(Platform.OS === 'android') {
+				Notification.create({
+				  subject: `婚格支出提醒`,
+				  message: `支出: ${cost.description} | 金额 ￥${cost.value}`,
+				  sendAt: this.state.expired_at ? new Date(moment(this.state.expired_at).format('YYYY/MM/DD hh:mm:ss')) : new Date()
+				});
+	    } 
+
+			this.props.load(this.props.marry);
+			this.setState({
+				success: true
+			});
+		} else {
+			Alert.alert('记得填写支出名称，清晰记录消费条目哦~');
+		}
 	}
 	async _update() {
 		const cost = {
@@ -168,16 +188,17 @@ class Cost extends React.Component {
 						ref={scrollView => this.scrollView = scrollView }
 						contentContainerStyle={innerStyles.container}>
 						
-						<View style={{ padding: 10 }}>
-							<Subtitle>用途说明</Subtitle>
-							<SoftInput 
+						<View style={{ flexDirection: 'row', padding: 10 }}>
+							<Subtitle>支出说明</Subtitle>
+							<SoftInput
+								style={{ backgroundColor: '#FFFFFF', height: 40, textAlignVertical: 'center', textAlign: 'right' }}
 								scroll={this._onScroll.bind(this)}
 								value={this.state.description}
 								onChangeText={(description) => this.setState({ description })}
-								placeholder={"花费说明"} />
+								placeholder={"支出说明"} />
 						</View>
-						<FormRow />
 
+						<FormRow />
 
 						<View style={{ flexDirection: 'row', height: 50, padding: 10, alignItems: 'center', justifyContent: 'space-between' }}>
 							<Subtitle>金额</Subtitle>
@@ -273,7 +294,7 @@ const innerStyles = StyleSheet.create({
 		backgroundColor: '#FFFFFF',
 		borderRadius: 5,
 		margin: 10,
-		padding: 10,
+		padding: 5,
 	},
 	centerContainer: {
 		flex: 1,

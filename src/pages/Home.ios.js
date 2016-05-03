@@ -176,7 +176,13 @@ class Home extends React.Component {
 			);
 		}else {
 			return (
-				<View />
+				<View style={{ flex: 1, backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center' }}>
+						
+					<TouchableOpacity style={{ paddingVertical: 10, paddingHorizontal: 20, borderRadius: 5, backgroundColor: '#CCCCCC' }} onPress={this._invite.bind(this)}>
+						<Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '500' }}>生成我的婚礼</Text>
+					</TouchableOpacity>
+
+				</View>
 			)
 		}
 	}

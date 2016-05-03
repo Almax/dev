@@ -2,6 +2,8 @@ import { Alert } from 'react-native';
 import Storage from 'react-native-storage';
 import Contacts from 'react-native-contacts';
 import { findUser, currentUser, cleanUser } from './session';
+import configs from './configs'; 
+const baseUrl = configs.baseUrl;
 const session = new Storage({
     size: 5000,    
     defaultExpires: 1000 * 3600 * 24 * 365,
@@ -11,9 +13,6 @@ const session = new Storage({
     }
 });
 
-//const baseUrl = 'http://apiv2.marrynovo.com/api/v1/';
-//const baseUrl = 'http://192.168.199.152:3000/api/v1/';
-const baseUrl = 'http://192.168.1.152:3000/api/v1/';
 
 export async function init() {
 	await session.save({
@@ -26,6 +25,9 @@ export async function load(call) {
 	try {
 		let new_contacts = [];
 		let cachedContacts = await session.load({ key: 'contacts' });
+		if(cachedContacts.length > 0) {
+			return call(cachedContacts);
+		}
 		Contacts.getAll((err, contacts) => {
 		  if( err && err.type === 'permissionDenied' ){
 
@@ -33,10 +35,10 @@ export async function load(call) {
 				new Promise(async (resolve, reject) => {
 			  	let c = contacts.filter(function(contact){
 					  return contact.phoneNumbers.length > 0;
-					});					
-					if(c.length <= cachedContacts.length) {
-						return call(cachedContacts);
-					}
+					});
+
+
+
 					for(key in Object.keys(c)) {
 			  		let name = `${c[key].familyName ? c[key].familyName : ''}${c[key].givenName ? c[key].givenName : ''}`;
 				  	let phone = c[key].phoneNumbers[0] ? c[key].phoneNumbers[0].number : null;

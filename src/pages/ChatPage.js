@@ -15,7 +15,14 @@ class ChatPage extends React.Component {
         <View style={{ margin: 10, borderRadius: 10, backgroundColor: '#FFFFFF' }}>
         
           <View style={{ padding: 10, flexDirection: 'row', alignItems: 'center' }}>
-            <Image source={{ uri: object.photo }} style={{ width: 80, height: 80, borderRadius: 40 }} />
+            
+            { 
+              object.photo ? 
+                <Image source={{ uri: object.photo }} style={{ width: 80, height: 80, borderRadius: 40 }} />
+              :
+                <View style={{ width: 80, height: 80, borderRadius: 40, backgroundColor: '#F06199' }} />
+            }
+
             <Text style={{ color: '#666666', fontSize: 18, fontWeight: '500', marginLeft: 10 }}>
               {object.name} { object.nickname ? `(${object.nickname})` : null }
             </Text>

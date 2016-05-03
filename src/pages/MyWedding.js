@@ -192,6 +192,15 @@ class MyWedding extends React.Component {
 						</View>
 					</TouchableOpacity>
 
+					<TouchableOpacity onPress={this._edit.bind(this, '我正在寻找的', FinalStep)} style={styles.block}>
+						<View style={styles.blockKey}>
+							<Image source={asset.marryWish} style={styles.blockIcon} resizeMode={'contain'} />
+							<Text style={styles.blockText}>婚礼想法</Text>
+						</View>
+						<View style={styles.blockValue}>
+						</View>
+					</TouchableOpacity>
+
 				</ScrollView>
 
 				<View style={{ padding: 10 }}>
@@ -1010,9 +1019,17 @@ class FindHelper extends React.Component {
 class FinalStep extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			text: null
+		const { marry } = props;
+		if(marry) {
+			this.state = {
+				text: marry.marry_wish
+			}
+		} else {
+			this.state = {
+				text: null,
+			};
 		}
+
 	}
 	_next() {
 		this.props.update({
@@ -1029,14 +1046,23 @@ class FinalStep extends React.Component {
 	}
 	render() {
 		return (
-			<Template onPress={this._next.bind(this)} isEditMode={this.props.isEditMode}>
+			<ScrollView 
+				contentContainerStyle={{ flex: 1, backgroundColor: '#EFEFEF' }}>
+
 				<TextInput 
 					style={styles.editor}
 					value={this.state.text}
 					onChangeText={(text) => this.setState({ text })}
 					multiline={true}
 					placeholder={'在这里说说你关于婚礼的其他想法...'} />
-			</Template>
+
+				<View style={{ padding: 10 }}>
+					<SubmitButton onPress={this._next.bind(this)}>
+						{ this.props.isEditMode ? '保存' : '下一步' }
+					</SubmitButton>
+				</View>
+
+			</ScrollView>
 		);
 	}
 }
@@ -1153,8 +1179,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		textAlignVertical: 'top',
 		justifyContent: 'flex-start',
-		marginVertical: 50,
-		marginHorizontal: 10,
+		margin: 10,
 		padding: 10,
 		borderRadius: 10,
 		backgroundColor: '#FFFFFF',

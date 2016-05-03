@@ -69,9 +69,16 @@ class AccountItem extends React.Component {
 					contentContainerStyle={innerStyles.card}>
 						
 					<View style={innerStyles.userCard}>
-						<Image source={{ uri: `${user.photo}?imageView2/1/w/100/h/100` }} style={innerStyles.avatar} />
+						
+						{ 
+							user.photo ? 
+							<Image source={{ uri: `${user.photo}?imageView2/1/w/100/h/100` }} style={innerStyles.avatar} />
+							:
+							<View style={[innerStyles.avatar, { backgroundColor: '#F01699' }]} />
+						}
+
 						<View>
-							<Text style={innerStyles.name}>{user.name}</Text>
+							<Text style={innerStyles.name}>{user.name ? user.name : user.username}</Text>
 		            
 		          <View style={innerStyles.date}>
 		            <Text style={innerStyles.helper}>添加于  </Text> 
