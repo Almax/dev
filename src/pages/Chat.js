@@ -188,7 +188,7 @@ class Chat extends React.Component {
 	_addContacts() {
 		this.props.navigator.push({
 			component: ChatContact
-		})
+		});
 	}
 	_onMenuPress(id) {
 		const { navigator } = this.props;

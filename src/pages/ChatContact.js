@@ -39,9 +39,7 @@ class ChatContact extends React.Component {
 	}
 	async _inviteFriend(uid) {
 		let resp = await inviteFriend(uid);
-		if(resp === false) {
-			Alert.alert('添加成功,等待对方同意...');
-		}
+		Alert.alert('添加成功,等待对方同意...');
 	}
 	async _pushFriend(user) {
 		await push(user);
