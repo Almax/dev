@@ -12,6 +12,8 @@ import Add from './Add';
 import Chat from './Chat';
 import More from './More';
 import FindPartner from './FindPartner';
+import { getMyMarry } from '../redux/modules/marry';
+
 class Navigator extends React.Component {
   constructor(props) {
     super(props);
@@ -21,9 +23,14 @@ class Navigator extends React.Component {
     }
   }
   componentDidMount() {
+    this.props.loadMarry();
   }
   componentWillReceiveProps(nextProps) {
     if(nextProps.marry === null) {
+      this.props.navigator.push({
+        component: FindPartner
+      })
+    } else {
       if(nextProps.message && nextProps.invitation) {
         let { invitation, message } = nextProps;
         if(message && message.length && message[0].pass === false) {
@@ -125,6 +132,6 @@ export default connect(
     invitation: state.invitation,
   }),
   dispatch => ({
-    
+    loadMarry: () => dispatch(getMyMarry())
   })
 )(Navigator)

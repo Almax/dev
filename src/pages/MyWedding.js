@@ -82,7 +82,7 @@ class MyWedding extends React.Component {
 		let { marry_color, marry_city, marry_date, marry_guest, marry_budget, marry_style, marry_hotel_name, marry_hotel_address, marry_find } = this.props.marry;
 		marry_color = marry_color ? JSON.parse(marry_color) : [];
 		marry_city = marry_city ? JSON.parse(marry_city) : ['还没有设置'];
-		marry_date = marry_date ? moment(marry_date).format('YYYY年MM月DD日 a hh:ss') : '还没有设置';
+		marry_date = marry_date ? moment(marry_date).format('YYYY年MM月DD日') : '还没有设置';
 		marry_style = marry_style ? JSON.parse(marry_style) : ['还没有设置'];
 		marry_find = marry_find ? JSON.parse(marry_find) : ['还没有设置'];
 
@@ -192,7 +192,7 @@ class MyWedding extends React.Component {
 						</View>
 					</TouchableOpacity>
 
-					<TouchableOpacity onPress={this._edit.bind(this, '我正在寻找的', FinalStep)} style={styles.block}>
+					<TouchableOpacity onPress={this._edit.bind(this, '婚礼想法', FinalStep)} style={styles.block}>
 						<View style={styles.blockKey}>
 							<Image source={asset.marryWish} style={styles.blockIcon} resizeMode={'contain'} />
 							<Text style={styles.blockText}>婚礼想法</Text>
@@ -523,7 +523,7 @@ class PickDate extends React.Component {
 				</View>
 
 				<TouchableOpacity onPress={this._pickDate.bind(this)} style={styles.selectButton}>
-					<Text style={styles.selectButtonText}>{this.state.date ? moment(this.state.date).format('YYYY年MM月DD日 h:mm a') : '选择日期'}</Text>
+					<Text style={styles.selectButtonText}>{this.state.date ? moment(this.state.date).format('YYYY年MM月DD日') : '选择日期'}</Text>
 				</TouchableOpacity>
 			</Template>
 		);
@@ -1176,10 +1176,11 @@ const styles = StyleSheet.create({
 		fontSize: 16 
 	},
 	editor: {
-		flex: 1,
+		height: 100,
 		textAlignVertical: 'top',
 		justifyContent: 'flex-start',
-		margin: 10,
+		marginTop: 20,
+		marginHorizontal: 10,
 		padding: 10,
 		borderRadius: 10,
 		backgroundColor: '#FFFFFF',

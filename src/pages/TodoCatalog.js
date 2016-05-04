@@ -45,6 +45,7 @@ class TodoCatalog extends React.Component {
 
 					<View style={{ height: 5 }}/>
 					<Text style={{ fontSize: 14, fontWeight: '500', color: '#666666' }}>{row.name}</Text>
+					
 				</TouchableOpacity>
 			</View>
 		)
