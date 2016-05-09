@@ -36,6 +36,7 @@
     "react-native-keyboard-aware-scroll-view": "0.0.4",
     "react-native-lazyload": "^0.1.7",
     "react-native-lightbox": "^0.5.0",
+    "react-native-markdown": "^0.1.1",
     "react-native-parallax-scroll-view": "^0.18.0",
     "react-native-storage": "0.0.12",
     "react-native-store": "^0.4.1",

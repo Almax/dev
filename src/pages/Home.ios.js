@@ -152,7 +152,7 @@ class Home extends React.Component {
                     onPress={ () => navigator.push({ title: '婚礼', component: MyWedding }) }
                     style={styles.textIcon}>
                   <Image source={asset.i_22} style={styles.icon} />
-                  <Text style={styles.text}>婚礼</Text>
+                  <Text style={styles.text}>我的婚礼</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={ () => navigator.push({ title: '小课堂', component: WebPage }) }

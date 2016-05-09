@@ -9,8 +9,8 @@ let options = {
   cameraType: 'back', // 'front' or 'back'
   mediaType: 'photo', // 'photo' or 'video'
   videoQuality: 'high', // 'low', 'medium', or 'high'
-  maxWidth: 1000, // photos only
-  maxHeight: 600, // photos only
+  maxWidth: 2560, // photos only
+  maxHeight: 1920, // photos only
   aspectX: 2, // aspectX:aspectY, the cropping image's ratio of width to height
   aspectY: 1, // aspectX:aspectY, the cropping image's ratio of width to height
   quality: 1, // photos only

@@ -131,7 +131,6 @@ export async function deleteStory(marry, story) {
 export async function createStory(marry, data) {
   const options = { method: 'post', body: JSON.stringify({ marry_story: data }) };
   const url = `${baseUrl}syncdata/${marry.id}/story`;
-  console.warn(url);
   return await request(url, options);
 }
 

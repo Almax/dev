@@ -153,6 +153,11 @@ class Navigation extends React.Component {
   }
   onBackAndroid = () => {
     const nav = this.navigator;
+
+    if(typeof nav === 'undefined') {
+      return ;
+    }
+
     const routers = nav.getCurrentRoutes();
     if (routers.length > 1) {
       nav.pop();

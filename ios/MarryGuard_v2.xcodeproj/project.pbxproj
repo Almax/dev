@@ -1030,8 +1030,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/婚格 - 让你结婚更简单.app/婚格 - 让你结婚更简单";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/婚格 - 让结婚更简单.app/婚格 - 让结婚更简单";
 				TREAT_MISSING_BASELINES_AS_TEST_FAILURES = NO;
 			};
 			name = Debug;
@@ -1053,8 +1054,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/婚格 - 让你结婚更简单.app/婚格 - 让你结婚更简单";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/婚格 - 让结婚更简单.app/婚格 - 让结婚更简单";
 				TREAT_MISSING_BASELINES_AS_TEST_FAILURES = NO;
 			};
 			name = Release;
@@ -1087,6 +1089,7 @@
 				PRODUCT_NAME = "婚格 - 让结婚更简单";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -1118,6 +1121,7 @@
 				PRODUCT_NAME = "婚格 - 让结婚更简单";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};

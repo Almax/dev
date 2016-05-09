@@ -6,6 +6,7 @@ import React, {
 	Image,
 	Dimensions,
 	PixelRatio,
+	Platform,
 	Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -82,15 +83,20 @@ class ImageView extends React.Component {
 			return (
 				<View style={styles.container}>
 					<Image source={{ uri: this.state.uri }} style={styles.photo} />
-					<View style={styles.buttonGroup}>
-						<TouchableOpacity style={styles.button}>
-							<Text style={styles.buttonText}>点评</Text>
-						</TouchableOpacity>
-						<View style={{ width: 1 / PixelRatio.get(), height: 40, backgroundColor: '#999999' }} />
-						<TouchableOpacity style={styles.button}>
-							<Text style={styles.buttonText}>圈人</Text>
-						</TouchableOpacity>
-					</View>
+
+					{
+						/*
+						<View style={styles.buttonGroup}>
+							<TouchableOpacity style={styles.button}>
+								<Text style={styles.buttonText}>点评</Text>
+							</TouchableOpacity>
+							<View style={{ width: 1 / PixelRatio.get(), height: 40, backgroundColor: '#999999' }} />
+							<TouchableOpacity style={styles.button}>
+								<Text style={styles.buttonText}>圈人</Text>
+							</TouchableOpacity>
+						</View>
+						*/
+					}
 				</View>
 			);
 		} else {
@@ -98,7 +104,8 @@ class ImageView extends React.Component {
 			return (
 				<View style={styles.container}>
 
-					<Image source={{ uri: this.state.story.photo }} style={styles.photo} />
+					<Image source={{ uri: this.state.story.photo }} style={styles.photo} resizeMode={'contain'} />
+
 					<TouchableOpacity onPress={this._writeStory.bind(this, this.state.story)} style={styles.story}>
 						<Image source={{ uri: user.photo }} style={styles.avatar} />
 						<View style={styles.userInfo}>
@@ -129,7 +136,12 @@ const styles = {
 		backgroundColor: '#000000' 
 	},
 	photo: {
-		flex: 1 
+		flex: 1,
+		height: height,
+		width: width,
+		// transform: [{
+		// 	rotate: '90deg',
+		// }]
 	},
 	story: {
 		flexDirection: 'row',

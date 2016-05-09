@@ -153,21 +153,21 @@ class Home extends React.Component {
 								</TouchableOpacity>
 							</View>
 							<View style={{ justifyContent: 'space-around', flexDirection: 'row', flexWrap: 'wrap' }}>
-								
-                <TouchableOpacity
-                    onPress={ () => navigator.push({ title: '小课堂', component: WebPage }) }
-                    style={styles.textIcon}>
-                  <Image source={asset.i_50} style={styles.icon} />
-                  <Text style={styles.text}>小课堂</Text>
-                </TouchableOpacity>
-							
+						
 								<TouchableOpacity
 										onPress={ () => navigator.push({ component: MyWedding }) }
 										style={styles.textIcon}>
 									<Image source={asset.i_22} style={styles.icon} />
 									<Text style={styles.text}>我的婚礼</Text>
 								</TouchableOpacity>
-								
+										
+                <TouchableOpacity
+                    onPress={ () => navigator.push({ title: '小课堂', component: WebPage }) }
+                    style={styles.textIcon}>
+                  <Image source={asset.i_50} style={styles.icon} />
+                  <Text style={styles.text}>小课堂</Text>
+                </TouchableOpacity>
+														
 								<TouchableOpacity
 										onPress={ () => navigator.push({ component: SocialWedding }) }
 										style={styles.textIcon}>
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
 		margin: 2,
 	},
 	text: {
-		fontSize: 14,
+		fontSize: 12,
 		color: '#999999'
 	},
 	helperText: {

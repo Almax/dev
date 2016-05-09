@@ -67,7 +67,8 @@ export function load() {
 
 export function create(data) {
 	return async (dispatch) => {
-		dispatch(createNewTask(await createTask(data)))
+		dispatch(createNewTask(await createTask(data)));
+    dispatch(initialTask(await loadTask()));
 	}
 }
 

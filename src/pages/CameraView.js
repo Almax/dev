@@ -108,7 +108,6 @@ class CameraView extends Component {
       photo: source.uri,
     };
     let newPhoto = await createStory(this.props.marry, params);
-    console.warn(JSON.stringify(newPhoto));
     this.setState({
       preview: newPhoto.photo
     });

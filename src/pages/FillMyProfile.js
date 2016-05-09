@@ -22,6 +22,7 @@ var options = {
 
 import React, {
 	ScrollView,
+	Alert,
 	View,
 	Text,
 	Image,
@@ -78,6 +79,16 @@ class FillMyProfile extends React.Component {
 
 	}
 	_welcome() {
+		if(this.state.name==null || this.state.name == '' || this.state.photo==null) {
+			Alert.alert('请完善姓名跟头像');
+			return ;
+		}
+
+		if(this.state.marry_date==null || this.state.marry_name == '' || this.state.marry_name==null) {
+			Alert.alert('请先完善婚礼信息');
+			return ;
+		}
+
 		this.props.updateProfile({
 			name: this.state.name,
 			photo: this.state.photo,
