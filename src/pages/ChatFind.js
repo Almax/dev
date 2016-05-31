@@ -13,10 +13,10 @@ import asset from '../assets';
 import { findUser } from '../utils/session';
 import { inviteFriend } from '../utils/chat';
 import { SubmitButton, FormBlock } from '../components/Form';
+import Zhuge from '../components/Zhuge';
 class ChatUser extends React.Component {
 	async _invite() {
 		let resp = await inviteFriend(this.props.user.uid);
-		console.warn(resp);
 		Alert.alert('添加成功,等待对方同意...');
 	}
 	render() {
@@ -70,6 +70,9 @@ class ChatFind extends React.Component {
 
 	}
 	async _findUsername() {
+
+		
+		Zhuge.getEvent('账号查找联系人', {}, () => {});
 		if(/\d{11}/.test(this.state.username)) {
 			let user = await findUser(this.state.username);
 			if(user.error) {

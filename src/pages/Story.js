@@ -54,7 +54,7 @@ import {
 import { load, deleteIt } from '../redux/modules/story';
 const { width, height } = Dimensions.get('window');
 import Loading from './Loading';
-
+import Zhuge from '../components/Zhuge';
 class Memory extends React.Component {
 	constructor(props) {
 		super(props);
@@ -117,6 +117,8 @@ class Memory extends React.Component {
 		   	});
 
 		   	this.props.load(this.props.marry);
+
+		   	Zhuge.getEvent('创建婚礼故事', {}, () => {});
 		  }
 		});	
 	}

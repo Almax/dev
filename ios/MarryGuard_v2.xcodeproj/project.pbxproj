@@ -17,10 +17,10 @@
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBD1A68108700A75B9A /* LaunchScreen~.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen~.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		410AB3FD31BD79C68312C479 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECDB70E4F3FE2A477709ECF /* libPods.a */; };
 		81212D001CC4BAF800169DE7 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81212CF11CC4BAEB00169DE7 /* libRCTCameraRoll.a */; };
 		81212D5E1CC5FD5000169DE7 /* AssetLibraryToBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 81212D5D1CC5FD5000169DE7 /* AssetLibraryToBase64.m */; };
 		81212DAE1CC7300300169DE7 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81212DAC1CC72FFC00169DE7 /* libRNFS.a */; };
@@ -33,6 +33,16 @@
 		816A1FF21C9116B200622F4B /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 816A1FF11C91169900622F4B /* libCodePush.a */; };
 		816A1FF41C9116CD00622F4B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 816A1FF31C9116CD00622F4B /* libz.tbd */; };
 		81B6DD831CBB532000B44A29 /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B6DD751CBB531900B44A29 /* libRCTContacts.a */; };
+		81DE0C391CFBE9B10049E868 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DE0C381CFBE9B10049E868 /* UIKit.framework */; };
+		81DE0C541CFBE9C00049E868 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DE0C531CFBE9C00049E868 /* Foundation.framework */; };
+		81DE0C561CFBE9C80049E868 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DE0C551CFBE9C80049E868 /* SystemConfiguration.framework */; };
+		81DE0C581CFBE9CD0049E868 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DE0C571CFBE9CD0049E868 /* CoreTelephony.framework */; };
+		81DE0C5A1CFBE9D50049E868 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DE0C591CFBE9D50049E868 /* Accelerate.framework */; };
+		81DE0C5C1CFBE9DC0049E868 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DE0C5B1CFBE9DC0049E868 /* CoreGraphics.framework */; };
+		81DE0C5E1CFBE9E20049E868 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DE0C5D1CFBE9E20049E868 /* QuartzCore.framework */; };
+		81DE0C601CFBE9F00049E868 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DE0C5F1CFBE9F00049E868 /* libicucore.tbd */; };
+		81DE0C621CFBE9F70049E868 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DE0C611CFBE9F70049E868 /* CoreMotion.framework */; };
+		81DE0C671CFC03330049E868 /* RCTZhugeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81DE0C661CFC03320049E868 /* RCTZhugeManager.m */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		A067F00F937E494D8EBE27EC /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2432A56E078D4A29A9DDB07E /* libRCTActionSheet.a */; };
 		BFD62D5C87ED443E873B7137 /* libRNChart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CE1EA21703544748D8E25A0 /* libRNChart.a */; };
@@ -241,7 +251,6 @@
 		13B07F961A680F5B00A75B9A /* 婚格 - 让结婚更简单.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "婚格 - 让结婚更简单.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MarryGuard_v2/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MarryGuard_v2/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "Base.lproj/LaunchScreen~.xib"; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MarryGuard_v2/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MarryGuard_v2/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MarryGuard_v2/main.m; sourceTree = "<group>"; };
@@ -249,6 +258,7 @@
 		2432A56E078D4A29A9DDB07E /* libRCTActionSheet.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTActionSheet.a; sourceTree = "<group>"; };
 		516941F00BB04498B292E639 /* Example.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = Example.xcodeproj; path = "../node_modules/react-native-image-picker/ios/Example/Example.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		7ECDB70E4F3FE2A477709ECF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		81212CEA1CC4BAEA00169DE7 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		81212D5D1CC5FD5000169DE7 /* AssetLibraryToBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AssetLibraryToBase64.m; path = "../node_modules/react-native-asset-library-to-base64/ios/AssetLibraryToBase64.m"; sourceTree = "<group>"; };
 		81212D921CC72FFC00169DE7 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
@@ -262,9 +272,23 @@
 		816A1FEC1C91169900622F4B /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		816A1FF31C9116CD00622F4B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		81B6DD6E1CBB531800B44A29 /* RCTContacts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTContacts.xcodeproj; path = "../node_modules/react-native-contacts/ios/RCTContacts.xcodeproj"; sourceTree = "<group>"; };
+		81DE0C381CFBE9B10049E868 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		81DE0C531CFBE9C00049E868 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		81DE0C551CFBE9C80049E868 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		81DE0C571CFBE9CD0049E868 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		81DE0C591CFBE9D50049E868 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		81DE0C5B1CFBE9DC0049E868 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		81DE0C5D1CFBE9E20049E868 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		81DE0C5F1CFBE9F00049E868 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		81DE0C611CFBE9F70049E868 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		81DE0C631CFBE9FD0049E868 /* libZhugeio.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZhugeio.a; path = "../../../../Library/Developer/Xcode/DerivedData/MarryGuard_v2-euxbdpkfftihhlhgqwxroryrtrri/Build/Products/Debug-iphoneos/libZhugeio.a"; sourceTree = "<group>"; };
+		81DE0C651CFC03320049E868 /* RCTZhugeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTZhugeManager.h; sourceTree = "<group>"; };
+		81DE0C661CFC03320049E868 /* RCTZhugeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTZhugeManager.m; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		9CE1EA21703544748D8E25A0 /* libRNChart.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNChart.a; sourceTree = "<group>"; };
+		A64A6BEEA4978E8A7C8FB83C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BB4F04B63AA24EC89B0337CE /* libRCTCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTCamera.a; sourceTree = "<group>"; };
+		D6B9DE6E900DAA699247E5E4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		DCFDA605C6664DF3AF261144 /* MessengerExample.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = MessengerExample.xcodeproj; path = "../node_modules/react-native-gifted-messenger/MessengerExample/ios/MessengerExample.xcodeproj"; sourceTree = "<group>"; };
 		E21D604B03194BB2B1C5ADFE /* RNChart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNChart.xcodeproj; path = "../node_modules/react-native-chart/RNChart.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -281,12 +305,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81DE0C621CFBE9F70049E868 /* CoreMotion.framework in Frameworks */,
+				81DE0C601CFBE9F00049E868 /* libicucore.tbd in Frameworks */,
+				816A1FF41C9116CD00622F4B /* libz.tbd in Frameworks */,
+				81DE0C5E1CFBE9E20049E868 /* QuartzCore.framework in Frameworks */,
+				81DE0C5C1CFBE9DC0049E868 /* CoreGraphics.framework in Frameworks */,
+				81DE0C5A1CFBE9D50049E868 /* Accelerate.framework in Frameworks */,
+				81DE0C581CFBE9CD0049E868 /* CoreTelephony.framework in Frameworks */,
+				81DE0C561CFBE9C80049E868 /* SystemConfiguration.framework in Frameworks */,
+				81DE0C541CFBE9C00049E868 /* Foundation.framework in Frameworks */,
+				81DE0C391CFBE9B10049E868 /* UIKit.framework in Frameworks */,
 				81212DC01CC75D6E00169DE7 /* libRCTPushNotification.a in Frameworks */,
 				81212DAE1CC7300300169DE7 /* libRNFS.a in Frameworks */,
 				81212D001CC4BAF800169DE7 /* libRCTCameraRoll.a in Frameworks */,
 				81B6DD831CBB532000B44A29 /* libRCTContacts.a in Frameworks */,
 				8145FB951CA3C6CE00414F9D /* libRCTSplashScreen.a in Frameworks */,
-				816A1FF41C9116CD00622F4B /* libz.tbd in Frameworks */,
 				816A1FF21C9116B200622F4B /* libCodePush.a in Frameworks */,
 				816A1FE91C8D273F00622F4B /* libRCTHttpCache.a in Frameworks */,
 				816A1FEB1C8D273F00622F4B /* libRNImagePicker.a in Frameworks */,
@@ -303,6 +336,7 @@
 				BFD62D5C87ED443E873B7137 /* libRNChart.a in Frameworks */,
 				A067F00F937E494D8EBE27EC /* libRCTActionSheet.a in Frameworks */,
 				F487BEB8B10E49B4B38DEFBE /* libRCTCamera.a in Frameworks */,
+				410AB3FD31BD79C68312C479 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,8 +426,9 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB11A68108700A75B9A /* LaunchScreen~.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				81DE0C651CFC03320049E868 /* RCTZhugeManager.h */,
+				81DE0C661CFC03320049E868 /* RCTZhugeManager.m */,
 			);
 			name = MarryGuard_v2;
 			sourceTree = "<group>";
@@ -404,6 +439,33 @@
 				146834041AC3E56700842450 /* libReact.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		56469AAF0679E154A3A25EB9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				81DE0C631CFBE9FD0049E868 /* libZhugeio.a */,
+				81DE0C611CFBE9F70049E868 /* CoreMotion.framework */,
+				81DE0C5F1CFBE9F00049E868 /* libicucore.tbd */,
+				81DE0C5D1CFBE9E20049E868 /* QuartzCore.framework */,
+				81DE0C5B1CFBE9DC0049E868 /* CoreGraphics.framework */,
+				81DE0C591CFBE9D50049E868 /* Accelerate.framework */,
+				81DE0C571CFBE9CD0049E868 /* CoreTelephony.framework */,
+				81DE0C551CFBE9C80049E868 /* SystemConfiguration.framework */,
+				81DE0C531CFBE9C00049E868 /* Foundation.framework */,
+				81DE0C381CFBE9B10049E868 /* UIKit.framework */,
+				7ECDB70E4F3FE2A477709ECF /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		599838D7A1A4EDA11F5CBA52 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D6B9DE6E900DAA699247E5E4 /* Pods.debug.xcconfig */,
+				A64A6BEEA4978E8A7C8FB83C /* Pods.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
@@ -568,6 +630,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MarryGuard_v2Tests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				599838D7A1A4EDA11F5CBA52 /* Pods */,
+				56469AAF0679E154A3A25EB9 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -607,10 +671,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MarryGuard_v2" */;
 			buildPhases = (
+				B4974AF81FD804F1C1EC43DE /* Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
-				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				A28BC104966A72E52D8C349D /* Embed Pods Frameworks */,
+				A56976B0482600EA8144B07D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -945,7 +1012,6 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				8145FB981CA3C7A500414F9D /* LaunchScreen.xib in Resources */,
 				8145FB9B1CA3C7B700414F9D /* splash.png in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreen~.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -966,6 +1032,51 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
 		};
+		A28BC104966A72E52D8C349D /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A56976B0482600EA8144B07D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B4974AF81FD804F1C1EC43DE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -982,6 +1093,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81212D5E1CC5FD5000169DE7 /* AssetLibraryToBase64.m in Sources */,
+				81DE0C671CFC03330049E868 /* RCTZhugeManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -996,18 +1108,6 @@
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		13B07FB11A68108700A75B9A /* LaunchScreen~.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				13B07FB21A68108700A75B9A /* Base */,
-			);
-			name = "LaunchScreen~.xib";
-			path = MarryGuard_v2;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
@@ -1063,6 +1163,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D6B9DE6E900DAA699247E5E4 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1084,7 +1185,10 @@
 				INFOPLIST_FILE = MarryGuard_v2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.marrynovo.hunge;
 				PRODUCT_NAME = "婚格 - 让结婚更简单";
 				PROVISIONING_PROFILE = "";
@@ -1095,6 +1199,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A64A6BEEA4978E8A7C8FB83C /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1116,7 +1221,10 @@
 				INFOPLIST_FILE = MarryGuard_v2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.marrynovo.hunge;
 				PRODUCT_NAME = "婚格 - 让结婚更简单";
 				PROVISIONING_PROFILE = "";

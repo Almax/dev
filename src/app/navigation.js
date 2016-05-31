@@ -23,6 +23,7 @@ import More from '../pages/More';
 const { height, width } = Dimensions.get('window');
 import Swiper from 'react-native-swiper2';
 import { loadUser } from '../redux/modules/session';
+import { isFirstTime } from '../utils/splash';
 const swiperStyles = {
   page: {
     flex: 1,
@@ -134,7 +135,7 @@ class Navigation extends React.Component {
     this.state = {
       progress: null,
       showModal: false,
-      showSwiper: true,
+      showSwiper: false,
     }
   }
   componentWillMount() {
@@ -147,9 +148,14 @@ class Navigation extends React.Component {
       BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
     }
   }
-  componentDidMount() {
+  async componentDidMount() {
     this.props.loadSession();
     SplashScreen.hide();
+
+    let isFirst = await isFirstTime();
+    this.setState({
+      showSwiper: isFirst
+    });
   }
   onBackAndroid = () => {
     const nav = this.navigator;
@@ -196,7 +202,6 @@ class Navigation extends React.Component {
         fontSize: 18, color: '#FFFFFF', fontWeight: '100'
       }
     }
-
     var routeMapper = {
       LeftButton(route, navigator, index, navState) {
         if(index > 0) {
@@ -277,6 +282,7 @@ class Navigation extends React.Component {
   }
   render() {
     const url = 'https://itunes.apple.com/cn/app/hun-ge-rang-jie-hun-geng-jian/id1062457289?mt=8';
+
     if(this.state.showSwiper) {
       return <Step onPress={() => this.setState({ showSwiper: false })} />;
     } else {

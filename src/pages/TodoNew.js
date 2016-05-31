@@ -29,7 +29,7 @@ import data from './mock.json';
 import DateTimePicker from '../components/Widget/DateTimePicker';
 import { create, load } from '../redux/modules/task';
 import Notification from 'react-native-system-notification';
-
+import Zhuge from '../components/Zhuge';
 class TodoNew extends React.Component {
 	constructor(props) {
 		super(props)
@@ -40,6 +40,9 @@ class TodoNew extends React.Component {
 			end_date: new Date(),
 			showPicker: false,
 		};
+	}
+	componentDidMount() {
+		Zhuge.getEvent('创建任务', {}, () => {});
 	}
 	viewScroll(offset) {
 		this.scrollView.scrollTo({ x:0 ,y: offset, animated: true })

@@ -24,7 +24,7 @@ class TodoPage extends React.Component {
 	}
 }
 
-export default class Schedule extends React.Component {
+class Schedule extends React.Component {
 	render() {
 		const pagers = [
 			{ index: 2, component: TodoPage, name: '我的' },
@@ -41,3 +41,4 @@ export default class Schedule extends React.Component {
 		)
 	}
 }
+export default Schedule;

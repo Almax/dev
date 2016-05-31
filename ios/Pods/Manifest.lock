@@ -1,0 +1,18 @@
+PODS:
+  - Bugtags (1.2.6)
+  - RongCloudIMKit (2.4.0)
+  - Zhugeio (2.0.5):
+    - Zhugeio/Zhugeio (= 2.0.5)
+  - Zhugeio/Zhugeio (2.0.5)
+
+DEPENDENCIES:
+  - Bugtags
+  - RongCloudIMKit (= 2.4.0)
+  - Zhugeio
+
+SPEC CHECKSUMS:
+  Bugtags: 10d4b0c089b34f6e28877e5830218627ebd14dbb
+  RongCloudIMKit: c2cb0013452b98b38267d395b6155665344db96e
+  Zhugeio: e9acc7fce6365cab25aee644be44943c5287e7a8
+
+COCOAPODS: 0.39.0

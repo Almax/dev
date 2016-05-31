@@ -19,6 +19,7 @@ import styles from '../styles';
 import asset from '../assets';
 import { findPassword, findPasswordConfirm } from '../utils/session';
 import { store } from '../redux/modules/session';
+import Zhuge from '../components/Zhuge';
 
 const SMS_EXPIRED_TIME = 60;
 class FindPassword extends React.Component {
@@ -102,6 +103,7 @@ class FindPassword extends React.Component {
 		} else {
 			this.props.loginUser(resp);
 			Alert.alert('修改成功', '你的密码已经修改成功，请记住你的新密码');
+			Zhuge.getEvent('修改密码', {}, () => {});
 		}
 	}
 	_scroll(offset) {

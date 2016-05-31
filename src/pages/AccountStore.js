@@ -13,6 +13,7 @@ import styles from '../styles'
 import { CatalogSection, Caption, Subtitle, HorizontalView, BackStep, SegmentedControl } from '../components/View';
 import AccountCost from './AccountCost';
 import AccountIncome from './AccountIncome';
+import Zhuge from '../components/Zhuge';
 
 class AccountStore extends React.Component {
 	constructor(props) {
@@ -22,7 +23,7 @@ class AccountStore extends React.Component {
 		}
 	}
 	componentDidMount() {
-		
+		Zhuge.getEvent('创建账本', {}, () => {});
 	}
 	_onViewChange(event) {
     this.setState({

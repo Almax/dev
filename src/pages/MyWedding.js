@@ -25,6 +25,7 @@ import asset from '../assets';
 import moment from 'moment';
 import { SubmitButton, FormRow } from '../components/Form';
 import PickCityComponent from './PickCity';
+import Zhuge from '../components/Zhuge';
 
 class Template extends React.Component {
 	render() {
@@ -51,7 +52,10 @@ class Template extends React.Component {
 	}
 }
 
-class MyWedding extends React.Component {	
+class MyWedding extends React.Component {
+	componentDidMount() {
+		Zhuge.getEvent('更新我的婚礼信息', {}, () => {});
+	}
 	_edit(title, Component) {
 		this.props.navigator.push({
 			title: title,

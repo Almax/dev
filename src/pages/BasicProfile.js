@@ -43,6 +43,7 @@ import asset from '../assets';
 import { connect } from 'react-redux';
 import { updateProfile } from '../redux/modules/session';
 import Loading from './Loading';
+import Zhuge from '../components/Zhuge';
 class BasicProfile extends React.Component {
 	constructor(props) {
 		super(props)
@@ -68,6 +69,9 @@ class BasicProfile extends React.Component {
 		})
 	}
 	componentWillReceiveProps(nextProps) {
+		
+		Zhuge.getEvent('更新资料', {}, () => {});
+
 		this.setState({ loaded: true });
 		Alert.alert('更新成功', '我的资料更新成功');
 	}

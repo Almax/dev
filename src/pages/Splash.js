@@ -7,7 +7,7 @@ import React, {
 	NetInfo,
 	Alert,
 } from 'react-native';
-
+import Zhuge from '../components/Zhuge';
 import Store from 'react-native-store';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -32,7 +32,9 @@ class Splash extends React.Component {
 		}
 	}
 	componentDidMount() {
-		
+		this.props.navigator.navigationContext.addListener('willfocus', (event)=>{
+			Zhuge.getEvent('页面跳转', event.currentTarget.currentRoute, () => {})
+		});
 	}
 	componentWillReceiveProps(nextProps) {
 		const { user } = nextProps
@@ -60,11 +62,11 @@ class Splash extends React.Component {
 				<LogIn navigator={this.props.navigator} />
 			);
 		} else {
+			Zhuge.activeUser({ id: `${user.id}`, mobile: user.username, name: user.name })
 			return (
-			<View style={{ flex: 1 }}>
-				<Navigator navigator={this.props.navigator} />
-				<Subscriber />
-			</View>
+				<View style={{ flex: 1 }}>
+					<Navigator navigator={this.props.navigator} />
+				</View>
 			);
 		}
 

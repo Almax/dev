@@ -14,6 +14,7 @@ import React, {
   Alert,
   Dimensions,
 } from 'react-native';
+import Zhuge from '../components/Zhuge';
 import moment from 'moment';
 require('moment/locale/zh-cn');
 import Navigation from './navigation';
@@ -24,6 +25,8 @@ class App extends React.Component {
       progress: null,
       finished: true,
     }
+    //Zhuge.io event
+    Zhuge.getEvent('APP启动', {}, (successLog) => console.warn(successLog));
   }
   async componentDidMount() {
     if(Platform.OS === 'ios' && false) {
